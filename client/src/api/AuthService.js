@@ -3,7 +3,7 @@ import api from './api';
 // Sign in user using email token from magic link
 const signIn = emailToken =>
   api({
-    path: '/api/auth',
+    url: '/auth',
     method: 'POST',
     data: {
       emailToken
@@ -13,7 +13,7 @@ const signIn = emailToken =>
 // Sign up user
 const signUp = (email, name) =>
   api({
-    path: '/api/users',
+    url: '/users',
     method: 'POST',
     data: {
       email,
@@ -23,7 +23,7 @@ const signUp = (email, name) =>
 
 // Send user a magic link to sign in with
 const sendMagicLink = email =>
-  api({ path: '/api/email', method: 'POST', data: { email } });
+  api({ url: '/auth/email', method: 'POST', data: { email } });
 
 export default {
   signIn,

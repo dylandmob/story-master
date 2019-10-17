@@ -2,9 +2,10 @@ import axios from 'axios';
 
 // Create an Axios Client with defaults
 const client = axios.create({
-  baseURL: 'https://api.zupage.com',
+  baseURL: 'http://localhost:5000/api',
   timeout: 10000,
-  crossDomain: true
+  crossDomain: true,
+  withCredentials: true
 });
 
 const AUTH_HEADER = 'x-auth-token';

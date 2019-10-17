@@ -13,6 +13,10 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, config.get('jwtSecret'));
 
+    if (!decoded.user.isAdmin) {
+      return res.status(401).json({ msg: 'You do not have admin privileges' });
+    }
+
     req.user = decoded.user;
 
     next();

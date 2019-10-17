@@ -12,13 +12,13 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) =>
-  res.json({ msg: 'Welcome to the Middleburg CCS API...' })
+  res.json({ msg: 'Welcome to the Story Master API...' })
 );
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/applications', require('./routes/applications'));
+app.use('/api/campaigns', require('./routes/campaigns'));
 
 const PORT = process.env.PORT || 5000;
 

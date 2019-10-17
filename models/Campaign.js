@@ -9,18 +9,18 @@ const CampaignSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  date: {
+  dateCreated: {
     type: Date,
     default: Date.now
   },
-  isAdmin: {
-    type: Boolean,
-    default: false
+  dateLastModified: {
+    type: Date,
+    default: Date.now
   },
-  isVerified: {
-    type: Boolean,
-    default: false
-  }
+  imageUrl: { type: String, default: 'https://place-hold.it/200x200' },
+  admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
+  players: [],
+  chapters: [String]
 });
 
 module.exports = mongoose.model('campaign', CampaignSchema);
