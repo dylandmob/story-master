@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import AuthContext from './authContext';
+import AuthContext from '.';
 import authReducer from './authReducer';
 
 import api from '../../api/AuthService';
@@ -9,12 +9,12 @@ import {
   SIGN_OUT,
   EMAIL_SENT,
   AUTH_ERROR,
-  SIGN_UP_REQ
+  SIGN_UP_REQ,
+  SIGNED_IN
 } from '../types';
 
 const AuthState = props => {
   const initialState = {
-    user: {},
     authStatus: SIGN_IN,
     authError: null
   };
@@ -28,15 +28,11 @@ const AuthState = props => {
       await api.sendMagicLink(email);
       dispatch({ type: EMAIL_SENT });
     } catch (err) {
-      console.error(
-        'There is an error! We should probably have them sign up!',
-        err
-      );
-
-      // IF 404
-      dispatch({ type: SIGN_UP_REQ, payload: email }); // Set authStatus to SIGNUP
-
       // If user does not exist, 404 will return and the user will need to sign up with a name
+      if (err.status === 404) {
+        return dispatch({ type: SIGN_UP_REQ, payload: email });
+      }
+
       handleError('Error trying to send magic link', err);
     }
   };
@@ -55,7 +51,7 @@ const AuthState = props => {
   const signIn = async token => {
     try {
       const response = await api.signIn(token);
-      dispatch({ type: SIGN_IN, payload: response.data });
+      dispatch({ type: SIGN_IN, payload: response });
     } catch (err) {
       handleError('Error trying to sign in', err);
     }
@@ -63,6 +59,8 @@ const AuthState = props => {
 
   // Sign out user
   const signOut = () => dispatch({ type: SIGN_OUT });
+
+  const setSignedInStatus = () => dispatch({ type: SIGNED_IN });
 
   const handleError = (type, err) =>
     dispatch({ type: AUTH_ERROR, payload: `${type}: ${err}` });
@@ -76,7 +74,8 @@ const AuthState = props => {
         signUp,
         signIn,
         signOut,
-        sendMagicLink
+        sendMagicLink,
+        setSignedInStatus
       }}
     >
       {props.children}

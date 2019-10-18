@@ -1,15 +1,22 @@
 import React, { useEffect, useContext } from 'react';
+import queryString from 'query-string';
 import { Container, Row, Col } from 'shards-react';
-import AuthContext from '../../context/auth/authContext';
+import AuthContext from '../../context/auth';
 import AuthCard from './AuthCard';
 
-const Auth = props => {
-  const { signIn, authStatus } = useContext(AuthContext);
+const Auth = ({ location, history }) => {
+  const { signIn } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log('Props', props);
-    console.log('Match', props.location);
+    let params = queryString.parse(location.search);
 
+    // Sign In and route user
+    if (params.token) {
+      console.log('Signing in user');
+      signIn(params.token)
+        .then(() => history.push('/'))
+        .catch(e => window.alert(e));
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -24,7 +31,7 @@ const Auth = props => {
           </div>
         </Col>
         <Col sm='12' md='6' lg='6'>
-          <AuthCard cardStyle={{ top: '30vh' }} />
+          <AuthCard cardStyle={{ top: '25%' }} />
         </Col>
       </Row>
     </Container>

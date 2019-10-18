@@ -10,18 +10,27 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  date: {
+  dateCreated: {
     type: Date,
     default: Date.now
   },
-  isAdmin: {
-    type: Boolean,
-    default: false
+  imageUrl: {
+    type: String,
+    default: 'https://place-hold.it/200x200'
   },
   isVerified: {
     type: Boolean,
     default: false
-  }
+  },
+  campaigns: [
+    {
+      campaign: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'campaigns',
+        isAdmin: { type: Boolean, default: false }
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model('user', UserSchema);

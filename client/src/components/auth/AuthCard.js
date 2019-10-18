@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Card, CardImg, CardBody } from 'shards-react';
 import { animated, useTransition } from 'react-spring';
-import AuthContext from '../../context/auth/authContext';
+import AuthContext from '../../context/auth';
 import { SIGN_IN, SIGN_UP_REQ, EMAIL_SENT } from '../../context/types';
 import SignIn from './SignIn';
 import SignUp from './SignUp';

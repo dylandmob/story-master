@@ -8,19 +8,6 @@ const { check, validationResult } = require('express-validator');
 const emailUser = require('../emailUser');
 const User = require('../models/User');
 
-// @route   GET api/auth
-// @desc    Gets logged in user
-// @access  Private
-router.get('/', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
 // Sign Up
 
 // Request to see if exisiting user returns false
@@ -63,6 +50,13 @@ router.post(
           .json({ msg: 'No user was found for this email' });
       }
 
+      if (!user.isVerified) {
+        await user.remove();
+        return res
+          .status(404)
+          .json({ msg: 'No user was found for this email' });
+      }
+
       const payload = { user: { id: user.id } };
 
       const token = jwt.sign(payload, config.get('jwtEmailSecret'), {
@@ -97,8 +91,6 @@ router.post('/', async (req, res) => {
     const decoded = jwt.verify(token, config.get('jwtEmailSecret'));
     user = await User.findById(decoded.user.id);
   } catch (err) {
-    console.error(err.message);
-    console.error(err.name);
     if (err.name === 'TokenExpiredError') {
       const expiredDecoded = jwt.verify(token, config.get('jwtEmailSecret'), {
         ignoreExpiration: true
@@ -113,14 +105,12 @@ router.post('/', async (req, res) => {
     }
   }
 
-  console.log('User!', user);
-
   try {
     if (!user) {
       return res.status(400).json({ msg: 'No user was found for this id' });
     }
 
-    const payload = { user: { id: user.id, isAdmin: user.isAdmin } };
+    const payload = { user: { id: user.id } };
 
     const token = jwt.sign(payload, config.get('jwtSecret'), {
       expiresIn: config.get('tokenLife')
@@ -135,13 +125,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    let data = {
-      token,
-      refreshToken,
-      isAdmin: user.isAdmin
-    };
-
-    res.json(data);
+    res.json({ token, refreshToken });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error: ' + err.message);
@@ -153,7 +137,7 @@ router.post('/', async (req, res) => {
 // @access  Private
 router.post('/token', (req, res) => {
   // Get token from the header
-  const currentToken = req.header('x-refresh-token');
+  const currentToken = req.body.refreshToken;
 
   // Check if not token
   if (!currentToken) {
@@ -165,7 +149,7 @@ router.post('/token', (req, res) => {
 
     const user = decoded.user;
 
-    const payload = { user: { id: user.id, isAdmin: user.isAdmin } };
+    const payload = { user: { id: user.id } };
 
     const token = jwt.sign(payload, config.get('jwtSecret'), {
       expiresIn: config.get('tokenLife')
@@ -174,7 +158,7 @@ router.post('/token', (req, res) => {
       expiresIn: config.get('refreshTokenLife')
     });
 
-    res.json({ token, refreshToken, isAdmin: user.isAdmin });
+    res.json({ token, refreshToken });
   } catch (err) {
     console.error(err.message);
     res.status(401).json({ msg: 'Token is not valid' });

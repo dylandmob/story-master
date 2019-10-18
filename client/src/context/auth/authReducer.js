@@ -3,12 +3,12 @@ import {
   SIGN_OUT,
   AUTH_ERROR,
   EMAIL_SENT,
-  SIGN_UP_REQ
+  SIGN_UP_REQ,
+  SIGNED_IN,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  TOKEN_EXP_TIME
 } from '../types';
-
-const ACCESS_TOKEN = 'middleburgAccessToken';
-const REFRESH_TOKEN = 'middleburgRefreshToken';
-const TOKEN_EXP_TIME = 'middleburgAccessTokenExpTime';
 
 export default (state, action) => {
   switch (action.type) {
@@ -18,7 +18,7 @@ export default (state, action) => {
       localStorage.setItem(ACCESS_TOKEN, token);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       localStorage.setItem(TOKEN_EXP_TIME, tokenExpTime);
-      return { ...state, authStatus: null };
+      return { ...state, authStatus: SIGNED_IN };
     case SIGN_UP_REQ:
       return {
         ...state,
@@ -34,6 +34,8 @@ export default (state, action) => {
       return { ...state, authStatus: SIGN_IN };
     case AUTH_ERROR:
       return { ...state, authError: action.payload };
+    case SIGNED_IN:
+      return { ...state, authStatus: SIGNED_IN };
     default:
       return state;
   }

@@ -29,7 +29,7 @@ const Home = () => {
       style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
     >
       {campaigns.map(campaign => (
-        <CampaignCard campaign={campaign} />
+        <CampaignCard key={campaign.id} campaign={campaign} />
       ))}
     </Container>
   );

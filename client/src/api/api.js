@@ -4,8 +4,7 @@ import axios from 'axios';
 const client = axios.create({
   baseURL: 'http://localhost:5000/api',
   timeout: 10000,
-  crossDomain: true,
-  withCredentials: true
+  crossDomain: true
 });
 
 const AUTH_HEADER = 'x-auth-token';
@@ -48,8 +47,6 @@ const api = async function(options) {
 async function handleToken() {
   const expiration = localStorage.getItem(TOKEN_EXP_TIME);
   const time = new Date().getTime() / 1000;
-  console.log('Expiration Time', expiration);
-  console.log('Time', time);
   if (expiration < time) {
     await getNewToken();
   }
@@ -60,7 +57,7 @@ async function getNewToken() {
     const currentRefreshToken = localStorage.getItem(REFRESH_TOKEN);
     console.log('Getting new token', currentRefreshToken);
     const response = await client({
-      url: `/oauth/token`,
+      url: `/auth/token`,
       method: 'POST',
       data: {
         refreshToken: currentRefreshToken

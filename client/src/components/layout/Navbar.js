@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../../context/auth';
+import { SIGNED_IN } from '../../context/types';
 import { Link } from 'react-router-dom';
 import {
   Navbar,
@@ -11,6 +13,9 @@ import {
 } from 'shards-react';
 
 const NavbarComp = () => {
+  const authContext = useContext(AuthContext);
+  const { authStatus } = authContext;
+
   const [collapseOpen, setCollapseOpen] = useState(false);
 
   const toggleNavbar = () => setCollapseOpen(!collapseOpen);
@@ -24,8 +29,12 @@ const NavbarComp = () => {
       <Collapse open={collapseOpen} navbar>
         <Nav navbar className='ml-auto'>
           <NavItem>
-            <NavLink active tag={Link} to='/sign-in'>
-              Sign In
+            <NavLink
+              active
+              tag={Link}
+              to={authStatus === SIGNED_IN ? '/profile' : '/sign-in'}
+            >
+              {authStatus === SIGNED_IN ? 'Profile' : 'Sign In'}
             </NavLink>
           </NavItem>
         </Nav>

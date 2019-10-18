@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
 const CampaignSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'users'
-  },
   name: {
     type: String,
     required: true
   },
+  description: String,
   dateCreated: {
     type: Date,
     default: Date.now
@@ -18,9 +15,13 @@ const CampaignSchema = mongoose.Schema({
     default: Date.now
   },
   imageUrl: { type: String, default: 'https://place-hold.it/200x200' },
-  admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
-  players: [],
-  chapters: [String]
+  users: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+      isAdmin: { type: Boolean, default: false }
+    }
+  ],
+  chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'chapters' }]
 });
 
 module.exports = mongoose.model('campaign', CampaignSchema);
