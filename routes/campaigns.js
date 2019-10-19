@@ -126,8 +126,6 @@ router.patch(
       // Edit the campaign
       campaign.update({ $set: patchData });
 
-      console.log('Edited campaign', campaign);
-
       res.json(campaign);
     } catch (err) {
       console.error('Logging error message: ', err.message);

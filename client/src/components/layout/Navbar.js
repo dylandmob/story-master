@@ -28,6 +28,13 @@ const NavbarComp = () => {
       <NavbarToggler onClick={toggleNavbar} />
       <Collapse open={collapseOpen} navbar>
         <Nav navbar className='ml-auto'>
+          {authStatus === SIGNED_IN && (
+            <NavItem>
+              <NavLink active tag={Link} to='/'>
+                My Campaigns
+              </NavLink>
+            </NavItem>
+          )}
           <NavItem>
             <NavLink
               active

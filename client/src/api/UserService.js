@@ -8,14 +8,11 @@ const getMe = () =>
   });
 
 // Edit user
-const editMe = (name, imageUrl) =>
+const editMe = data =>
   api({
     url: '/me',
     method: 'PATCH',
-    data: {
-      name,
-      imageUrl
-    }
+    data
   });
 
 // Delete user

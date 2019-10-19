@@ -26,7 +26,7 @@ const Profile = () => {
     console.log('Name', name);
     console.log('ImageUrl', imageUrl);
 
-    editMe();
+    editMe(name, imageUrl);
   };
 
   return (
@@ -34,7 +34,7 @@ const Profile = () => {
       {user && (
         <Form className='mt-5' style={{ width: 500 }} onSubmit={onSave}>
           <Image
-            src={user.imageUrl}
+            src={imageUrl}
             centered
             circular
             style={{ maxHeight: 200, maxWidth: 200 }}

@@ -27,7 +27,10 @@ const UserState = props => {
 
   const editMe = async (name, imageUrl) => {
     try {
-      await api.editMe(name, imageUrl);
+      let data = {};
+      if (name && name.length > 3 && name.length < 25) data.name = name;
+      if (imageUrl) data.imageUrl = imageUrl;
+      await api.editMe(data);
       dispatch({ type: EDIT_ME });
     } catch (err) {
       console.error('Erroring editing me', err);
