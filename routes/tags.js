@@ -1,6 +1,7 @@
 const express = require('express');
-const tagRouter = express.Router({ mergeParams: true });
+const router = express.Router({ mergeParams: true });
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const { check, validationResult } = require('express-validator');
 
 const Tag = require('../models/Tag');
@@ -8,7 +9,7 @@ const Tag = require('../models/Tag');
 // @route   GET api/campaigns/:campaignId/tags
 // @desc    Gets the campaign's tags
 // @access  Private
-tagRouter.get('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const tags = await Tag.find({ campaign: req.params.campaignId }).sort({
       dateLastModified: -1
@@ -23,10 +24,10 @@ tagRouter.get('/', auth, async (req, res) => {
 // @route   POST api/campaigns/:campaignId/tags
 // @desc    Create a new tag
 // @access  Admin
-tagRouter.post(
+router.post(
   '/',
   [
-    auth,
+    admin,
     [
       check('name', "Tag's name is required")
         .not()
@@ -62,7 +63,7 @@ tagRouter.post(
 // @route   PATCH api/campaigns/:campaignId/tags/:tagId
 // @desc    Edit a tag
 // @access  Admin
-tagRouter.patch('/:tagId', auth, async (req, res) => {
+router.patch('/:tagId', admin, async (req, res) => {
   const { name, description, privateDescription, imageUrl } = req.body;
 
   try {
@@ -90,7 +91,7 @@ tagRouter.patch('/:tagId', auth, async (req, res) => {
 // @route   DELETE api/campaigns/:campaignId/tags/:tagId
 // @desc    Delete a tag
 // @access  Admin
-tagRouter.delete('/:tagId', auth, async (req, res) => {
+router.delete('/:tagId', admin, async (req, res) => {
   try {
     let tag = await Tag.findById(req.params.tagId);
 
@@ -106,4 +107,4 @@ tagRouter.delete('/:tagId', auth, async (req, res) => {
   }
 });
 
-module.exports = tagRouter;
+module.exports = router;

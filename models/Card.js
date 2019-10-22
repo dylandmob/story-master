@@ -17,7 +17,8 @@ const CardSchema = mongoose.Schema({
   },
   imageUrl: { type: String, default: 'https://place-hold.it/200x200' },
   privateDescription: String,
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }]
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }],
+  hidden: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('card', CardSchema);

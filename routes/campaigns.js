@@ -7,6 +7,7 @@ const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 
 router.use('/:campaignId/tags', require('./tags'));
+router.use('/:campaignId/cards', require('./cards'));
 
 // @route   GET api/campaigns
 // @desc    Gets all user's campaigns
