@@ -2,7 +2,7 @@ import React from 'react';
 import Store from './context/Store';
 
 import Layout from './components/layout/Layout';
-import TokenChecker from './components/TokenChecker';
+import TokenChecker from './components/auth/TokenChecker';
 
 function App() {
   return (

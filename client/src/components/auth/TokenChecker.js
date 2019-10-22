@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
-import AuthContext from '../context/auth';
-import { ACCESS_TOKEN } from '../context/types';
+import AuthContext from '../../context/auth';
+import { ACCESS_TOKEN } from '../../context/types';
 
 function TokenChecker() {
   const authContext = useContext(AuthContext);

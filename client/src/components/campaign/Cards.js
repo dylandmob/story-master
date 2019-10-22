@@ -2,11 +2,11 @@ import React from 'react';
 import { Container, Button } from 'shards-react';
 import CardComponent from '../cards/CardComponent';
 
-const Characters = ({ type, cards }) => {
+const Characters = ({ tag, cards }) => {
   return (
     <Container>
       <div className='my-3 text-center'>
-        <h1>{type.name}</h1>
+        <h1>{tag.name}</h1>
         <Button className='mt-3' outline>
           Add a card
         </Button>

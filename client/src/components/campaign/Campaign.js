@@ -1,136 +1,39 @@
-import React, { useState } from 'react';
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
-import {
-  Nav,
-  NavItem,
-  NavLink,
-  Container,
-  Collapse,
-  Button
-} from 'shards-react';
-import Act from './Act';
-import Cards from './Cards';
+import React, { useContext, useEffect } from 'react';
+import CampaignContext from '../../context/campaign';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Container } from 'shards-react';
+import EditCampaign from './EditCampaign';
+import CampaignNavbar from './CampaignNavbar';
+import CreateForm from './CreateForm';
+import CreateCard from './CreateCard';
+import Tag from './Tag';
 
 const Campaign = () => {
-  const [showChapters, setShowChapters] = useState(true);
-  const [showActs, setShowActs] = useState(true);
+  const campaignContext = useContext(CampaignContext);
+  const { campaign, getCampaignForId, createTag } = campaignContext;
 
-  const campaign = {
-    id: 0,
-    name: 'Infinity: Origins',
-    description: 'A really cool campaign that I love',
-    photoUrl: 'https://place-hold.it/300x200',
-    types: [
-      { id: 0, name: 'characters' },
-      { id: 1, name: 'locations' },
-      { id: 2, name: 'gods' }
-    ],
-    chapters: [
-      {
-        id: 0,
-        name: 'Chapter 1',
-        acts: [
-          { id: 0, name: 'Act 1', cards: [] },
-          { id: 1, name: 'Act 2', cards: [] }
-        ]
-      },
-      { id: 1, name: 'Finale', acts: [] }
-    ],
-    characters: [
-      {
-        id: 0,
-        name: 'Takaya the Brave',
-        photoUrl: 'https://imgur.com/WYYJISQ.jpg',
-        description: 'The champion of Tempus'
-      },
-      {
-        id: 1,
-        name: 'Kelemvor',
-        photoUrl: 'https://i.imgur.com/16azVhm.jpg',
-        description: 'The God of Death'
-      },
-      {
-        id: 2,
-        name: 'Bane',
-        photoUrl: 'https://i.imgur.com/skk0MdT.jpg',
-        description: 'The God of Hatred'
-      }
-    ],
-    locations: [
-      {
-        id: 0,
-        name: 'Eternia',
-        photoUrl: 'https://i.imgur.com/mfAUhYt.jpg',
-        description: 'The land of elves'
-      },
-      {
-        id: 1,
-        name: 'Ike',
-        photoUrl: 'https://i.imgur.com/SNoNPni.jpg',
-        description: 'The land of tinkerers'
-      }
-    ]
+  let { path, params } = useRouteMatch();
+
+  useEffect(() => {
+    if (params.id) {
+      getCampaignForId(params.id);
+    }
+
+    // eslint-disable-next-line
+  }, []);
+
+  const onCreateTag = tag => {
+    console.log('Creating a new tag', tag);
+    createTag(campaign._id, tag);
   };
 
-  let { path, url } = useRouteMatch();
+  const onCreateChapter = chapter => {
+    console.log('Creating a new chapter', chapter);
+  };
 
-  return (
+  return campaign ? (
     <React.Fragment>
-      <Nav
-        vertical
-        tabs
-        style={{
-          height: '100%',
-          width: '160px',
-          position: 'fixed',
-          zIndex: 1,
-          top: 60,
-          left: 0,
-          overflowX: 'hidden',
-          paddingTop: '20px'
-        }}
-      >
-        <NavItem>
-          <NavLink active onClick={() => setShowChapters(!showChapters)}>
-            Chapters
-          </NavLink>
-        </NavItem>
-        <Collapse open={showChapters}>
-          {campaign.chapters.map(chapter => (
-            <React.Fragment>
-              <NavItem className='ml-3'>
-                <NavLink onClick={() => setShowActs(!showActs)}>
-                  - {chapter.name}
-                </NavLink>
-              </NavItem>
-              <Collapse open={showActs}>
-                {chapter.acts.map(act => (
-                  <NavItem className='ml-4'>
-                    <NavLink
-                      tag={Link}
-                      to={`${url}/chapters/${chapter.id}/act/${act.id}`}
-                    >
-                      # {act.name}
-                    </NavLink>
-                  </NavItem>
-                ))}
-              </Collapse>
-            </React.Fragment>
-          ))}
-        </Collapse>
-        {campaign.types.map(type => (
-          <NavItem>
-            <NavLink tag={Link} to={`${url}/${type.name}`}>
-              {type.name}
-            </NavLink>
-          </NavItem>
-        ))}
-        <div className='text-center mt-2'>
-          <Button size='sm' outline style={{ width: '80%' }}>
-            add a type
-          </Button>
-        </div>
-      </Nav>
+      <CampaignNavbar campaign={campaign} />
       <Container
         style={{
           marginLeft: '160px',
@@ -138,21 +41,36 @@ const Campaign = () => {
         }}
       >
         <Switch>
-          <Route
-            exact
-            path={`${path}/chapters/:chapterId/act/:actId`}
-            component={Act}
-          >
-            <Act act={campaign.chapters[0].acts[0]} />
+          <Route exact path={`${path}/chapters/:chapterId/act/:actId`}>
+            {/* <Act act={campaign.chapters[0].acts[0]} /> */}
           </Route>
-          {campaign.types.map(type => (
-            <Route path={`${path}/${type.name}`}>
-              <Cards type={type} cards={campaign[type.name]} />
-            </Route>
-          ))}
+
+          <Route exact path={path}>
+            <EditCampaign />
+          </Route>
+          <Route exact path={`${path}/chapter/new`}>
+            <CreateForm type='chapter' onCreate={onCreateChapter} />
+          </Route>
+          <Route exact path={`${path}/tag/new`}>
+            <CreateForm type='tag' onCreate={onCreateTag} />
+          </Route>
+          <Route path={`${path}/tag/:tagId`}>
+            <Tag campaign={campaign} />
+          </Route>
+          <Route exact path={`${path}/card/new`}>
+            <CreateCard />
+          </Route>
+          <Route path='/chapters/:id'>
+            {/* <Chapters /> */}
+            <h3>Chapter!</h3>
+          </Route>
         </Switch>
       </Container>
     </React.Fragment>
+  ) : (
+    <Container>
+      <h1 className='mt-5'>No campaign found here!</h1>
+    </Container>
   );
 };
 

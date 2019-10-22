@@ -1,23 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardTitle, CardImg, CardBody } from 'shards-react';
+import { Container, Card, CardTitle, CardImg, CardBody } from 'shards-react';
 
-const CampaignCard = ({ campaign }) => {
-  const { _id, name, imageUrl, description } = campaign;
+const CardPage = ({ data }) => {
+  const { id, name, photoUrl, description } = data;
 
   return (
-    <Link to={`/campaign/${_id}`}>
+    <Container>
       <Card
+        key={id}
         style={{
           minWidth: '300px',
           maxWidth: '300px',
           margin: 20,
-          overflow: 'hidden',
-          cursor: 'pointer'
+          overflow: 'hidden'
         }}
       >
         <CardImg
-          src={imageUrl}
+          src={photoUrl}
           style={{ maxHeight: '400px', objectFit: 'cover' }}
         />
         <CardBody>
@@ -25,8 +24,8 @@ const CampaignCard = ({ campaign }) => {
           <p>{description}</p>
         </CardBody>
       </Card>
-    </Link>
+    </Container>
   );
 };
 
-export default CampaignCard;
+export default CardPage;

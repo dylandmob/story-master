@@ -8,6 +8,7 @@ import Auth from '../auth/Auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'shards-ui/dist/css/shards.min.css';
 import Profile from '../pages/Profile';
+import NewCampaign from '../campaign/NewCampaign';
 
 function Layout() {
   return (
@@ -15,6 +16,7 @@ function Layout() {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/campaign/new' component={NewCampaign} />
         <Route path='/campaign/:id' component={Campaign} />
         <Route exact path='/sign-in' component={Auth} />
         <Route exact path='/profile' component={Profile} />

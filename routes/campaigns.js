@@ -6,24 +6,39 @@ const { check, validationResult } = require('express-validator');
 const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 
+router.use('/:campaignId/tags', require('./tags'));
+
 // @route   GET api/campaigns
 // @desc    Gets all user's campaigns
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const user = User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
     let ids = user.campaigns.map(c => c.campaign);
-    let campaigns = await Campaign.find({ _id: { $in: ids } });
-
-    console.log('Campaigns', campaigns);
-    campaigns.toArray();
-    console.log('Campaigns 2', campaigns);
-
-    await campaigns.sort({
+    let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
       dateLastModified: -1
     });
 
     res.json(campaigns);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/campaigns/:id
+// @desc    Gets a user campaign from id
+// @access  Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    let campaignId = req.params.id;
+    const user = await User.findById(req.user.id);
+    let relationship = user.campaigns.find(
+      c => c.campaign.toString() === campaignId
+    );
+    let campaign = await Campaign.findById(relationship.campaign);
+
+    res.json(campaign);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -120,13 +135,13 @@ router.patch(
       // Normalize the data
       let patchData = {};
       if (name) patchData.name = name;
-      if (description) patchData.description = name;
-      if (imageUrl) patchData.imageUrl = name;
+      if (description) patchData.description = description;
+      if (imageUrl) patchData.imageUrl = imageUrl;
 
       // Edit the campaign
-      campaign.update({ $set: patchData });
+      await campaign.updateOne({ $set: patchData });
 
-      res.json(campaign);
+      res.json(campaign._id);
     } catch (err) {
       console.error('Logging error message: ', err.message);
       res.status(500).send('Server Error: ' + err.message);
