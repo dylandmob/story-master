@@ -6,7 +6,7 @@ import CardComponent from '../cards/CardComponent';
 
 const Tag = ({ campaign }) => {
   const cardContext = useContext(CardContext);
-  const { cards } = cardContext;
+  const { cards, getCardsForTag } = cardContext;
 
   const [tag, setTag] = useState({ name: '' });
 
@@ -15,6 +15,7 @@ const Tag = ({ campaign }) => {
   useEffect(() => {
     let foundTag = campaign.tags.find(t => t._id === params.tagId);
     setTag(foundTag);
+    getCardsForTag(campaign._id, foundTag._id);
     // eslint-disable-next-line
   }, [params]);
 

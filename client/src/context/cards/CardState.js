@@ -71,6 +71,7 @@ const CardState = props => {
       if (formData.privateDescription)
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
+      if (formData.tags) data.tags = formData.tags;
       const response = await api.createCard(campaignId, data);
       dispatch({ type: EDIT_CARD, payload: response });
     } catch (err) {

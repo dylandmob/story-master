@@ -3,7 +3,7 @@ const config = require('config');
 
 const User = require('../models/User');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   // Get token from the header
   const token = req.header('x-auth-token');
   const campaignId = req.params.campaignId;
@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
     req.user = decoded.user;
 
     // Find the user
-    let user = User.findById(req.user.id);
+    let user = await User.findById(decoded.user.id);
 
     // Find the campaign
     let campaignReference = user.campaigns.find(
@@ -38,6 +38,7 @@ module.exports = (req, res, next) => {
 
     next();
   } catch (err) {
+    console.error('Error', err);
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };

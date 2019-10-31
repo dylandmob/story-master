@@ -5,19 +5,25 @@ const admin = require('../middleware/admin');
 const { check, validationResult } = require('express-validator');
 
 const Tag = require('../models/Tag');
-const Cards = require('../models/Card');
+const Card = require('../models/Card');
 
 // @route   GET api/campaigns/:campaignId/cards
 // @desc    Gets the campaign's cards
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const cards = await Card.find({ campaign: req.params.campaignId }).sort({
+    let filterParmas = { campaign: req.params.campaignId };
+    if (req.query.tag) {
+      filterParmas = { ...filterParmas, tags: { $in: req.query.tag } };
+    }
+
+    const cards = await Card.find(filterParmas).sort({
       dateLastModified: -1
     });
 
     res.json(cards);
   } catch (err) {
+    console.error('Error', err);
     res.status(500).send('Server Error');
   }
 });
@@ -33,10 +39,26 @@ router.post(
       check('name', "Card's name is required")
         .not()
         .isEmpty(),
+      check('name', "Card's length should be between 1 and 30").isLength({
+        min: 1,
+        max: 30
+      }),
       check(
         'tags',
         'There needs to be at least one tag and less than 10'
-      ).isLength({ min: 0, max: 10 })
+      ).isArray({ min: 1, max: 10 }),
+      check(
+        'description',
+        'Description can not be longer than 1000 characters'
+      ).isLength({ max: 1000 }),
+      check(
+        'privateDescription',
+        'Private description can not be longer than 1000 characters'
+      ).isLength({ max: 1000 }),
+      check(
+        'imageUrl',
+        'Image url can not be longer than 50 characters'
+      ).isLength({ max: 50 })
     ]
   ],
   async (req, res) => {
@@ -69,31 +91,59 @@ router.post(
 // @route   PATCH api/campaigns/:campaignId/cards/:cardId
 // @desc    Edit a card
 // @access  Admin
-router.patch('/:cardId', admin, async (req, res) => {
-  const { name, description, privateDescription, imageUrl, tags } = req.body;
+router.patch(
+  '/:cardId',
+  [
+    admin,
+    [
+      check('name', "Card's length should be between 1 and 30").isLength({
+        min: 1,
+        max: 30
+      }),
+      check(
+        'tags',
+        'There needs to be at least one tag and less than 10'
+      ).isLength({ min: 1, max: 10 }),
+      check(
+        'description',
+        'Description can not be longer than 1000 characters'
+      ).isLength({ max: 1000 }),
+      check(
+        'privateDescription',
+        'Private description can not be longer than 1000 characters'
+      ).isLength({ max: 1000 }),
+      check(
+        'imageUrl',
+        'Image url can not be longer than 50 characters'
+      ).isLength({ max: 50 })
+    ]
+  ],
+  async (req, res) => {
+    const { name, description, privateDescription, imageUrl, tags } = req.body;
 
-  try {
-    let card = await Card.findById(req.params.cardId);
+    try {
+      let card = await Card.findById(req.params.cardId);
 
-    // If no card was found
-    if (!tag) return res.status(404).json({ msg: 'Card not found' });
+      // If no card was found
+      if (!tag) return res.status(404).json({ msg: 'Card not found' });
 
-    // Normalize the data
-    let patchData = {};
-    if (name) patchData.name = name;
-    if (description) patchData.description = description;
-    if (privateDescription) patchData.privateDescription = privateDescription;
-    if (imageUrl) patchData.imageUrl = imageUrl;
-    if (tags) patchData.tags = tags;
+      // Normalize the data
+      let patchData = {};
+      if (name) patchData.name = name;
+      if (description) patchData.description = description;
+      if (privateDescription) patchData.privateDescription = privateDescription;
+      if (imageUrl) patchData.imageUrl = imageUrl;
+      if (tags) patchData.tags = tags;
 
-    // Edit the card
-    await card.updateOne({ $set: patchData });
+      // Edit the card
+      await card.updateOne({ $set: patchData });
 
-    res.json(campaign._id);
-  } catch (err) {
-    res.status(500).send('Server Error: ' + err.message);
+      res.json(campaign._id);
+    } catch (err) {
+      res.status(500).send('Server Error: ' + err.message);
+    }
   }
-});
+);
 
 // @route   DELETE api/campaigns/:campaignId/cards/:cardId
 // @desc    Delete a card

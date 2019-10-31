@@ -1,8 +1,20 @@
 import React from 'react';
-import { Card, CardTitle, CardImg, CardBody } from 'shards-react';
+import { Card, CardTitle, CardImg, CardBody, Badge } from 'shards-react';
 
 const CardComponent = ({ data }) => {
-  const { id, name, photoUrl, description } = data;
+  const themes = [
+    'primary',
+    'secondary',
+    'success',
+    'info',
+    'dark',
+    'primary',
+    'secondary',
+    'success',
+    'info',
+    'dark'
+  ];
+  const { id, name, imageUrl, description, tags } = data;
 
   return (
     <Card
@@ -16,12 +28,17 @@ const CardComponent = ({ data }) => {
       }}
     >
       <CardImg
-        src={photoUrl}
+        src={imageUrl}
         style={{ maxHeight: '400px', objectFit: 'cover' }}
       />
       <CardBody>
         <CardTitle>{name}</CardTitle>
         <p>{description}</p>
+        {/* {tags.map((tag, index) => (
+          <Badge key={tag} theme={themes[index]}>
+            {tag}
+          </Badge>
+        ))} */}
       </CardBody>
     </Card>
   );

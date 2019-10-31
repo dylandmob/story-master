@@ -72,15 +72,16 @@ const CampaignNavbar = ({ campaign }) => {
           </React.Fragment>
         ))}
       </Collapse>
-      {campaign.tags.map(tag => (
-        <Link
-          key={tag._id}
-          className='nav-item nav-link'
-          to={`${url}/tag/${tag._id}`}
-        >
-          {tag.name}
-        </Link>
-      ))}
+      {campaign.tags &&
+        campaign.tags.map(tag => (
+          <Link
+            key={tag._id}
+            className='nav-item nav-link'
+            to={`${url}/tag/${tag._id}`}
+          >
+            {tag.name}
+          </Link>
+        ))}
       <div className='text-center mt-2'>
         <Button
           size='sm'

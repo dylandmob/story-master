@@ -26,9 +26,9 @@ const UserSchema = mongoose.Schema({
     {
       campaign: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'campaigns',
-        isAdmin: { type: Boolean, default: false }
-      }
+        ref: 'campaigns'
+      },
+      isAdmin: { type: Boolean, default: false }
     }
   ]
 });
