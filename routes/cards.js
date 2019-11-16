@@ -28,6 +28,20 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// @route   GET api/campaigns/:campaignId/cards
+// @desc    Gets the campaign's cards
+// @access  Private
+router.get('/:cardId', auth, async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.cardId);
+
+    res.json(card);
+  } catch (err) {
+    console.error('Error', err);
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   POST api/campaigns/:campaignId/cards
 // @desc    Create a new card
 // @access  Admin
@@ -39,9 +53,9 @@ router.post(
       check('name', "Card's name is required")
         .not()
         .isEmpty(),
-      check('name', "Card's length should be between 1 and 30").isLength({
+      check('name', "Card's length should be between 1 and 50").isLength({
         min: 1,
-        max: 30
+        max: 50
       }),
       check(
         'tags',
@@ -50,11 +64,11 @@ router.post(
       check(
         'description',
         'Description can not be longer than 1000 characters'
-      ).isLength({ max: 1000 }),
+      ).isLength({ max: 10000 }),
       check(
         'privateDescription',
         'Private description can not be longer than 1000 characters'
-      ).isLength({ max: 1000 }),
+      ).isLength({ max: 10000 }),
       check(
         'imageUrl',
         'Image url can not be longer than 50 characters'
@@ -96,9 +110,9 @@ router.patch(
   [
     admin,
     [
-      check('name', "Card's length should be between 1 and 30").isLength({
+      check('name', "Card's length should be between 1 and 50").isLength({
         min: 1,
-        max: 30
+        max: 50
       }),
       check(
         'tags',
@@ -107,11 +121,11 @@ router.patch(
       check(
         'description',
         'Description can not be longer than 1000 characters'
-      ).isLength({ max: 1000 }),
+      ).isLength({ max: 10000 }),
       check(
         'privateDescription',
         'Private description can not be longer than 1000 characters'
-      ).isLength({ max: 1000 }),
+      ).isLength({ max: 10000 }),
       check(
         'imageUrl',
         'Image url can not be longer than 50 characters'
@@ -134,6 +148,7 @@ router.patch(
       if (privateDescription) patchData.privateDescription = privateDescription;
       if (imageUrl) patchData.imageUrl = imageUrl;
       if (tags) patchData.tags = tags;
+      patchData.dateLastModified = Date.now();
 
       // Edit the card
       await card.updateOne({ $set: patchData });

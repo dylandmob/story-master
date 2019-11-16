@@ -74,6 +74,7 @@ const CardState = props => {
       if (formData.tags) data.tags = formData.tags;
       const response = await api.createCard(campaignId, data);
       dispatch({ type: EDIT_CARD, payload: response });
+      return response._id;
     } catch (err) {
       handleError('Error editing card', err);
     }

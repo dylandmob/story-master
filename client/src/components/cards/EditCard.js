@@ -1,21 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CampaignContext from '../../context/campaign';
 import CardContext from '../../context/cards';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { FormCheckbox } from 'shards-react';
-import CreateForm from './CreateForm';
+import FormComponent from '../campaign/FormComponent';
 
-const CreateCard = () => {
+const EditCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const campaignContext = useContext(CampaignContext);
   const cardContext = useContext(CardContext);
+  const campaignContext = useContext(CampaignContext);
+  const { card, getCardForId, editCard } = cardContext;
   const { campaign } = campaignContext;
-  const { createCard } = cardContext;
   let history = useHistory();
+  let { params } = useRouteMatch();
 
-  const onCreate = card => {
-    card.tags = selectedTags;
-    createCard(campaign._id, card).then(id => {
+  useEffect(() => {
+    if (params.cardId) {
+      getCardForId(params.id, params.cardId);
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  // useEffect(() => {
+  //   if (card.tags) {
+  //     console.log('Card Tags', card);
+  //     console.log('Campaign Tags', campaign);
+  //   }
+  // }, [card]);
+
+  const onEdit = cardData => {
+    cardData.tags = selectedTags;
+    editCard(campaign._id, card._id, cardData).then(id => {
       history.push(`/campaign/${campaign._id}/card/${id}`);
     });
   };
@@ -32,7 +47,7 @@ const CreateCard = () => {
   };
 
   return (
-    <CreateForm type="card" hasImage onCreate={onCreate}>
+    <FormComponent defaultValue={card} type="card" hasImage onSubmit={onEdit}>
       <h4>Add tags - minimum 1</h4>
       {campaign &&
         campaign.tags.map(tag => (
@@ -44,8 +59,8 @@ const CreateCard = () => {
             {tag.name}
           </FormCheckbox>
         ))}
-    </CreateForm>
+    </FormComponent>
   );
 };
 
-export default CreateCard;
+export default EditCard;

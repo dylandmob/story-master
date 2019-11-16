@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../context/campaign';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { Container } from 'shards-react';
+import { Container } from 'semantic-ui-react';
 import EditCampaign from './EditCampaign';
 import CampaignNavbar from './CampaignNavbar';
 import CreateForm from './CreateForm';
 import CreateCard from './CreateCard';
 import Tag from './Tag';
+import CardPage from '../cards/CardPage';
+import EditCard from '../cards/EditCard';
 
 const Campaign = () => {
   const campaignContext = useContext(CampaignContext);
@@ -49,10 +51,10 @@ const Campaign = () => {
             <EditCampaign />
           </Route>
           <Route exact path={`${path}/chapter/new`}>
-            <CreateForm type='chapter' onCreate={onCreateChapter} />
+            <CreateForm type="chapter" onCreate={onCreateChapter} />
           </Route>
           <Route exact path={`${path}/tag/new`}>
-            <CreateForm type='tag' onCreate={onCreateTag} />
+            <CreateForm type="tag" onCreate={onCreateTag} />
           </Route>
           <Route path={`${path}/tag/:tagId`}>
             <Tag campaign={campaign} />
@@ -60,7 +62,13 @@ const Campaign = () => {
           <Route exact path={`${path}/card/new`}>
             <CreateCard />
           </Route>
-          <Route path='/chapters/:id'>
+          <Route exact path={`${path}/card/:cardId`}>
+            <CardPage />
+          </Route>
+          <Route exact path={`${path}/card/:cardId/edit`}>
+            <EditCard />
+          </Route>
+          <Route path="/chapters/:id">
             {/* <Chapters /> */}
             <h3>Chapter!</h3>
           </Route>
@@ -69,7 +77,7 @@ const Campaign = () => {
     </React.Fragment>
   ) : (
     <Container>
-      <h1 className='mt-5'>No campaign found here!</h1>
+      <h1 className="mt-5">No campaign found here!</h1>
     </Container>
   );
 };
