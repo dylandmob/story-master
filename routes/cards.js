@@ -139,7 +139,7 @@ router.patch(
       let card = await Card.findById(req.params.cardId);
 
       // If no card was found
-      if (!tag) return res.status(404).json({ msg: 'Card not found' });
+      if (!card) return res.status(404).json({ msg: 'Card not found' });
 
       // Normalize the data
       let patchData = {};
@@ -153,7 +153,7 @@ router.patch(
       // Edit the card
       await card.updateOne({ $set: patchData });
 
-      res.json(campaign._id);
+      res.json(card._id);
     } catch (err) {
       res.status(500).send('Server Error: ' + err.message);
     }

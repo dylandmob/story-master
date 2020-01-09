@@ -10,23 +10,26 @@ const EditCard = () => {
   const cardContext = useContext(CardContext);
   const campaignContext = useContext(CampaignContext);
   const { card, getCardForId, editCard } = cardContext;
-  const { campaign } = campaignContext;
+  const { campaign, getTags } = campaignContext;
   let history = useHistory();
   let { params } = useRouteMatch();
 
   useEffect(() => {
     if (params.cardId) {
       getCardForId(params.id, params.cardId);
+      if (!campaign.tags) {
+        getTags();
+      }
     }
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   if (card.tags) {
-  //     console.log('Card Tags', card);
-  //     console.log('Campaign Tags', campaign);
-  //   }
-  // }, [card]);
+  useEffect(() => {
+    if (campaign && card) {
+      setSelectedTags(selectedTags.concat(card.tags));
+    }
+    // eslint-disable-next-line
+  }, [campaign, card]);
 
   const onEdit = cardData => {
     cardData.tags = selectedTags;
@@ -47,7 +50,13 @@ const EditCard = () => {
   };
 
   return (
-    <FormComponent defaultValue={card} type="card" hasImage onSubmit={onEdit}>
+    <FormComponent
+      defaultValue={card}
+      type="card"
+      hasImage
+      onSave={onEdit}
+      edit
+    >
       <h4>Add tags - minimum 1</h4>
       {campaign &&
         campaign.tags.map(tag => (

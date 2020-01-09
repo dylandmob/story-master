@@ -4,7 +4,7 @@ import { Container, Image, Form } from 'semantic-ui-react';
 
 const FormComponent = ({
   defaultValue,
-  title,
+  edit,
   onSave,
   hasImage,
   type,
@@ -41,7 +41,9 @@ const FormComponent = ({
         style={{ width: 500 }}
         onSubmit={onSubmit}
       >
-        <h3 className="text-center mb-3">{title}</h3>
+        <h3 className="text-center mb-3">
+          {edit ? `Edit your ${type}` : `Create a new ${type}`}
+        </h3>
         {type === 'tag' && (
           <p>Tags are applied to your cards to help you organize them!</p>
         )}
@@ -86,7 +88,7 @@ const FormComponent = ({
         />
         {type === 'card' && <React.Fragment>{children}</React.Fragment>}
         <Button className="my-4" block theme="success" type="submit">
-          Create
+          Save
         </Button>
       </Form>
     </Container>
