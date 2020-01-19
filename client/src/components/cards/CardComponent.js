@@ -12,8 +12,8 @@ const CardComponent = ({ data }) => {
       <Card
         key={_id}
         style={{
-          minWidth: '200px',
-          maxWidth: '200px',
+          minWidth: '150px',
+          maxWidth: '150px',
           margin: 20,
           overflow: 'hidden',
           cursor: 'pointer'
@@ -21,7 +21,7 @@ const CardComponent = ({ data }) => {
       >
         <CardImg
           src={imageUrl}
-          style={{ maxHeight: '300px', objectFit: 'cover' }}
+          style={{ maxHeight: '200px', objectFit: 'cover' }}
         />
         <CardBody>
           <CardTitle>{name}</CardTitle>

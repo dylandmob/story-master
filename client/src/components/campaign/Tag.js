@@ -21,10 +21,10 @@ const Tag = ({ campaign }) => {
 
   return (
     <Container>
-      <div className='my-3 text-center'>
+      <div className="my-3 text-center">
         <h1>{tag.name}</h1>
         <Link to={`/campaign/${campaign._id}/card/new`}>
-          <Button className='mt-3' outline>
+          <Button className="mt-3" outline>
             Add a card
           </Button>
         </Link>
@@ -35,7 +35,7 @@ const Tag = ({ campaign }) => {
         {cards && cards.length > 0 ? (
           cards.map(card => <CardComponent key={card._id} data={card} />)
         ) : (
-          <h4 className='text-center mt-5' style={{ color: 'gray' }}>
+          <h4 className="text-center mt-5" style={{ color: 'gray' }}>
             it's kinda empty in here...
           </h4>
         )}
