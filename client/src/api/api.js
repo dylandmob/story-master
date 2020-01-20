@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios Client with defaults
 const client = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  // baseURL: 'http://localhost:5000/api',
   timeout: 10000,
   crossDomain: true
 });
@@ -57,7 +57,7 @@ async function getNewToken() {
     const currentRefreshToken = localStorage.getItem(REFRESH_TOKEN);
     console.log('Getting new token', currentRefreshToken);
     const response = await client({
-      url: `/auth/token`,
+      url: `api/auth/token`,
       method: 'POST',
       data: {
         refreshToken: currentRefreshToken

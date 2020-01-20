@@ -3,14 +3,14 @@ import api from './api';
 // Get user
 const getMe = () =>
   api({
-    url: '/me',
+    url: '/api/me',
     method: 'GET'
   });
 
 // Edit user
 const editMe = data =>
   api({
-    url: '/me',
+    url: '/api/me',
     method: 'PATCH',
     data
   });
@@ -18,14 +18,14 @@ const editMe = data =>
 // Delete user
 const deleteMe = () =>
   api({
-    url: `/me`,
+    url: `/api/me`,
     method: 'DELETE'
   });
 
 // Get user for id
 const getUserForId = userId =>
   api({
-    url: `/users/${userId}`,
+    url: `/api/users/${userId}`,
     method: 'GET'
   });
 

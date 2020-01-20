@@ -3,21 +3,21 @@ import api from './api';
 // Get user's campaigns
 const getMyCampaigns = () =>
   api({
-    url: '/campaigns?category=me',
+    url: '/api/campaigns?category=me',
     method: 'GET'
   });
 
 // Get a campaign by id
 const getCampaignForId = id =>
   api({
-    url: `/campaigns/${id}`,
+    url: `/api/campaigns/${id}`,
     method: 'GET'
   });
 
 // Create a new campaign
 const createCampaign = data =>
   api({
-    url: '/campaigns',
+    url: '/api/campaigns',
     method: 'POST',
     data
   });
@@ -25,7 +25,7 @@ const createCampaign = data =>
 // Edit a campaign
 const editCampaign = (id, data) =>
   api({
-    url: `/campaigns/${id}`,
+    url: `/api/campaigns/${id}`,
     method: 'PATCH',
     data
   });
@@ -33,7 +33,7 @@ const editCampaign = (id, data) =>
 // Delete user
 const deleteCampaign = id =>
   api({
-    url: `/campaigns/${id}`,
+    url: `/api/campaigns/${id}`,
     method: 'DELETE'
   });
 
