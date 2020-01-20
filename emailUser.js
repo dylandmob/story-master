@@ -11,7 +11,7 @@ module.exports = async (email, token) => {
     secure: true,
     auth: {
       user: process.env.EMAIL_USERNAME, //
-      pass: process.env.EMAIL_PASSWORD //
+      password: process.env.EMAIL_PASSWORD //
     }
   });
 
