@@ -10,9 +10,11 @@ const connectDB = async () => {
       useFindAndModify: false
     });
 
-    console.log('MongoDB Connected');
+    console.log('MongoDB Connected!!');
   } catch (err) {
-    console.error('Error connecting to DB', err.message);
+    console.error(err.message);
+    console.log('ERROR CONNECTING', err.message);
+    console.error('ERROR CONSOLE TESTING LOG STUFF', err.message);
     process.exit(1);
   }
 };
