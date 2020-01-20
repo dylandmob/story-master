@@ -2,6 +2,7 @@ const nodeMailer = require('nodemailer');
 
 module.exports = async (email, token) => {
   let link = `http://localhost:3000/sign-in?token=${token}`;
+  let productionLink = `https://calm-waters-78958.herokuapp.com/sign-in?token=${token}`;
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodeMailer.createTransport({
@@ -56,7 +57,9 @@ module.exports = async (email, token) => {
         <h1>Welcome to Story Master</h1>
         <p>We sent you this email just to verify that it's really you. Cause ya know, security is important.
         Click below to sign in!</p>
-        <a href=${link}><button>Click here to Sign In</button></a>
+        <a href=${
+          process.env.NODE_ENV === 'production' ? productionLink : link
+        }><button>Click here to Sign In</button></a>
       </div>
     </body>
       `
