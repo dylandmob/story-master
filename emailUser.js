@@ -10,8 +10,12 @@ module.exports = async (email, token) => {
     port: 465 || 587,
     secure: true,
     auth: {
-      user: process.env.EMAIL_USERNAME, //
-      password: process.env.EMAIL_PASSWORD //
+      type: 'OAuth2',
+      user: process.env.EMAIL_USERNAME,
+      clientId: process.env.EMAIL_CLIENT_ID,
+      clientSecret: process.env.EMAIL_CLIENT_SECRET,
+      refreshToken: process.env.EMAIL_REFRESH_TOKEN,
+      accessToken: process.env.EMAIL_ACCESS_TOKEN
     }
   });
 
