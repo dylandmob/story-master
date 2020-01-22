@@ -74,5 +74,6 @@ module.exports = async (email, token) => {
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
   } catch (err) {
     console.error(err.message);
+    console.log('Error sending email');
   }
 };
