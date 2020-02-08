@@ -6,8 +6,6 @@ require('dotenv').config();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-console.log('dotenv importing', require('dotenv').config());
-
 const app = express();
 
 app.use(cors());
@@ -51,9 +49,9 @@ passport.use(
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-app.get('/', (req, res) =>
-  res.json({ msg: 'Welcome to the Story Master API...' })
-);
+// app.get('/', (req, res) =>
+//   res.json({ msg: 'Welcome to the Story Master API...' })
+// );
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
