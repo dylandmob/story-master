@@ -9,6 +9,19 @@ const User = require('../models/User');
 //   profile), and invoke a callback with a user object.
 console.log('Google Client Id', process.env.GOOGLE_CLIENT_ID);
 
+passport.serializeUser((user, done) => {
+  console.log('Serializing user', user);
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  console.log('User id', id);
+  User.findById(id).then(user => {
+    console.log('Found user', user);
+    done(null, user);
+  });
+});
+
 passport.use(
   new GoogleStrategy(
     {
