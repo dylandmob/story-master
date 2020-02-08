@@ -43,7 +43,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/sign-in' }),
   function(req, res) {
-    console.log('Hit callback yhho', res);
+    console.log('Hit callback yhho');
 
     res.redirect('/');
   }
