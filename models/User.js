@@ -18,10 +18,6 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: 'https://place-hold.it/200x200'
   },
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
   campaigns: [
     {
       campaign: {
