@@ -26,6 +26,7 @@ var callbackURL =
 
 callbackURL += '/auth/google/callback';
 console.log('Callback Url', callbackURL);
+console.log('Google Client Id', process.env.GOOGLE_CLIENT_ID);
 
 passport.use(
   new GoogleStrategy(
