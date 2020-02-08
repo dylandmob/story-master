@@ -29,14 +29,18 @@ passport.use(
           // New user
           new User({
             googleId: profile.id,
-            name: profile.name,
-            email: profile.email,
+            name: profile.displayName,
+            email: profile.emails[0].value,
             imageUrl: profile.picture
           })
             .save()
             .then(newUser => {
               console.log('new user created:', newUser);
               done(null, newUser);
+            })
+            .catch(err => {
+              console.log('Error creating a new user', err.message);
+              done(err);
             });
         }
       });
