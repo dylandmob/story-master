@@ -10,6 +10,9 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  googleId: {
+    type: String
+  },
   dateCreated: {
     type: Date,
     default: Date.now
