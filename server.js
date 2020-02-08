@@ -75,7 +75,15 @@ app.get(
 //   which, in this example, will redirect the user to the home page.
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/sign-in' }),
+  passport.authenticate(
+    'google',
+    { failureRedirect: '/sign-in' },
+    (err, user, info) => {
+      console.log('Error', err);
+      console.log('User', user);
+      console.log('Info', info);
+    }
+  ),
   function(req, res) {
     console.log('Hit callback yhho', res);
 
