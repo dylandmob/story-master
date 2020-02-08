@@ -40,7 +40,7 @@ passport.use(
             console.log('user is not linked to google');
             try {
               await currentUser.updateOne({
-                $set: { googleId: profile.googleId }
+                $set: { googleId: profile.id }
               });
               console.log('Updated user', currentUser);
               done(null, currentUser);
