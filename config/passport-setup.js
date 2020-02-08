@@ -33,7 +33,10 @@ passport.use(
               .then(updatedUser => {
                 done(null, updatedUser);
               })
-              .catch(err => console.log('Error updating user', err.message));
+              .catch(err => {
+                console.log('Error updating user', err.message);
+                done(err);
+              });
           } else {
             done(null, currentUser);
           }
