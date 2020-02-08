@@ -19,6 +19,7 @@ app.use(express.json({ extended: false }));
 
 // initialize passport
 app.use(passport.initialize());
+app.use(passport.session());
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the

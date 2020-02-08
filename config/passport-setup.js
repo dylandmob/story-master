@@ -44,6 +44,7 @@ passport.use(
             currentUser
               .updateOne({ $set: { googleId: profile.googleId } })
               .then(updatedUser => {
+                console.log('Updated user', user);
                 done(null, updatedUser);
               })
               .catch(err => {
