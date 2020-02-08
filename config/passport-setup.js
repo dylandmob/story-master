@@ -34,23 +34,23 @@ passport.use(
       console.log('Google profile', profile);
       const email = profile.emails[0].value;
 
-      User.findOne({ email }).then(currentUser => {
+      User.findOne({ email }).then(async currentUser => {
         if (currentUser) {
           // User already exists
           console.log('user is:', currentUser);
           if (!currentUser.googleId) {
             // Link google if not already linked
             console.log('user is not linked to google');
-            currentUser
-              .updateOne({ $set: { googleId: profile.googleId } })
-              .then(updatedUser => {
-                console.log('Updated user', updatedUser);
-                done(null, updatedUser);
-              })
-              .catch(err => {
-                console.log('Error updating user', err.message);
-                done(err);
+            try {
+              await currentUser.updateOne({
+                $set: { googleId: profile.googleId }
               });
+              console.log('Updated user', currentUser);
+              done(null, currentUser);
+            } catch (err) {
+              console.log('Error updating user', err.message);
+              done(err);
+            }
           } else {
             done(null, currentUser);
           }
