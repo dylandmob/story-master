@@ -27,7 +27,6 @@ const Home = () => {
           />
         </Link>
       </h1>
-      <a href="/auth/google">Sign In with Google</a>
       <div
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >

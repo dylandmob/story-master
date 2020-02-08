@@ -21,35 +21,8 @@ app.use(express.json({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// GET /auth/google
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Google authentication will involve
-//   redirecting the user to google.com.  After authorization, Google
-//   will redirect the user back to this application at /auth/google/callback
-// https://www.googleapis.com/auth/plus.login
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })
-);
-
-// GET /auth/google/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/sign-in' }),
-  function(req, res) {
-    console.log('Hit callback yhho');
-
-    res.redirect('/');
-  }
-);
-
 // Define Routes
+app.use('/auth/google', require('./routes/auth-google'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/campaigns', require('./routes/campaigns'));

@@ -33,7 +33,7 @@ const AuthCard = props => {
       }}
     >
       <CardImg
-        src='https://i.imgur.com/BvtUCMb.jpg'
+        src="https://i.imgur.com/BvtUCMb.jpg"
         style={{ height: 300, objectFit: 'cover' }}
       />
       <CardBody
@@ -45,28 +45,9 @@ const AuthCard = props => {
         }}
       >
         {transitions.map(({ item, key, props }) => (
-          <Fragment key={key}>
-            {item === SIGN_IN && (
-              <animated.div
-                style={{
-                  ...props,
-                  width: 'calc(100% - 50px)'
-                }}
-              >
-                <SignIn onSignIn={onSignIn} />
-              </animated.div>
-            )}
-            {item === SIGN_UP_REQ && (
-              <animated.div style={{ ...props, width: 'calc(100% - 50px)' }}>
-                <SignUp onSignUp={onSignUp} />
-              </animated.div>
-            )}
-            {item === EMAIL_SENT && (
-              <animated.div style={{ ...props, width: 'calc(100% - 50px)' }}>
-                <EmailSent />
-              </animated.div>
-            )}
-          </Fragment>
+          <a key={key} href="/auth/google" style={{ ...props }}>
+            Sign In with Google
+          </a>
         ))}
       </CardBody>
     </Card>
