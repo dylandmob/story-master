@@ -62,11 +62,7 @@ app.get(
   '/auth/google',
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
-  }),
-  (req, res) => {
-    console.log('Get auth google', req);
-    console.log('Res', res);
-  }
+  })
 );
 
 // GET /auth/google/callback
@@ -76,7 +72,7 @@ app.get(
 //   which, in this example, will redirect the user to the home page.
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/sign-in' }),
   function(req, res) {
     console.log('Hit callback yhho', res);
 
