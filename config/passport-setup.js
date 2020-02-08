@@ -19,12 +19,24 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       console.log('Google AccessToken', accessToken);
       console.log('Google profile', profile);
+      const email = profile.emails[0].value;
 
-      User.findOne({ googleId: profile.id }).then(currentUser => {
+      User.findOne({ email }).then(currentUser => {
         if (currentUser) {
           // User already exists
           console.log('user is:', currentUser);
-          done(null, currentUser);
+          if (!currentUser.googleId) {
+            // Link google if not already linked
+            console.log('user is not linked to google');
+            currentUser
+              .updateOne({ $set: { googleId: profile.googleId } })
+              .then(updatedUser => {
+                done(null, updatedUser);
+              })
+              .catch(err => console.log('Error updating user', err.message));
+          } else {
+            done(null, currentUser);
+          }
         } else {
           // New user
           new User({
