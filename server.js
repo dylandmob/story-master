@@ -2,10 +2,11 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-require('dotenv').config();
+console.log('dotenv importing', require('dotenv').config());
 
 const app = express();
 
