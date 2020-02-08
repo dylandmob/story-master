@@ -11,11 +11,14 @@ const app = express();
 
 app.use(cors());
 
-// Connect Database
+// connect database
 connectDB();
 
-// Init Middleware
+// initialize middleware
 app.use(express.json({ extended: false }));
+
+// initialize passport
+app.use(passport.initialize());
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
