@@ -59,10 +59,14 @@ app.use(express.json({ extended: false }));
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
 app.get(
-  'auth/google',
+  '/auth/google',
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
-  })
+  }),
+  (req, res) => {
+    console.log('Get auth google', req);
+    console.log('Res', res);
+  }
 );
 
 // GET /auth/google/callback
@@ -71,7 +75,7 @@ app.get(
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 app.get(
-  'auth/google/callback',
+  '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     console.log('Hit callback yhho', res);
