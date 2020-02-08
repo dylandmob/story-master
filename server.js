@@ -1,8 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
@@ -32,7 +33,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL
+      callbackURL: '/auth/google/callback'
     },
     function(accessToken, refreshToken, profile, done) {
       console.log('Google AccessToken', accessToken);
@@ -58,10 +59,11 @@ app.use(express.json({ extended: false }));
 //   request.  The first step in Google authentication will involve
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
+// https://www.googleapis.com/auth/plus.login
 app.get(
   '/auth/google',
   passport.authenticate('google', {
-    scope: ['https://www.googleapis.com/auth/plus.login']
+    scope: ['profile', 'email']
   })
 );
 
