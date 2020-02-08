@@ -15,18 +15,19 @@ const Home = () => {
   }, []);
 
   return (
-    <Container className='text-center'>
-      <h1 className='mt-5'>
+    <Container className="text-center">
+      <h1 className="mt-5">
         My Campaigns
-        <Link to='campaign/new'>
+        <Link to="campaign/new">
           <Icon
-            name='plus circle'
-            color='blue'
+            name="plus circle"
+            color="blue"
             link
             style={{ marginLeft: 15 }}
           />
         </Link>
       </h1>
+      <a href="/auth/google">Sign In with Google</a>
       <div
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
