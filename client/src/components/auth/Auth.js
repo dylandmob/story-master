@@ -23,15 +23,15 @@ const Auth = ({ location, history }) => {
   return (
     <Container>
       <Row>
-        <Col sm='12' md='6' lg='6'>
+        <Col sm="12" md="6" lg="6">
           <div style={{ position: 'fixed', top: '50%' }}>
             <h2>Welcome to Story Master</h2>
             <h4 style={{ color: 'gray' }}>Plan your story</h4>
             <p>A work in progress :)</p>
           </div>
         </Col>
-        <Col sm='12' md='6' lg='6'>
-          <AuthCard cardStyle={{ top: '25%' }} />
+        <Col sm="12" md="6" lg="6">
+          <AuthCard cardStyle={{ top: '50%' }} />
         </Col>
       </Row>
     </Container>
