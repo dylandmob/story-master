@@ -11,14 +11,8 @@ const Auth = ({ location, history }) => {
     let params = queryString.parse(location.search);
     console.log('Token', params.token);
     console.log('RefreshToken', params.refreshToken);
-
-    // Sign In and route user
-    // if (params.token) {
-    //   console.log('Signing in user');
-    //   signIn(params.token)
-    //     .then(() => history.push('/'))
-    //     .catch(e => window.alert(e));
-    // }
+    signIn(params.token, params.refreshToken);
+    history.push('/');
     // eslint-disable-next-line
   }, []);
 
