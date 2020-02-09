@@ -30,8 +30,13 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/sign-in' }),
   (req, res) => {
     // Create jwts and send back to front end
-
-    res.redirect('/');
+    const token = jwt.sign(payload, config.get('jwtSecret'), {
+      expiresIn: config.get('tokenLife')
+    });
+    const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), {
+      expiresIn: config.get('refreshTokenLife')
+    });
+    res.redirect(`/sign-in?token=${token}&refreshToken=${refreshToken}`);
   }
 );
 

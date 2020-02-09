@@ -9,14 +9,16 @@ const Auth = ({ location, history }) => {
 
   useEffect(() => {
     let params = queryString.parse(location.search);
+    console.log('Token', params.token);
+    console.log('RefreshToken', params.refreshToken);
 
     // Sign In and route user
-    if (params.token) {
-      console.log('Signing in user');
-      signIn(params.token)
-        .then(() => history.push('/'))
-        .catch(e => window.alert(e));
-    }
+    // if (params.token) {
+    //   console.log('Signing in user');
+    //   signIn(params.token)
+    //     .then(() => history.push('/'))
+    //     .catch(e => window.alert(e));
+    // }
     // eslint-disable-next-line
   }, []);
 

@@ -19,14 +19,6 @@ export default (state, action) => {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       localStorage.setItem(TOKEN_EXP_TIME, tokenExpTime);
       return { ...state, authStatus: SIGNED_IN };
-    case SIGN_UP_REQ:
-      return {
-        ...state,
-        user: { email: action.payload },
-        authStatus: SIGN_UP_REQ
-      };
-    case EMAIL_SENT:
-      return { ...state, authStatus: EMAIL_SENT };
     case SIGN_OUT:
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
