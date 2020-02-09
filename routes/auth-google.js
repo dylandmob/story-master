@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 
 const User = require('../models/User');
 
@@ -30,6 +30,10 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/sign-in' }),
   (req, res) => {
     // Create jwts and send back to front end
+    console.log('Req user', req.user);
+
+    const payload = { user: { id: req.user.id } };
+
     const token = jwt.sign(payload, config.get('jwtSecret'), {
       expiresIn: config.get('tokenLife')
     });
