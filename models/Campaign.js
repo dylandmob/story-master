@@ -21,7 +21,17 @@ const CampaignSchema = mongoose.Schema({
       isAdmin: { type: Boolean, default: false }
     }
   ],
-  chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'chapters' }]
+  chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'chapters' }],
+  hidden: {
+    type: Boolean,
+    default: false
+  },
+  wiki: [
+    {
+      name: String,
+      tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }]
+    }
+  ]
 });
 
 module.exports = mongoose.model('campaign', CampaignSchema);
