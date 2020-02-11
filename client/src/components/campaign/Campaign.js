@@ -9,18 +9,18 @@ import CreateCard from './CreateCard';
 import Tag from './Tag';
 import CardPage from '../cards/CardPage';
 import EditCard from '../cards/EditCard';
+import Wiki from './Wiki';
 
 const Campaign = () => {
   const campaignContext = useContext(CampaignContext);
   const { campaign, getCampaignForId, createTag } = campaignContext;
 
-  let { path, params } = useRouteMatch();
+  let { path, params, isExact } = useRouteMatch();
 
   useEffect(() => {
     if (params.id) {
       getCampaignForId(params.id);
     }
-
     // eslint-disable-next-line
   }, []);
 
@@ -35,7 +35,7 @@ const Campaign = () => {
 
   return campaign ? (
     <React.Fragment>
-      <CampaignNavbar campaign={campaign} />
+      {!isExact && <CampaignNavbar campaign={campaign} />}
       <Container
         style={{
           marginLeft: '160px',
@@ -46,8 +46,10 @@ const Campaign = () => {
           <Route exact path={`${path}/chapters/:chapterId/act/:actId`}>
             {/* <Act act={campaign.chapters[0].acts[0]} /> */}
           </Route>
-
           <Route exact path={path}>
+            <Wiki />
+          </Route>
+          <Route exact path={`${path}/edit`}>
             <EditCampaign />
           </Route>
           <Route exact path={`${path}/chapter/new`}>

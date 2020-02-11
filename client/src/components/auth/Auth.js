@@ -9,8 +9,6 @@ const Auth = ({ location, history }) => {
 
   useEffect(() => {
     let params = queryString.parse(location.search);
-    console.log('Token', params.token);
-    console.log('RefreshToken', params.refreshToken);
     if (params.token && params.refreshToken) {
       signIn(params.token, params.refreshToken);
       history.push('/');

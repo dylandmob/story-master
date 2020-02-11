@@ -29,7 +29,7 @@ const CampaignNavbar = ({ campaign }) => {
       <NavItem>
         <NavLink
           active
-          onClick={() => history.push(`/campaign/${campaign._id}`)}
+          onClick={() => history.push(`/campaign/${campaign._id}/edit`)}
         >
           <b>{campaign.name}</b>
         </NavLink>
@@ -38,9 +38,9 @@ const CampaignNavbar = ({ campaign }) => {
         <NavLink active onClick={() => setShowChapters(!showChapters)}>
           Chapters
           <Icon
-            className='pull-right'
-            name='plus'
-            color='blue'
+            className="pull-right"
+            name="plus"
+            color="blue"
             link
             onClick={() =>
               history.push(`/campaign/${campaign._id}/chapter/new`)
@@ -52,14 +52,14 @@ const CampaignNavbar = ({ campaign }) => {
       <Collapse open={showChapters}>
         {campaign.chapters.map(chapter => (
           <React.Fragment>
-            <NavItem className='ml-3'>
+            <NavItem className="ml-3">
               <NavLink onClick={() => setShowActs(!showActs)}>
                 - {chapter.name}
               </NavLink>
             </NavItem>
             <Collapse open={showActs}>
               {chapter.acts.map(act => (
-                <NavItem className='ml-4'>
+                <NavItem className="ml-4">
                   <NavLink
                     tag={Link}
                     to={`${url}/chapters/${chapter.id}/act/${act.id}`}
@@ -76,15 +76,15 @@ const CampaignNavbar = ({ campaign }) => {
         campaign.tags.map(tag => (
           <Link
             key={tag._id}
-            className='nav-item nav-link'
+            className="nav-item nav-link"
             to={`${url}/tag/${tag._id}`}
           >
             {tag.name}
           </Link>
         ))}
-      <div className='text-center mt-2'>
+      <div className="text-center mt-2">
         <Button
-          size='sm'
+          size="sm"
           outline
           style={{ width: '80%' }}
           onClick={() => history.push(`/campaign/${campaign._id}/tag/new`)}

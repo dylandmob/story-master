@@ -22,7 +22,6 @@ const CampaignCard = ({ campaign }) => {
         />
         <CardBody>
           <CardTitle>{name}</CardTitle>
-          <p>{description}</p>
         </CardBody>
       </Card>
     </Link>

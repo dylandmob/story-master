@@ -86,7 +86,7 @@ const FormComponent = ({
           onChange={e => setPrivateDescription(e.target.value)}
           style={{ minHeight: 60 }}
         />
-        {type === 'card' && <React.Fragment>{children}</React.Fragment>}
+        {children}
         <Button className="my-4" block theme="success" type="submit">
           Save
         </Button>

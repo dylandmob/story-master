@@ -78,12 +78,14 @@ const CampaignState = props => {
   };
 
   // Edit campaign
-  const editCampaign = async (campaignId, name, description, imageUrl) => {
+  const editCampaign = async (campaignId, formData) => {
     try {
       let data = {};
-      if (name) data.name = name;
-      if (description) data.description = description;
-      if (imageUrl) data.imageUrl = imageUrl;
+      if (formData.name) data.name = formData.name;
+      if (formData.description) data.description = formData.description;
+      if (formData.imageUrl) data.imageUrl = formData.imageUrl;
+      if (formData.privateDescription)
+        data.privateDescription = formData.privateDescription;
       const response = await api.editCampaign(campaignId, data);
       dispatch({ type: EDIT_CAMPAIGN, payload: response });
       return response;
