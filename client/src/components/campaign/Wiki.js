@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import CampaignContext from '../../context/campaign';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardTitle } from 'shards-react';
-import { Container, Icon } from 'semantic-ui-react';
+import { Container, Icon, Grid } from 'semantic-ui-react';
+import { WikiNav } from './WikiNav';
 
 export default function Wiki() {
   const campaignContext = useContext(CampaignContext);
@@ -14,7 +15,7 @@ export default function Wiki() {
       <Card className="my-5">
         <CardBody>
           <CardTitle className="text-center">
-            <h1 className="mt-3">
+            <h1>
               {campaign.name}
               <Link to={`/campaign/${campaign._id}/edit`}>
                 <Icon
@@ -27,7 +28,14 @@ export default function Wiki() {
             </h1>
           </CardTitle>
           {/* Edit Campaign Button show only if admin */}
-          <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
+          <Grid>
+            <Grid.Column width={3}>
+              <WikiNav campaign={campaign} />
+            </Grid.Column>
+            <Grid.Column width={13}>
+              <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
+            </Grid.Column>
+          </Grid>
           {/* Navigation */}
         </CardBody>
         <img
