@@ -10,7 +10,7 @@ router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
 
 // @route   GET api/campaigns
-// @desc    Gets all user's campaigns
+// @desc    Gets all or user's campaigns
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
@@ -41,11 +41,7 @@ router.get('/', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
   try {
     let campaignId = req.params.id;
-    const user = await User.findById(req.user.id);
-    let relationship = user.campaigns.find(
-      c => c.campaign.toString() === campaignId
-    );
-    let campaign = await Campaign.findById(relationship.campaign);
+    let campaign = await Campaign.findById(req.params.id);
 
     res.json(campaign);
   } catch (err) {
