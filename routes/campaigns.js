@@ -14,13 +14,21 @@ router.use('/:campaignId/cards', require('./cards'));
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    let ids = user.campaigns.map(c => c.campaign);
-    let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
-      dateLastModified: -1
-    });
+    if (req.query.category && req.query.category === 'me') {
+      const user = await User.findById(req.user.id);
+      let ids = user.campaigns.map(c => c.campaign);
+      let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
+        dateLastModified: -1
+      });
 
-    res.json(campaigns);
+      res.json(campaigns);
+    } else {
+      let campaigns = await Campaign.find({ hidden: false }).sort({
+        dateLastModified: -1
+      });
+
+      res.json(campaigns);
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

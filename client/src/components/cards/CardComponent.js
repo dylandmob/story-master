@@ -3,7 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Card, CardTitle, CardImg, CardBody } from 'shards-react';
 
 const CardComponent = ({ data }) => {
-  const { _id, name, imageUrl, description, tags } = data;
+  const { _id, name, imageUrl } = data;
 
   let { params } = useRouteMatch();
 

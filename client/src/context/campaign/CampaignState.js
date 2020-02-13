@@ -15,7 +15,8 @@ import {
   CREATE_TAG,
   DELETE_TAG,
   EDIT_TAG,
-  GET_TAGS
+  GET_TAGS,
+  GET_CAMPAIGNS
 } from '../types';
 
 const CampaignState = props => {
@@ -56,6 +57,16 @@ const CampaignState = props => {
       dispatch({ type: GET_MY_CAMPAIGNS, payload: response });
     } catch (err) {
       handleError('Error getting my campaigns', err);
+    }
+  };
+
+  // Get campaigns
+  const getCampaigns = async () => {
+    try {
+      const response = await api.getCampaigns();
+      dispatch({ type: GET_CAMPAIGNS, payload: response });
+    } catch (err) {
+      handleError('Error getting campaigns', err);
     }
   };
 
@@ -157,6 +168,7 @@ const CampaignState = props => {
         myCampaigns: state.myCampaigns,
         campaigns: state.campaigns,
         campaignError: state.campaignError,
+        getCampaigns,
         getMyCampaigns,
         getCampaignForId,
         createCampaign,

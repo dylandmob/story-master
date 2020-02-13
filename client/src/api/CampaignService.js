@@ -1,6 +1,13 @@
 import api from './api';
 
 // Get user's campaigns
+const getCampaigns = () =>
+  api({
+    url: '/api/campaigns',
+    method: 'GET'
+  });
+
+// Get user's campaigns
 const getMyCampaigns = () =>
   api({
     url: '/api/campaigns?category=me',
@@ -38,6 +45,7 @@ const deleteCampaign = id =>
   });
 
 export default {
+  getCampaigns,
   getMyCampaigns,
   getCampaignForId,
   createCampaign,

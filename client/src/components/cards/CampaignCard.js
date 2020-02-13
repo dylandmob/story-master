@@ -9,8 +9,8 @@ const CampaignCard = ({ campaign }) => {
     <Link to={`/campaign/${_id}`}>
       <Card
         style={{
-          minWidth: '300px',
-          maxWidth: '300px',
+          minWidth: '200px',
+          maxWidth: '200px',
           margin: 20,
           overflow: 'hidden',
           cursor: 'pointer'
@@ -18,7 +18,7 @@ const CampaignCard = ({ campaign }) => {
       >
         <CardImg
           src={imageUrl}
-          style={{ maxHeight: '400px', objectFit: 'cover' }}
+          style={{ maxHeight: '200px', objectFit: 'cover' }}
         />
         <CardBody>
           <CardTitle>{name}</CardTitle>
