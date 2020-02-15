@@ -39,7 +39,6 @@ const api = async function(options) {
     );
   } else {
     client.defaults.headers.common[AUTH_HEADER] = String(null);
-    console.log('Setting to null', client.defaults.headers.common[AUTH_HEADER]);
   }
 
   return client(options)
