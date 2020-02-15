@@ -30,13 +30,16 @@ const api = async function(options) {
     return Promise.reject(error.response || error.message);
   };
 
+  console.log(localStorage.getItem(ACCESS_TOKEN));
+
   if (localStorage.getItem(ACCESS_TOKEN)) {
     await handleToken();
     client.defaults.headers.common[AUTH_HEADER] = localStorage.getItem(
       ACCESS_TOKEN
     );
   } else {
-    client.defaults.headers.common[AUTH_HEADER] = null;
+    client.defaults.headers.common[AUTH_HEADER] = String(null);
+    console.log('Setting to null', client.defaults.headers.common[AUTH_HEADER]);
   }
 
   return client(options)

@@ -47,14 +47,14 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
   try {
     let campaign = await Campaign.findById(req.params.campaignId);
 
+    // if no campaign was found
+    if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
+
     // check if campaign is hidden
     if (campaign.hidden && !req.isAdmin)
       return res
         .status(403)
         .json({ msg: 'Not authorized to view this campaign' });
-
-    // if no campaign was found
-    if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
 
     res.json(campaign);
   } catch (err) {

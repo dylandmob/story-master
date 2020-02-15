@@ -9,12 +9,13 @@ module.exports = async (req, res, next) => {
   const token = req.header('x-auth-token');
   const campaignId = req.params.campaignId;
 
+  // check if no campaignId
   if (!campaignId) {
     return res.status(404).json({ msg: 'No campaign id is included' });
   }
 
   // check if no token
-  if (!token) {
+  if (!token || token === 'null') {
     req.isAdmin = false;
     return next();
   }
@@ -32,6 +33,7 @@ module.exports = async (req, res, next) => {
       c => c.campaign.toString() === campaignId
     );
 
+    // user is admin if campaignReference is valid and isAdmin is true
     req.isAdmin = campaignReference && campaignReference.isAdmin;
 
     next();
