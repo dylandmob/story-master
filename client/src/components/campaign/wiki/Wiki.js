@@ -26,16 +26,13 @@ export default function Wiki() {
     <Container>
       <Card
         style={{
-          position: 'fixed',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          maxHeight: '80%',
           minWidth: '500px',
-          maxWidth: '90%'
+          maxWidth: '90vw',
+          height: 'calc(90vh - 70px)',
+          marginTop: '5vh'
         }}
       >
-        <CardBody>
+        <CardBody style={{ height: '100%' }}>
           <CardTitle className="text-center">
             <h1>
               {campaign.name}
@@ -51,11 +48,17 @@ export default function Wiki() {
               )}
             </h1>
           </CardTitle>
-          <Grid>
+          <Grid className="my-3" style={{ height: '100%' }}>
             <Grid.Column width={4}>
               <WikiNav campaign={campaign} />
             </Grid.Column>
-            <Grid.Column width={12}>
+            <Grid.Column
+              width={12}
+              style={{
+                height: '85%',
+                overflow: 'auto'
+              }}
+            >
               <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
             </Grid.Column>
           </Grid>

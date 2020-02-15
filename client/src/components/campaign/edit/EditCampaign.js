@@ -1,10 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { Container, FormCheckbox, Button } from 'shards-react';
 import FormComponent from './FormComponent';
+import WikiTabs from './WikiTabs';
 
 const EditCampaign = () => {
   const [hidden, setHidden] = useState(false);
+  const [tabs, setTabs] = useState([]);
   const campaignContext = useContext(CampaignContext);
   const { editCampaign, deleteCampaign, campaign } = campaignContext;
 
@@ -29,6 +31,7 @@ const EditCampaign = () => {
         <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
           Hidden
         </FormCheckbox>
+        {/* <WikiTabs tags={campaign.tags} onSetTabs={tabs => setTabs(tabs)} /> */}
       </FormComponent>
       <Button
         className="mt-4"
