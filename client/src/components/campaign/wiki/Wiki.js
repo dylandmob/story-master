@@ -24,7 +24,17 @@ export default function Wiki() {
 
   return (
     <Container>
-      <Card className="my-5">
+      <Card
+        style={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          maxHeight: '80%',
+          minWidth: '500px',
+          maxWidth: '90%'
+        }}
+      >
         <CardBody>
           <CardTitle className="text-center">
             <h1>
@@ -41,30 +51,29 @@ export default function Wiki() {
               )}
             </h1>
           </CardTitle>
-          {/* Edit Campaign Button show only if admin */}
           <Grid>
-            <Grid.Column width={3}>
+            <Grid.Column width={4}>
               <WikiNav campaign={campaign} />
             </Grid.Column>
-            <Grid.Column width={13}>
+            <Grid.Column width={12}>
               <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
             </Grid.Column>
           </Grid>
         </CardBody>
-        <img
-          src={campaign.imageUrl}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: -1,
-            minWidth: '1024px',
-            minHeight: '100%',
-            width: '100%',
-            height: 'auto'
-          }}
-        ></img>
       </Card>
+      <img
+        src={campaign.imageUrl}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          minWidth: '1024px',
+          minHeight: '100%',
+          width: '100%',
+          height: 'auto'
+        }}
+      ></img>
     </Container>
   );
 }
