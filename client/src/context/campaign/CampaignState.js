@@ -33,8 +33,6 @@ const CampaignState = props => {
   const getCampaignForId = async id => {
     try {
       const response = await api.getCampaignForId(id);
-      // const tags = await tagApi.getTags(id);
-      // response.tags = tags;
       dispatch({ type: GET_CURRENT_CAMPAIGN, payload: response });
     } catch (err) {
       handleError('Error getting a campaign', err);
@@ -95,8 +93,7 @@ const CampaignState = props => {
       if (formData.name) data.name = formData.name;
       if (formData.description) data.description = formData.description;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
-      if (formData.privateDescription)
-        data.privateDescription = formData.privateDescription;
+      if (formData.hidden) data.hidden = formData.hidden;
       const response = await api.editCampaign(campaignId, data);
       dispatch({ type: EDIT_CAMPAIGN, payload: response });
       return response;
@@ -174,6 +171,7 @@ const CampaignState = props => {
         createCampaign,
         editCampaign,
         deleteCampaign,
+        getTags,
         createTag,
         editTag,
         deleteTag

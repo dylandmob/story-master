@@ -15,7 +15,7 @@ export default (state, action) => {
     case GET_CAMPAIGNS:
       return { ...state, campaigns: action.payload };
     case GET_CURRENT_CAMPAIGN:
-      return { ...state, campaign: action.payload };
+      return { ...state, campaign: { ...state.campaign, ...action.payload } };
     case CREATE_CAMPAIGN:
       return { ...state, campaign: action.payload };
     case DELETE_CAMPAIGN:

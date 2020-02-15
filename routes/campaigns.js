@@ -56,7 +56,9 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
         .status(403)
         .json({ msg: 'Not authorized to view this campaign' });
 
-    res.json(campaign);
+    let data = campaign.toObject();
+    data.isAdmin = req.isAdmin;
+    res.json(data);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -114,7 +116,7 @@ router.post(
 // @desc    Edit campaign
 // @access  Private
 router.patch(
-  '/:id',
+  '/:campaignId',
   [
     admin,
     [
@@ -132,10 +134,10 @@ router.patch(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, description, imageUrl } = req.body;
+    const { name, description, imageUrl, hidden } = req.body;
 
     try {
-      let campaign = await Campaign.findById(req.params.id);
+      let campaign = await Campaign.findById(req.params.campaignId);
 
       // If no campaign was found
       if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
@@ -155,6 +157,7 @@ router.patch(
       if (name) patchData.name = name;
       if (description) patchData.description = description;
       if (imageUrl) patchData.imageUrl = imageUrl;
+      // if (hidden) patchData.hidden = hidden;
 
       // Edit the campaign
       await campaign.updateOne({ $set: patchData });
@@ -170,9 +173,9 @@ router.patch(
 // @route   DELETE api/campaigns/:id
 // @desc    Delete campaign
 // @access  Private
-router.delete('/:id', admin, async (req, res) => {
+router.delete('/:campaignId', admin, async (req, res) => {
   try {
-    let campaign = await Campaign.findById(req.params.id);
+    let campaign = await Campaign.findById(req.params.campaignId);
 
     // If no campaign was found
     if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });

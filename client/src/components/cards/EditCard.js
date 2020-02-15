@@ -3,7 +3,7 @@ import CampaignContext from '../../context/campaign';
 import CardContext from '../../context/cards';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { FormCheckbox } from 'shards-react';
-import FormComponent from '../campaign/FormComponent';
+import FormComponent from '../campaign/edit/FormComponent';
 
 const EditCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);

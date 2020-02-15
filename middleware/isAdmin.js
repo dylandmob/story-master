@@ -34,7 +34,7 @@ module.exports = async (req, res, next) => {
     );
 
     // user is admin if campaignReference is valid and isAdmin is true
-    req.isAdmin = campaignReference && campaignReference.isAdmin;
+    req.isAdmin = campaignReference && campaignReference.isAdmin ? true : false;
 
     next();
   } catch (err) {

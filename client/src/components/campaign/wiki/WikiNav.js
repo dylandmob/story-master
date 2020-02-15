@@ -22,8 +22,8 @@ export const WikiNav = ({ campaign }) => {
           <b>Home</b>
         </NavLink>
       </NavItem>
-      {campaign.tags &&
-        campaign.tags.map(tag => (
+      {campaign.wiki &&
+        campaign.wiki.map(tag => (
           <Link
             key={tag._id}
             className="nav-item nav-link"
