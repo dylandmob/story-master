@@ -79,13 +79,15 @@ const FormComponent = ({
           onChange={e => setDescription(e.target.value)}
           style={{ minHeight: 60 }}
         />
-        <Form.TextArea
-          label="Private Description"
-          placeholder={`Your ${type} description only to be seen by you and other admins`}
-          value={privateDescription}
-          onChange={e => setPrivateDescription(e.target.value)}
-          style={{ minHeight: 60 }}
-        />
+        {type !== 'campaign' && (
+          <Form.TextArea
+            label="Private Description"
+            placeholder={`Your ${type} description only to be seen by you and other admins`}
+            value={privateDescription}
+            onChange={e => setPrivateDescription(e.target.value)}
+            style={{ minHeight: 60 }}
+          />
+        )}
         {children}
         <Button className="my-4" block theme="success" type="submit">
           Save

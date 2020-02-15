@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+const isAdmin = require('../middleware/isAdmin');
 const { check, validationResult } = require('express-validator');
 
 const Campaign = require('../models/Campaign');
@@ -9,10 +11,13 @@ const User = require('../models/User');
 router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
 
+const skipIfQuery = middleware => (req, res, next) =>
+  req.query.category ? middleware(req, res, next) : next();
+
 // @route   GET api/campaigns
 // @desc    Gets all or user's campaigns
-// @access  Private
-router.get('/', auth, async (req, res) => {
+// @access  Public
+router.get('/', skipIfQuery(auth), async (req, res) => {
   try {
     if (req.query.category && req.query.category === 'me') {
       const user = await User.findById(req.user.id);
@@ -35,13 +40,21 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/campaigns/:id
-// @desc    Gets a user campaign from id
-// @access  Private
-router.get('/:id', auth, async (req, res) => {
+// @route   GET api/campaigns/:campaignId
+// @desc    Gets a campaign for id
+// @access  Public
+router.get('/:campaignId', isAdmin, async (req, res) => {
   try {
-    let campaignId = req.params.id;
-    let campaign = await Campaign.findById(req.params.id);
+    let campaign = await Campaign.findById(req.params.campaignId);
+
+    // check if campaign is hidden
+    if (campaign.hidden && !req.isAdmin)
+      return res
+        .status(403)
+        .json({ msg: 'Not authorized to view this campaign' });
+
+    // if no campaign was found
+    if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
 
     res.json(campaign);
   } catch (err) {
@@ -103,7 +116,7 @@ router.post(
 router.patch(
   '/:id',
   [
-    auth,
+    admin,
     [
       check('name', "Campaign's name should be a string").isString(),
       check(
@@ -157,7 +170,7 @@ router.patch(
 // @route   DELETE api/campaigns/:id
 // @desc    Delete campaign
 // @access  Private
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', admin, async (req, res) => {
   try {
     let campaign = await Campaign.findById(req.params.id);
 

@@ -2,8 +2,6 @@ import React, { useReducer } from 'react';
 import AuthContext from '.';
 import authReducer from './authReducer';
 
-import api from '../../api/AuthService';
-
 import { SIGN_IN, SIGN_OUT, AUTH_ERROR, SIGNED_IN } from '../types';
 
 const AuthState = props => {
