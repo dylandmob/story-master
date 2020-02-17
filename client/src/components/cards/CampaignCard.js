@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardTitle, CardImg, CardBody } from 'shards-react';
 
 const CampaignCard = ({ campaign }) => {
-  const { _id, name, imageUrl, description } = campaign;
+  const { _id, name, imageUrl } = campaign;
 
   return (
     <Link to={`/campaign/${_id}`}>

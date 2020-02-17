@@ -90,7 +90,7 @@ const CardState = props => {
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.tags) data.tags = formData.tags;
-      const response = await api.editCard(campaignId, cardId, data);
+      await api.editCard(campaignId, cardId, data);
       return cardId;
     } catch (err) {
       handleError('Error editing card', err);

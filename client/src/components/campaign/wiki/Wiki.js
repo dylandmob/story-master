@@ -9,7 +9,7 @@ export default function Wiki() {
   const campaignContext = useContext(CampaignContext);
   const { campaign, getCampaignForId } = campaignContext;
 
-  let { path, params } = useRouteMatch();
+  let { params } = useRouteMatch();
 
   useEffect(() => {
     if (params.id) {
@@ -66,6 +66,7 @@ export default function Wiki() {
       </Card>
       <img
         src={campaign.imageUrl}
+        alt="wiki background"
         style={{
           position: 'fixed',
           top: 0,

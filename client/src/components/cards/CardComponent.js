@@ -1,14 +1,12 @@
 import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, CardTitle, CardImg, CardBody } from 'shards-react';
 
-const CardComponent = ({ data }) => {
+const CardComponent = ({ data, path }) => {
   const { _id, name, imageUrl } = data;
 
-  let { params } = useRouteMatch();
-
   return (
-    <Link to={`/campaign/${params.id}/card/${_id}`}>
+    <Link to={path}>
       <Card
         key={_id}
         style={{

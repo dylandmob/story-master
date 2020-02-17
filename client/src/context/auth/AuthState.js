@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import AuthContext from '.';
 import authReducer from './authReducer';
 
-import { SIGN_IN, SIGN_OUT, AUTH_ERROR, SIGNED_IN } from '../types';
+import { SIGN_IN, SIGN_OUT, SIGNED_IN } from '../types';
 
 const AuthState = props => {
   const initialState = {
@@ -20,9 +20,6 @@ const AuthState = props => {
   const signOut = () => dispatch({ type: SIGN_OUT });
 
   const setSignedInStatus = () => dispatch({ type: SIGNED_IN });
-
-  const handleError = (type, err) =>
-    dispatch({ type: AUTH_ERROR, payload: `${type}: ${err}` });
 
   return (
     <AuthContext.Provider

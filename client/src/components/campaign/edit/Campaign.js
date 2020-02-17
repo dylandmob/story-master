@@ -7,7 +7,6 @@ import CampaignNavbar from './CampaignNavbar';
 import CreateForm from '../CreateForm';
 import CreateCard from '../CreateCard';
 import Tag from '../Tag';
-import CardPage from '../../cards/CardPage';
 import EditCard from '../../cards/EditCard';
 
 const Campaign = () => {
@@ -24,10 +23,7 @@ const Campaign = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onCreateTag = tag => {
-    console.log('Creating a new tag', tag);
-    createTag(campaign._id, tag);
-  };
+  const onCreateTag = tag => createTag(campaign._id, tag);
 
   return campaign ? (
     <React.Fragment>
@@ -52,9 +48,6 @@ const Campaign = () => {
             <CreateCard />
           </Route>
           <Route exact path={`${path}/card/:cardId`}>
-            <CardPage />
-          </Route>
-          <Route exact path={`${path}/card/:cardId/edit`}>
             <EditCard />
           </Route>
         </Switch>

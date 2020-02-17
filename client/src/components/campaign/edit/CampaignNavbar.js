@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import { Nav, NavItem, NavLink, Button } from 'shards-react';
 
 const CampaignNavbar = ({ campaign }) => {
   let history = useHistory();
-
   let { url } = useRouteMatch();
 
   return (

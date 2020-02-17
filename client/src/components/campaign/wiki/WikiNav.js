@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
-import { Nav, NavItem, NavLink, Button } from 'shards-react';
+import { Nav, NavItem, NavLink } from 'shards-react';
 
 export const WikiNav = ({ campaign }) => {
   let history = useHistory();
