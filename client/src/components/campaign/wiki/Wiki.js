@@ -48,14 +48,14 @@ export default function Wiki() {
               )}
             </h1>
           </CardTitle>
-          <Grid className="my-3" style={{ height: '100%' }}>
+          <Grid className="my-3" style={{ height: 'calc(100% - 50px)' }}>
             <Grid.Column width={4}>
               <WikiNav campaign={campaign} />
             </Grid.Column>
             <Grid.Column
               width={12}
               style={{
-                height: '85%',
+                height: '100%',
                 overflow: 'auto'
               }}
             >

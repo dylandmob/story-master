@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'shards-react';
 import { Container, Image, Form } from 'semantic-ui-react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const FormComponent = ({
   defaultValue,
@@ -72,21 +73,27 @@ const FormComponent = ({
           value={name}
           onChange={e => setName(e.target.value)}
         />
-        <Form.TextArea
-          label="Description"
+        <Form.Field label="Description" />
+        <TextareaAutosize
           placeholder={`Your ${type} description`}
           value={description}
           onChange={e => setDescription(e.target.value)}
-          style={{ minHeight: 60 }}
+          minRows={3}
+          maxRows={50}
+          style={{ boxSizing: 'border-box' }}
         />
         {type !== 'campaign' && (
-          <Form.TextArea
-            label="Private Description"
-            placeholder={`Your ${type} description only to be seen by you and other admins`}
-            value={privateDescription}
-            onChange={e => setPrivateDescription(e.target.value)}
-            style={{ minHeight: 60 }}
-          />
+          <>
+            <Form.Field label="Private Description" />
+            <TextareaAutosize
+              placeholder={`Your ${type} description only to be seen you and other admins`}
+              value={privateDescription}
+              onChange={e => setPrivateDescription(e.target.value)}
+              minRows={3}
+              maxRows={50}
+              style={{ boxSizing: 'border-box' }}
+            />
+          </>
         )}
         {children}
         <Button className="my-4" block theme="success" type="submit">

@@ -39,7 +39,7 @@ const EditCampaign = () => {
         theme="danger"
         type="button"
         onClick={onDelete}
-        style={{ width: 500, margin: 'auto' }}
+        style={{ width: 500, margin: 'auto', marginBottom: '100px' }}
       >
         Delete campaign
       </Button>
