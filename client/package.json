@@ -9,6 +9,7 @@
     "immutability-helper": "^3.0.1",
     "query-string": "^6.8.3",
     "react": "^16.9.0",
+    "react-beautiful-dnd": "^12.2.0",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.9.0",
