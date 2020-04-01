@@ -31,7 +31,9 @@ const EditCampaign = () => {
         {/* <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
           Hidden
         </FormCheckbox> */}
-        <WikiTabs />
+        {campaign.tags && (
+          <WikiTabs tags={campaign.tags} tabs={campaign.tabs} />
+        )}
       </FormComponent>
       <Button
         className="mt-4"
