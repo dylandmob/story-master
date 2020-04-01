@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // fake data generator
@@ -38,26 +38,28 @@ const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
+  color: isDragging ? 'white' : 'black',
   userSelect: 'none',
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'blue' : 'white',
+  borderRadius: 5,
 
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'lightblue' : '#ebecf0',
   padding: grid,
-  width: 250
+  width: 250,
+  borderRadius: 5,
+  margin: 5
 });
 
 const App = () => {
-  const [items, setItems] = useState(getItems(10));
-  const [selected, setSelected] = useState(getItems(5, 10));
+  const [items, setItems] = useState(getItems(5, 10));
+  const [selected, setSelected] = useState(getItems(10));
 
   const getList = id => (id === 'droppable' ? items : selected);
 
@@ -100,6 +102,7 @@ const App = () => {
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
+            <h5>Tabs on Wiki</h5>
             {items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (
@@ -127,6 +130,7 @@ const App = () => {
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
+            <h5>All Tags</h5>
             {selected.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (

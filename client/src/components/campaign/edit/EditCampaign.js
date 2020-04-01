@@ -3,8 +3,6 @@ import CampaignContext from '../../../context/campaign';
 import { Container, FormCheckbox, Button } from 'shards-react';
 import FormComponent from './FormComponent';
 import WikiTabs from './WikiTabs';
-import EditWikiTabs from './EditWikiTabs';
-import TestDragger from './TestDragger';
 
 const EditCampaign = () => {
   const [hidden, setHidden] = useState(false);
@@ -30,15 +28,11 @@ const EditCampaign = () => {
         onSave={onEdit}
         edit
       >
-        <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
+        {/* <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
           Hidden
-        </FormCheckbox>
-        {/* <WikiTabs tags={campaign.tags} onSetTabs={tabs => setTabs(tabs)} /> */}
-        <EditWikiTabs />
+        </FormCheckbox> */}
+        <WikiTabs />
       </FormComponent>
-      <div style={{ display: 'flex' }}>
-        <TestDragger />
-      </div>
       <Button
         className="mt-4"
         block
