@@ -31,11 +31,23 @@ const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    let list = [];
-    if (tabsList) list = tabsList;
-    setTabs(list);
-    setTags(tagsList);
-    onTabsChange(list);
+    let defaultTabs = [];
+    let defaultTags = [];
+    console.log('tabsList', tabsList);
+    console.log('tagsList', tagsList);
+
+    if (tabsList) defaultTabs = tabsList;
+    defaultTags = tagsList.filter(tag => {
+      // Check if tag is in tabs list
+      return !defaultTabs.find(tab => tab._id === tag._id);
+    });
+    console.log('Default Tags', defaultTags);
+    console.log('Default Tabs', defaultTabs);
+
+    setTabs(defaultTabs);
+    setTags(defaultTags);
+    onTabsChange(defaultTabs);
+    // eslint-disable-next-line
   }, []);
 
   const getList = id => (id === 'droppable' ? tabs : tags);

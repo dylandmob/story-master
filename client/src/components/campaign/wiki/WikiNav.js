@@ -11,7 +11,8 @@ export const WikiNav = ({ campaign }) => {
       vertical
       tabs
       style={{
-        paddingTop: '20px'
+        paddingTop: '20px',
+        borderBottom: 'none'
       }}
     >
       <NavItem>

@@ -32,10 +32,10 @@ const EditCampaign = () => {
         {/* <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
           Hidden
         </FormCheckbox> */}
-        {campaign.tags && (
+        {campaign.tags && campaign.wiki && (
           <WikiTabs
             tagsList={campaign.tags}
-            tabsList={campaign.tabs}
+            tabsList={campaign.wiki}
             onTabsChange={tabs => setTabs(tabs)}
           />
         )}

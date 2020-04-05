@@ -26,12 +26,7 @@ const CampaignSchema = mongoose.Schema({
     type: Boolean,
     default: false
   },
-  wiki: [
-    {
-      name: String,
-      tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }]
-    }
-  ]
+  wiki: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }]
 });
 
 module.exports = mongoose.model('campaign', CampaignSchema);

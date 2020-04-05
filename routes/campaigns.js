@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 
 const Campaign = require('../models/Campaign');
 const User = require('../models/User');
+const Tag = require('../models/Tag');
 
 router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
@@ -20,6 +21,7 @@ const skipIfQuery = middleware => (req, res, next) =>
 router.get('/', skipIfQuery(auth), async (req, res) => {
   try {
     if (req.query.category && req.query.category === 'me') {
+      // get user's campaigns if category = me
       const user = await User.findById(req.user.id);
       let ids = user.campaigns.map(c => c.campaign);
       let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
@@ -28,6 +30,7 @@ router.get('/', skipIfQuery(auth), async (req, res) => {
 
       res.json(campaigns);
     } else {
+      // get all non-hidden campaigns
       let campaigns = await Campaign.find({ hidden: false }).sort({
         dateLastModified: -1
       });
@@ -58,6 +61,22 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
 
     let data = campaign.toObject();
     data.isAdmin = req.isAdmin;
+
+    // fetch tags in wiki
+    data.wiki = await Tag.find({
+      _id: { $in: data.wiki }
+    });
+
+    // remove non-essential data
+    data.wiki = data.wiki.map(tab => {
+      return {
+        imageUrl: tab.imageUrl,
+        _id: tab._id,
+        name: tab.name,
+        description: tab.description
+      };
+    });
+
     res.json(data);
   } catch (err) {
     console.error(err.message);

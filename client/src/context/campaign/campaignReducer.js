@@ -5,8 +5,7 @@ import {
   CREATE_CAMPAIGN,
   GET_CURRENT_CAMPAIGN,
   DELETE_CAMPAIGN,
-  GET_TAGS,
-  SET_TABS
+  GET_TAGS
 } from '../types';
 
 export default (state, action) => {
@@ -25,11 +24,6 @@ export default (state, action) => {
       return {
         ...state,
         campaign: { ...state.campaign, tags: action.payload }
-      };
-    case SET_TABS:
-      return {
-        ...state,
-        campaign: { ...state.campaign, wiki: action.payload }
       };
     case CAMPAIGN_ERROR:
       return { ...state, userError: action.payload };
