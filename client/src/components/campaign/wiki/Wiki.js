@@ -1,19 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, Route } from 'react-router-dom';
 import { Card, CardBody, CardTitle } from 'shards-react';
 import { Container, Icon, Grid, Loader } from 'semantic-ui-react';
 import { WikiNav } from './WikiNav';
+import { WikiLayout } from './WikiLayout';
 
 export default function Wiki() {
   const campaignContext = useContext(CampaignContext);
-  const { campaign, getCampaignForId } = campaignContext;
+  const { campaign, getCampaignForId, getTags } = campaignContext;
 
-  let { params } = useRouteMatch();
+  let { path, params } = useRouteMatch();
 
   useEffect(() => {
     if (params.id) {
       getCampaignForId(params.id);
+      getTags(params.id);
     }
     // eslint-disable-next-line
   }, []);
@@ -26,15 +28,16 @@ export default function Wiki() {
     <Container>
       <Card
         style={{
-          minWidth: '500px',
+          minWidth: '200px',
           maxWidth: '90vw',
+          width: '100%',
           height: 'calc(90vh - 70px)',
           marginTop: '5vh'
         }}
       >
         <CardBody style={{ height: '100%' }}>
           <CardTitle className="text-center">
-            <h1>
+            <h1 style={{ whiteSpace: 'nowrap' }}>
               {campaign.name}
               {campaign.isAdmin && (
                 <Link to={`/campaign/${campaign._id}/edit`}>
@@ -59,7 +62,7 @@ export default function Wiki() {
                 overflow: 'auto'
               }}
             >
-              <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
+              <WikiLayout campaign={campaign} />
             </Grid.Column>
           </Grid>
         </CardBody>

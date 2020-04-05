@@ -3,7 +3,7 @@ import CardContext from '../../context/cards';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Image, Button } from 'semantic-ui-react';
 
-const CardPage = () => {
+const CardPage = ({ campaign }) => {
   const cardContext = useContext(CardContext);
   const { card, getCardForId } = cardContext;
 
@@ -20,10 +20,6 @@ const CardPage = () => {
 
   const { name, imageUrl, description, privateDescription } = card;
 
-  console.log('Private Description', privateDescription);
-  // let result = privateDescription.replace(/\n/g, '<br>');
-  // console.log('Result', result);
-
   return (
     <Container className="mt-5">
       <Image
@@ -31,22 +27,28 @@ const CardPage = () => {
         centered
         style={{ maxHeight: '400px', objectFit: 'cover' }}
       />
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', marginTop: 25 }}>
         <h1>{name}</h1>
-        <Link to={`/campaign/${params.id}/card/${params.cardId}/edit`}>
-          <Button>Edit</Button>
-        </Link>
+        {campaign.isAdmin && (
+          <Link to={`/campaign/${params.id}/card/${params.cardId}/edit`}>
+            <Button>Edit</Button>
+          </Link>
+        )}
       </div>
       <div
         style={{
           whiteSpace: 'pre-wrap',
-          marginBottom: 100
+          marginBottom: 100,
+          marginTop: 25
         }}
       >
-        <h3>Description</h3>
         <p>{description}</p>
-        <h3>Private Description</h3>
-        <p>{privateDescription}</p>
+        {campaign.isAdmin && (
+          <>
+            <h3>Private Description</h3>
+            <p>{privateDescription}</p>{' '}
+          </>
+        )}
       </div>
     </Container>
   );

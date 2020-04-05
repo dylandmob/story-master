@@ -4,7 +4,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Button } from 'shards-react';
 import CardComponent from '../cards/CardComponent';
 
-const Tag = ({ campaign }) => {
+const Tag = ({ campaign, readOnly }) => {
   const cardContext = useContext(CardContext);
   const { cards, getCardsForTag } = cardContext;
 
@@ -13,7 +13,7 @@ const Tag = ({ campaign }) => {
   const { params } = useRouteMatch();
 
   useEffect(() => {
-    if (campaign) {
+    if (campaign && campaign.tags) {
       let foundTag = campaign.tags.find(t => t._id === params.tagId);
       setTag(foundTag);
       getCardsForTag(campaign._id, foundTag._id);
@@ -25,11 +25,13 @@ const Tag = ({ campaign }) => {
     <Container>
       <div className="my-3 text-center">
         <h1>{tag.name}</h1>
-        <Link to={`/campaign/${campaign._id}/edit/card/new`}>
-          <Button className="mt-3" outline>
-            Add a card
-          </Button>
-        </Link>
+        {campaign.isAdmin && (
+          <Link to={`/campaign/${campaign._id}/edit/card/new`}>
+            <Button className="mt-3" outline>
+              Add a card
+            </Button>
+          </Link>
+        )}
       </div>
       <Container
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
@@ -39,12 +41,16 @@ const Tag = ({ campaign }) => {
             <CardComponent
               key={card._id}
               data={card}
-              path={`/campaign/${campaign._id}/edit/card/${card._id}`}
+              path={
+                readOnly
+                  ? `/campaign/${campaign._id}/card/${card._id}`
+                  : `/campaign/${campaign._id}/edit/card/${card._id}`
+              }
             />
           ))
         ) : (
           <h4 className="text-center mt-5" style={{ color: 'gray' }}>
-            it's kinda empty in here...
+            {readOnly ? 'no cards here!' : "it's kinda empty in here..."}
           </h4>
         )}
       </Container>
