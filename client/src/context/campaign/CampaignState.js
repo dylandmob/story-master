@@ -94,6 +94,7 @@ const CampaignState = props => {
       if (formData.description) data.description = formData.description;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.hidden) data.hidden = formData.hidden;
+      if (formData.wiki) data.wiki = formData.wiki;
       const response = await api.editCampaign(campaignId, data);
       dispatch({ type: EDIT_CAMPAIGN, payload: response });
       return response;
@@ -153,6 +154,9 @@ const CampaignState = props => {
       handleError('Error deleting a tag', err);
     }
   };
+
+  // Set tabs
+  // const setTabs = async (campaignId, tabs) => {};
 
   // Handle errors
   const handleError = (type, err) =>

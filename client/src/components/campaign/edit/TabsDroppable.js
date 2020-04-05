@@ -12,7 +12,7 @@ const TabsDroppable = ({ id, title, items }) => {
         >
           <h5>{title}</h5>
           {items.map((item, index) => (
-            <TabsDraggable item={item} index={index} />
+            <TabsDraggable key={item._id} item={item} index={index} />
           ))}
           {provided.placeholder}
         </div>

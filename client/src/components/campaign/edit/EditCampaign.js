@@ -6,12 +6,13 @@ import WikiTabs from './WikiTabs';
 
 const EditCampaign = () => {
   const [hidden, setHidden] = useState(false);
-  const [tabs, setTabs] = useState([]);
+  const [newTabs, setTabs] = useState([]);
   const campaignContext = useContext(CampaignContext);
   const { editCampaign, deleteCampaign, campaign } = campaignContext;
 
   const onEdit = formData => {
     formData.hidden = hidden;
+    formData.wiki = newTabs;
     editCampaign(campaign._id, formData);
   };
 
@@ -32,7 +33,11 @@ const EditCampaign = () => {
           Hidden
         </FormCheckbox> */}
         {campaign.tags && (
-          <WikiTabs tags={campaign.tags} tabs={campaign.tabs} />
+          <WikiTabs
+            tagsList={campaign.tags}
+            tabsList={campaign.tabs}
+            onTabsChange={tabs => setTabs(tabs)}
+          />
         )}
       </FormComponent>
       <Button

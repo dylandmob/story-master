@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const TabsDraggable = ({ item, index }) => {
   return (
-    <Draggable key={item.id} draggableId={item.id} index={index}>
+    <Draggable key={item._id} draggableId={item._id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -14,7 +14,7 @@ const TabsDraggable = ({ item, index }) => {
             provided.draggableProps.style
           )}
         >
-          {item.content}
+          {item.name}
         </div>
       )}
     </Draggable>

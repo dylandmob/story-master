@@ -134,7 +134,7 @@ router.patch(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, description, imageUrl, hidden } = req.body;
+    const { name, description, imageUrl, hidden, wiki } = req.body;
 
     try {
       let campaign = await Campaign.findById(req.params.campaignId);
@@ -157,7 +157,8 @@ router.patch(
       if (name) patchData.name = name;
       if (description) patchData.description = description;
       if (imageUrl) patchData.imageUrl = imageUrl;
-      // if (hidden) patchData.hidden = hidden;
+      if (hidden) patchData.hidden = hidden;
+      if (wiki) patchData.wiki = wiki;
 
       // Edit the campaign
       await campaign.updateOne({ $set: patchData });

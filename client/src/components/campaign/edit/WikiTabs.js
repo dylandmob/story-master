@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import TabsDroppable from './TabsDroppable';
-
-// fake data generator
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k + offset}`,
-    content: `item ${k + offset}`
-  }));
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -18,9 +11,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-/**
- * Moves an item from one list to another list.
- */
+// Moves an item from one list to another list.
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
@@ -35,11 +26,24 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const WikiTabs = () => {
-  const [tabs, setTabs] = useState(getItems(5, 10));
-  const [tags, setTags] = useState(getItems(10));
+const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
+  const [tabs, setTabs] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    let list = [];
+    if (tabsList) list = tabsList;
+    setTabs(list);
+    setTags(tagsList);
+    onTabsChange(list);
+  }, []);
 
   const getList = id => (id === 'droppable' ? tabs : tags);
+
+  const editTabs = tabs => {
+    setTabs(tabs);
+    onTabsChange(tabs);
+  };
 
   const onDragEnd = result => {
     const { source, destination } = result;
@@ -53,7 +57,7 @@ const WikiTabs = () => {
         source.index,
         destination.index
       );
-      source.droppableId === 'droppable2' ? setTags(items) : setTabs(items);
+      source.droppableId === 'droppable2' ? setTags(items) : editTabs(items);
     } else {
       const result = move(
         getList(source.droppableId),
@@ -62,7 +66,7 @@ const WikiTabs = () => {
         destination
       );
 
-      setTabs(result.droppable);
+      editTabs(result.droppable);
       setTags(result.droppable2);
     }
   };
