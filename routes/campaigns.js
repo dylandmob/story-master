@@ -62,10 +62,13 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
     let data = campaign.toObject();
     data.isAdmin = req.isAdmin;
 
-    // fetch tags in wiki
-    data.wiki = await Tag.find({
-      _id: { $in: data.wiki }
-    });
+    // fetch tags in wiki, using aggregate to maintain the same order
+    let query = [
+      { $match: { _id: { $in: data.wiki } } },
+      { $addFields: { __order: { $indexOfArray: [data.wiki, '$_id'] } } },
+      { $sort: { __order: 1 } }
+    ];
+    data.wiki = await Tag.aggregate(query);
 
     // remove non-essential data
     data.wiki = data.wiki.map(tab => {

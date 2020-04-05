@@ -11,7 +11,7 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-// Moves an item from one list to another list.
+// moves an item from one list to another list.
 const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
@@ -33,16 +33,12 @@ const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
   useEffect(() => {
     let defaultTabs = [];
     let defaultTags = [];
-    console.log('tabsList', tabsList);
-    console.log('tagsList', tagsList);
 
     if (tabsList) defaultTabs = tabsList;
     defaultTags = tagsList.filter(tag => {
       // Check if tag is in tabs list
       return !defaultTabs.find(tab => tab._id === tag._id);
     });
-    console.log('Default Tags', defaultTags);
-    console.log('Default Tabs', defaultTabs);
 
     setTabs(defaultTabs);
     setTags(defaultTags);
