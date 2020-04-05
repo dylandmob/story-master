@@ -55,18 +55,15 @@ async function handleToken() {
 async function getNewToken() {
   try {
     const currentRefreshToken = localStorage.getItem(REFRESH_TOKEN);
-    console.log('Getting new token', currentRefreshToken);
     const response = await client({
-      url: `api/auth/token`,
+      url: `/api/auth/token`,
       method: 'POST',
       data: {
         refreshToken: currentRefreshToken
       }
     });
-    console.log('Token Response', response.data);
     const { token, refreshToken } = response.data;
     const tokenExpTime = new Date().getTime() / 1000 + 3600;
-    console.log('Token Exp Time', tokenExpTime);
 
     localStorage.setItem(ACCESS_TOKEN, token);
     localStorage.setItem(REFRESH_TOKEN, refreshToken);
