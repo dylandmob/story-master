@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import CardContext from '../../context/cards';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Button } from 'shards-react';
+import { Icon } from 'semantic-ui-react';
 import CardComponent from '../cards/CardComponent';
 
 const Tag = ({ campaign, readOnly }) => {
@@ -13,10 +14,12 @@ const Tag = ({ campaign, readOnly }) => {
   const { params } = useRouteMatch();
 
   useEffect(() => {
-    if (campaign && campaign.tags) {
+    if (campaign._id && campaign.tags) {
       let foundTag = campaign.tags.find(t => t._id === params.tagId);
-      setTag(foundTag);
-      getCardsForTag(campaign._id, foundTag._id);
+      if (foundTag) {
+        setTag(foundTag);
+        getCardsForTag(campaign._id, foundTag._id);
+      }
     }
     // eslint-disable-next-line
   }, [params]);
@@ -24,7 +27,19 @@ const Tag = ({ campaign, readOnly }) => {
   return (
     <Container>
       <div className="my-3 text-center">
-        <h1>{tag.name}</h1>
+        <h1>
+          {tag.name}
+          {campaign.isAdmin && (
+            <Link to={`/campaign/${campaign._id}/edit/tag/${tag._id}/edit`}>
+              <Icon
+                name="pencil"
+                color="blue"
+                link
+                style={{ marginLeft: 15 }}
+              />
+            </Link>
+          )}
+        </h1>
         {campaign.isAdmin && (
           <Link to={`/campaign/${campaign._id}/edit/card/new`}>
             <Button className="mt-3" outline>
@@ -32,6 +47,14 @@ const Tag = ({ campaign, readOnly }) => {
             </Button>
           </Link>
         )}
+      </div>
+      <div
+        style={{
+          whiteSpace: 'pre-wrap',
+          width: '100%'
+        }}
+      >
+        <p>{tag.description}</p>
       </div>
       <Container
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}

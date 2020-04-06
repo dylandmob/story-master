@@ -8,6 +8,7 @@ import CreateForm from '../CreateForm';
 import CreateCard from '../CreateCard';
 import Tag from '../Tag';
 import EditCard from '../../cards/EditCard';
+import EditTag from './EditTag';
 
 const Campaign = () => {
   const campaignContext = useContext(CampaignContext);
@@ -40,6 +41,9 @@ const Campaign = () => {
           </Route>
           <Route exact path={`${path}/tag/new`}>
             <CreateForm type="tag" onCreate={onCreateTag} />
+          </Route>
+          <Route exact path={`${path}/tag/:tagId/edit`}>
+            <EditTag />
           </Route>
           <Route path={`${path}/tag/:tagId`}>
             <Tag campaign={campaign} />

@@ -30,7 +30,7 @@ const CardPage = ({ campaign }) => {
       <div style={{ textAlign: 'center', marginTop: 25 }}>
         <h1>{name}</h1>
         {campaign.isAdmin && (
-          <Link to={`/campaign/${params.id}/card/${params.cardId}/edit`}>
+          <Link to={`/campaign/${params.id}/edit/card/${params.cardId}`}>
             <Button>Edit</Button>
           </Link>
         )}

@@ -34,7 +34,7 @@ const EditCard = () => {
   const onEdit = cardData => {
     cardData.tags = selectedTags;
     editCard(campaign._id, card._id, cardData).then(id => {
-      history.push(`/campaign/${campaign._id}/card/${id}`);
+      history.push(`/campaign/${campaign._id}/edit/card/${id}`);
     });
   };
 

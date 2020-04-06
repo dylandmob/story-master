@@ -140,6 +140,7 @@ const CampaignState = props => {
       if (formData.imageUrl) tag.imageUrl = formData.imageUrl;
       const response = await tagApi.editTag(campaignId, tagId, tag);
       dispatch({ type: EDIT_TAG, payload: response });
+      return tagId;
     } catch (err) {
       handleError('Error editing a tag', err);
     }

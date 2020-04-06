@@ -79,10 +79,10 @@ router.patch('/:tagId', admin, async (req, res) => {
     if (privateDescription) patchData.privateDescription = privateDescription;
     if (imageUrl) patchData.imageUrl = imageUrl;
 
-    // Edit the campaign
+    // Edit the tag
     await tag.updateOne({ $set: patchData });
 
-    res.json(campaign._id);
+    res.json(tag._id);
   } catch (err) {
     res.status(500).send('Server Error: ' + err.message);
   }
