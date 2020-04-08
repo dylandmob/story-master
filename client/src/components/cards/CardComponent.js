@@ -10,8 +10,8 @@ const CardComponent = ({ data, path }) => {
       <Card
         key={_id}
         style={{
-          minWidth: '150px',
-          maxWidth: '150px',
+          minWidth: '175px',
+          maxWidth: '175px',
           margin: 20,
           overflow: 'hidden',
           cursor: 'pointer'

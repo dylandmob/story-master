@@ -25,10 +25,16 @@ export default function Wiki() {
   }
 
   return (
-    <Container>
+    <Container
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
       <Card
         style={{
-          minWidth: '200px',
+          minWidth: '70vw',
           maxWidth: '90vw',
           width: '100%',
           height: 'calc(90vh - 70px)',
