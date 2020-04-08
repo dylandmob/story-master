@@ -51,10 +51,12 @@ const Tag = ({ campaign, readOnly }) => {
       <div
         style={{
           whiteSpace: 'pre-wrap',
-          width: '100%'
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
         }}
       >
-        <p>{tag.description}</p>
+        <p style={{ width: '70%' }}>{tag.description}</p>
       </div>
       <Container
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}

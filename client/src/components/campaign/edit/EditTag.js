@@ -35,7 +35,7 @@ const EditTag = () => {
       hasImage
       onSave={onEdit}
       edit
-    ></FormComponent>
+    />
   );
 };
 

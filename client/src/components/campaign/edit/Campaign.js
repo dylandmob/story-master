@@ -40,7 +40,7 @@ const Campaign = () => {
             <EditCampaign />
           </Route>
           <Route exact path={`${path}/tag/new`}>
-            <CreateForm type="tag" onCreate={onCreateTag} />
+            <CreateForm type="tag" hasImage onCreate={onCreateTag} />
           </Route>
           <Route exact path={`${path}/tag/:tagId/edit`}>
             <EditTag />

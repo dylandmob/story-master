@@ -48,7 +48,7 @@ const CampaignNavbar = ({ campaign }) => {
           size="sm"
           outline
           style={{ width: '80%' }}
-          onClick={() => history.push(`/campaign/${campaign._id}/tag/new`)}
+          onClick={() => history.push(`/campaign/${campaign._id}/edit/tag/new`)}
         >
           add a tag
         </Button>
