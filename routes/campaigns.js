@@ -12,7 +12,7 @@ const Tag = require('../models/Tag');
 router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
 
-const skipIfQuery = middleware => (req, res, next) =>
+const skipIfQuery = (middleware) => (req, res, next) =>
   req.query.category ? middleware(req, res, next) : next();
 
 // @route   GET api/campaigns
@@ -23,16 +23,16 @@ router.get('/', skipIfQuery(auth), async (req, res) => {
     if (req.query.category && req.query.category === 'me') {
       // get user's campaigns if category = me
       const user = await User.findById(req.user.id);
-      let ids = user.campaigns.map(c => c.campaign);
+      let ids = user.campaigns.map((c) => c.campaign);
       let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
-        dateLastModified: -1
+        dateLastModified: -1,
       });
 
       res.json(campaigns);
     } else {
       // get all non-hidden campaigns
       let campaigns = await Campaign.find({ hidden: false }).sort({
-        dateLastModified: -1
+        dateLastModified: -1,
       });
 
       res.json(campaigns);
@@ -66,17 +66,17 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
     let query = [
       { $match: { _id: { $in: data.wiki } } },
       { $addFields: { __order: { $indexOfArray: [data.wiki, '$_id'] } } },
-      { $sort: { __order: 1 } }
+      { $sort: { __order: 1 } },
     ];
     data.wiki = await Tag.aggregate(query);
 
     // remove non-essential data
-    data.wiki = data.wiki.map(tab => {
+    data.wiki = data.wiki.map((tab) => {
       return {
         imageUrl: tab.imageUrl,
         _id: tab._id,
         name: tab.name,
-        description: tab.description
+        description: tab.description,
       };
     });
 
@@ -95,10 +95,22 @@ router.post(
   [
     auth,
     [
-      check('name', "Campaign's name is required")
-        .not()
-        .isEmpty()
-    ]
+      check('name', "Campaign's name is required").not().isEmpty(),
+      check(
+        'name',
+        'Name should be between 3 characters and 50 characters in length'
+      ).isLength({ min: 3, max: 50 }),
+      check('description', 'Description should be a string').isString(),
+      check(
+        'description',
+        'Description should be no more than 100,000 characters in length'
+      ).isLength({ max: 100000 }),
+      check('imageUrl', 'ImageUrl should be a string').isString(),
+      check(
+        'imageUrl',
+        'ImageUrl should be no more than 2,048 characters in length'
+      ).isLength({ max: 2048 }),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -114,7 +126,7 @@ router.post(
         name,
         description,
         imageUrl,
-        users: [{ user: req.user.id, isAdmin: true }]
+        users: [{ user: req.user.id, isAdmin: true }],
       });
 
       const campaign = await newCampaign.save();
@@ -123,7 +135,7 @@ router.post(
 
       // Add new campaign reference to user
       await User.findByIdAndUpdate(req.user.id, {
-        $push: { campaigns: { campaign: campaign._id, isAdmin: true } }
+        $push: { campaigns: { campaign: campaign._id, isAdmin: true } },
       });
 
       res.json(campaign);
@@ -145,10 +157,19 @@ router.patch(
       check('name', "Campaign's name should be a string").isString(),
       check(
         'name',
-        'Name should be between 3 characters and 30 characters in length'
-      ).isLength({ min: 3, max: 30 }),
-      check('imageUrl', 'ImageUrl should be a string').isString()
-    ]
+        'Name should be between 3 characters and 50 characters in length'
+      ).isLength({ min: 3, max: 50 }),
+      check('description', 'Description should be a string').isString(),
+      check(
+        'description',
+        'Description should be no more than 100,000 characters in length'
+      ).isLength({ max: 100000 }),
+      check('imageUrl', 'ImageUrl should be a string').isString(),
+      check(
+        'imageUrl',
+        'ImageUrl should be no more than 2,048 characters in length'
+      ).isLength({ max: 2048 }),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -165,7 +186,7 @@ router.patch(
       if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
 
       // Check if user is connected to the campaign
-      let user = campaign.users.find(e => {
+      let user = campaign.users.find((e) => {
         return e.user.toString() === req.user.id;
       });
 
@@ -204,7 +225,7 @@ router.delete('/:campaignId', admin, async (req, res) => {
     if (!campaign) return res.status(404).json({ msg: 'Campaign not found' });
 
     // Check if user is connected to the campaign
-    let user = campaign.users.find(e => {
+    let user = campaign.users.find((e) => {
       return e.user.toString() === req.user.id;
     });
 
@@ -214,9 +235,9 @@ router.delete('/:campaignId', admin, async (req, res) => {
     }
 
     // Remove campaign reference in users
-    await campaign.users.forEach(async element => {
+    await campaign.users.forEach(async (element) => {
       await User.findByIdAndUpdate(element.user, {
-        $pull: { campaigns: { campaign: campaign.id } }
+        $pull: { campaigns: { campaign: campaign.id } },
       });
     });
 

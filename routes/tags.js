@@ -5,6 +5,7 @@ const admin = require('../middleware/admin');
 const { check, validationResult } = require('express-validator');
 
 const Tag = require('../models/Tag');
+const Card = require('../models/Card');
 
 // @route   GET api/campaigns/:campaignId/tags
 // @desc    Gets the campaign's tags
@@ -12,7 +13,7 @@ const Tag = require('../models/Tag');
 router.get('/', auth, async (req, res) => {
   try {
     const tags = await Tag.find({ campaign: req.params.campaignId }).sort({
-      dateLastModified: -1
+      dateLastModified: -1,
     });
 
     res.json(tags);
@@ -26,14 +27,7 @@ router.get('/', auth, async (req, res) => {
 // @access  Admin
 router.post(
   '/',
-  [
-    admin,
-    [
-      check('name', "Tag's name is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [admin, [check('name', "Tag's name is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -48,7 +42,7 @@ router.post(
         name,
         description,
         privateDescription,
-        imageUrl
+        imageUrl,
       });
 
       const tag = await newTag.save();
@@ -98,7 +92,33 @@ router.delete('/:tagId', admin, async (req, res) => {
     // If no campaign was found
     if (!tag) return res.status(404).json({ msg: 'Tag not found' });
 
-    tag.remove();
+    // Remove tag from wiki
+
+    // Remove tags from cards with tag
+    let filterParmas = {
+      campaign: req.params.campaignId,
+      tags: { $in: tag },
+    };
+
+    const cards = await Card.find(filterParmas);
+    console.log('Cards that have tag', cards);
+
+    cards.map((card) => {
+      // Delete cards that only have this tag and no other tags
+      if (card.tags.length === 1) {
+        console.log('Card should be removed!', card);
+
+        // card.remove();
+      } else {
+        console.log('Card should remove tag', card);
+
+        // card.updateOne({ $pull: { _id: tag._id }})
+      }
+    });
+
+    console.log('Tag to be removed', tag);
+
+    // tag.remove();
 
     res.json({ msg: 'Campaign removed' });
   } catch (err) {
