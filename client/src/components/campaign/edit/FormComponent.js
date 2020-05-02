@@ -9,7 +9,7 @@ const FormComponent = ({
   onSave,
   hasImage,
   type,
-  children
+  children,
 }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -29,7 +29,7 @@ const FormComponent = ({
     // eslint-disable-next-line
   }, [defaultValue]);
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     onSave({ name, description, privateDescription, imageUrl });
   };
@@ -62,7 +62,7 @@ const FormComponent = ({
               label="Image Url"
               placeholder="Your image url aka link ex-https://place-hold.it/200x200"
               value={imageUrl}
-              onChange={e => setImageUrl(e.target.value)}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </React.Fragment>
         )}
@@ -71,24 +71,24 @@ const FormComponent = ({
           label="Name"
           placeholder={`Your ${type} name`}
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
         <Form.Field label="Description" />
         <TextareaAutosize
           placeholder={`Your ${type} description`}
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           minRows={3}
           maxRows={50}
           style={{ boxSizing: 'border-box' }}
         />
         {type !== 'campaign' && (
           <>
-            <Form.Field label="Private Description" />
+            <Form.Field label="Private Notes" />
             <TextareaAutosize
-              placeholder={`Your ${type} description only to be seen you and other admins`}
+              placeholder={`Your ${type} notes only to be seen you and other admins`}
               value={privateDescription}
-              onChange={e => setPrivateDescription(e.target.value)}
+              onChange={(e) => setPrivateDescription(e.target.value)}
               minRows={3}
               maxRows={50}
               style={{ boxSizing: 'border-box' }}

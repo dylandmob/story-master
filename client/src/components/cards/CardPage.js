@@ -39,13 +39,13 @@ const CardPage = ({ campaign }) => {
         style={{
           whiteSpace: 'pre-wrap',
           marginBottom: 100,
-          marginTop: 25
+          marginTop: 25,
         }}
       >
         <p>{description}</p>
         {campaign.isAdmin && (
           <>
-            <h3>Private Description</h3>
+            <h3>Private Notes</h3>
             <p>{privateDescription}</p>{' '}
           </>
         )}

@@ -15,7 +15,7 @@ const Tag = ({ campaign, readOnly }) => {
 
   useEffect(() => {
     if (campaign._id && campaign.tags) {
-      let foundTag = campaign.tags.find(t => t._id === params.tagId);
+      let foundTag = campaign.tags.find((t) => t._id === params.tagId);
       if (foundTag) {
         setTag(foundTag);
         getCardsForTag(campaign._id, foundTag._id);
@@ -53,7 +53,7 @@ const Tag = ({ campaign, readOnly }) => {
           whiteSpace: 'pre-wrap',
           width: '100%',
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
         <p style={{ width: '70%' }}>{tag.description}</p>
@@ -62,7 +62,7 @@ const Tag = ({ campaign, readOnly }) => {
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
         {cards && cards.length > 0 ? (
-          cards.map(card => (
+          cards.map((card) => (
             <CardComponent
               key={card._id}
               data={card}
