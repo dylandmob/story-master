@@ -9,8 +9,8 @@ const Card = require('../models/Card');
 
 // @route   GET api/campaigns/:campaignId/cards
 // @desc    Gets the campaign's cards
-// @access  Private
-router.get('/', auth, async (req, res) => {
+// @access  Public
+router.get('/', async (req, res) => {
   try {
     let filterParmas = { campaign: req.params.campaignId };
     if (req.query.tag) {
@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
     }
 
     const cards = await Card.find(filterParmas).sort({
-      dateLastModified: -1
+      dateLastModified: -1,
     });
 
     res.json(cards);
@@ -28,10 +28,10 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/campaigns/:campaignId/cards
-// @desc    Gets the campaign's cards
-// @access  Private
-router.get('/:cardId', auth, async (req, res) => {
+// @route   GET api/campaigns/:campaignId/cards/:cardId
+// @desc    Gets a card by id
+// @access  Public
+router.get('/:cardId', async (req, res) => {
   try {
     const card = await Card.findById(req.params.cardId);
 
@@ -50,12 +50,10 @@ router.post(
   [
     admin,
     [
-      check('name', "Card's name is required")
-        .not()
-        .isEmpty(),
+      check('name', "Card's name is required").not().isEmpty(),
       check('name', "Card's length should be between 1 and 50").isLength({
         min: 1,
-        max: 50
+        max: 50,
       }),
       check(
         'tags',
@@ -72,8 +70,8 @@ router.post(
       check(
         'imageUrl',
         'Image url can not be longer than 50 characters'
-      ).isLength({ max: 50 })
-    ]
+      ).isLength({ max: 50 }),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -90,7 +88,7 @@ router.post(
         description,
         privateDescription,
         imageUrl,
-        tags
+        tags,
       });
 
       const card = await newCard.save();
@@ -112,7 +110,7 @@ router.patch(
     [
       check('name', "Card's length should be between 1 and 50").isLength({
         min: 1,
-        max: 50
+        max: 50,
       }),
       check(
         'tags',
@@ -129,8 +127,8 @@ router.patch(
       check(
         'imageUrl',
         'Image url can not be longer than 50 characters'
-      ).isLength({ max: 50 })
-    ]
+      ).isLength({ max: 50 }),
+    ],
   ],
   async (req, res) => {
     const { name, description, privateDescription, imageUrl, tags } = req.body;
