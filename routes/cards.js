@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
+const isAdmin = require('../middleware/isAdmin');
 const { check, validationResult } = require('express-validator');
 
 const Tag = require('../models/Tag');
@@ -9,12 +10,16 @@ const Card = require('../models/Card');
 
 // @route   GET api/campaigns/:campaignId/cards
 // @desc    Gets the campaign's cards
-// @access  Public
-router.get('/', async (req, res) => {
+// @access  Public, hide cards
+router.get('/', isAdmin, async (req, res) => {
   try {
     let filterParmas = { campaign: req.params.campaignId };
     if (req.query.tag) {
       filterParmas = { ...filterParmas, tags: { $in: req.query.tag } };
+    }
+
+    if (!req.isAdmin) {
+      filterParmas = { ...filterParmas, hidden: false };
     }
 
     const cards = await Card.find(filterParmas).sort({
@@ -30,10 +35,14 @@ router.get('/', async (req, res) => {
 
 // @route   GET api/campaigns/:campaignId/cards/:cardId
 // @desc    Gets a card by id
-// @access  Public
-router.get('/:cardId', async (req, res) => {
+// @access  Public, if card is not hidden
+router.get('/:cardId', isAdmin, async (req, res) => {
   try {
     const card = await Card.findById(req.params.cardId);
+
+    // Check if user has permission
+    if (!req.isAdmin && card.hidden)
+      return res.status(403).json({ msg: 'Not authorized to view this card' });
 
     res.json(card);
   } catch (err) {
