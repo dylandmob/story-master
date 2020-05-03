@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import EditCampaign from './EditCampaign';
 import CampaignNavbar from './CampaignNavbar';
@@ -15,6 +15,7 @@ const Campaign = () => {
   const { campaign, getCampaignForId, getTags, createTag } = campaignContext;
 
   let { path, params } = useRouteMatch();
+  let history = useHistory();
 
   useEffect(() => {
     if (params.id) {
@@ -24,7 +25,11 @@ const Campaign = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onCreateTag = tag => createTag(campaign._id, tag);
+  const onCreateTag = (tag) => {
+    createTag(campaign._id, tag).then((id) =>
+      history.push(`/campaign/${campaign._id}/edit/tag/${id}`)
+    );
+  };
 
   return campaign ? (
     <React.Fragment>
@@ -32,7 +37,7 @@ const Campaign = () => {
       <Container
         style={{
           marginLeft: '160px',
-          padding: '0px 10px'
+          padding: '0px 10px',
         }}
       >
         <Switch>

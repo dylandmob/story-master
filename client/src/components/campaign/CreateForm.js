@@ -10,7 +10,7 @@ const CreateForm = ({ onCreate, hasImage, type, children }) => {
     hasImage ? 'https://place-hold.it/200x200' : null
   );
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     onCreate({ name, description, privateDescription, imageUrl });
   };
@@ -41,7 +41,7 @@ const CreateForm = ({ onCreate, hasImage, type, children }) => {
               label="Image Url"
               placeholder="Your image url aka link ex-https://place-hold.it/200x200"
               value={imageUrl}
-              onChange={e => setImageUrl(e.target.value)}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </React.Fragment>
         )}
@@ -50,20 +50,20 @@ const CreateForm = ({ onCreate, hasImage, type, children }) => {
           label="Name"
           placeholder={`Your new ${type} name`}
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
         <Form.TextArea
           label="Description"
           placeholder={`Your new ${type} description`}
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           style={{ minHeight: 60 }}
         />
         <Form.TextArea
-          label="Private Description"
-          placeholder={`Your ${type} description only to be seen by you and other admins`}
+          label="Private Notes"
+          placeholder={`Your ${type} notes only to be seen by you and other admins`}
           value={privateDescription}
-          onChange={e => setPrivateDescription(e.target.value)}
+          onChange={(e) => setPrivateDescription(e.target.value)}
           style={{ minHeight: 60 }}
         />
         {type === 'card' && <React.Fragment>{children}</React.Fragment>}

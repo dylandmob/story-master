@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator');
 
 const Tag = require('../models/Tag');
 const Card = require('../models/Card');
+const Campaign = require('../models/Campaign');
 
 // @route   GET api/campaigns/:campaignId/tags
 // @desc    Gets the campaign's tags
@@ -92,7 +93,14 @@ router.delete('/:tagId', admin, async (req, res) => {
     // If no campaign was found
     if (!tag) return res.status(404).json({ msg: 'Tag not found' });
 
-    // Remove tag from wiki
+    // Remove tag from wiki if in wiki
+    let campaign = await Campaign.findById(req.params.campaignId);
+    let wiki = campaign.wiki.filter(
+      (tab) => tab.toString() !== req.params.tagId
+    );
+
+    if (wiki.length !== campaign.wiki.length)
+      await campaign.updateOne({ $set: { wiki } });
 
     // Remove tags from cards with tag
     let filterParmas = {
@@ -101,26 +109,19 @@ router.delete('/:tagId', admin, async (req, res) => {
     };
 
     const cards = await Card.find(filterParmas);
-    console.log('Cards that have tag', cards);
 
     cards.map((card) => {
       // Delete cards that only have this tag and no other tags
       if (card.tags.length === 1) {
-        console.log('Card should be removed!', card);
-
-        // card.remove();
+        card.remove();
       } else {
-        console.log('Card should remove tag', card);
-
-        // card.updateOne({ $pull: { _id: tag._id }})
+        card.updateOne({ $pull: { _id: tag._id } });
       }
     });
 
-    console.log('Tag to be removed', tag);
+    tag.remove();
 
-    // tag.remove();
-
-    res.json({ msg: 'Campaign removed' });
+    res.json({ msg: 'Tag removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

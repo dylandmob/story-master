@@ -18,7 +18,7 @@ const CampaignNavbar = ({ campaign }) => {
         top: 60,
         left: 0,
         overflowX: 'hidden',
-        paddingTop: '20px'
+        paddingTop: '20px',
       }}
     >
       <NavItem>
@@ -34,7 +34,7 @@ const CampaignNavbar = ({ campaign }) => {
       </Link>
       <h6 style={{ marginLeft: '70px' }}>Tags</h6>
       {campaign.tags &&
-        campaign.tags.map(tag => (
+        campaign.tags.map((tag) => (
           <Link
             key={tag._id}
             className="nav-item nav-link"

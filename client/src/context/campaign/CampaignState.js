@@ -16,21 +16,21 @@ import {
   DELETE_TAG,
   EDIT_TAG,
   GET_TAGS,
-  GET_CAMPAIGNS
+  GET_CAMPAIGNS,
 } from '../types';
 
-const CampaignState = props => {
+const CampaignState = (props) => {
   const initialState = {
     campaign: null,
     campaigns: [],
     myCampaigns: [],
-    campaignError: null
+    campaignError: null,
   };
 
   const [state, dispatch] = useReducer(campaignReducer, initialState);
 
   // Get a campaign by it's id
-  const getCampaignForId = async id => {
+  const getCampaignForId = async (id) => {
     try {
       const response = await api.getCampaignForId(id);
       dispatch({ type: GET_CURRENT_CAMPAIGN, payload: response });
@@ -39,7 +39,7 @@ const CampaignState = props => {
     }
   };
 
-  const getTags = async campaignId => {
+  const getTags = async (campaignId) => {
     try {
       const response = await tagApi.getTags(campaignId);
       dispatch({ type: GET_TAGS, payload: response });
@@ -104,7 +104,7 @@ const CampaignState = props => {
   };
 
   // Delete a campaign
-  const deleteCampaign = async id => {
+  const deleteCampaign = async (id) => {
     try {
       await api.deleteCampaign(id);
       dispatch({ type: DELETE_CAMPAIGN });
@@ -124,6 +124,7 @@ const CampaignState = props => {
       if (formData.imageUrl) tag.imageUrl = formData.imageUrl;
       const response = await tagApi.createTag(campaignId, tag);
       dispatch({ type: CREATE_TAG, payload: response });
+      return response._id;
     } catch (err) {
       handleError('Error creating a tag', err);
     }
@@ -150,7 +151,7 @@ const CampaignState = props => {
   const deleteTag = async (campaignId, tagId) => {
     try {
       await tagApi.deleteTag(campaignId, tagId);
-      dispatch({ type: DELETE_TAG });
+      dispatch({ type: DELETE_TAG, payload: tagId });
     } catch (err) {
       handleError('Error deleting a tag', err);
     }
@@ -179,7 +180,7 @@ const CampaignState = props => {
         getTags,
         createTag,
         editTag,
-        deleteTag
+        deleteTag,
       }}
     >
       {props.children}

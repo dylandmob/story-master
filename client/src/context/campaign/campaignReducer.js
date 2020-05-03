@@ -5,7 +5,9 @@ import {
   CREATE_CAMPAIGN,
   GET_CURRENT_CAMPAIGN,
   DELETE_CAMPAIGN,
-  GET_TAGS
+  GET_TAGS,
+  CREATE_TAG,
+  DELETE_TAG,
 } from '../types';
 
 export default (state, action) => {
@@ -23,7 +25,24 @@ export default (state, action) => {
     case GET_TAGS:
       return {
         ...state,
-        campaign: { ...state.campaign, tags: action.payload }
+        campaign: { ...state.campaign, tags: action.payload },
+      };
+    case CREATE_TAG:
+      return {
+        ...state,
+        campaign: {
+          ...state.campaign,
+          tags: [...state.campaign.tags, action.payload],
+        },
+      };
+    case DELETE_TAG:
+      return {
+        ...state,
+        campaign: {
+          ...state.campaign,
+          tags: state.campaign.tags.filter((tag) => tag._id !== action.payload),
+          wiki: state.campaign.wiki.filter((tab) => tab !== action.payload),
+        },
       };
     case CAMPAIGN_ERROR:
       return { ...state, userError: action.payload };
