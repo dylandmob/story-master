@@ -1,13 +1,12 @@
 import React, { useReducer } from 'react';
 import AuthContext from '.';
 import authReducer from './authReducer';
-
 import { SIGN_IN, SIGN_OUT, SIGNED_IN } from '../types';
 
-const AuthState = props => {
+const AuthState = (props) => {
   const initialState = {
     authStatus: SIGN_IN,
-    authError: null
+    authError: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -29,7 +28,7 @@ const AuthState = props => {
         authError: state.authError,
         signIn,
         signOut,
-        setSignedInStatus
+        setSignedInStatus,
       }}
     >
       {props.children}
