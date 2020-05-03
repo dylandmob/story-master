@@ -19,6 +19,9 @@ import {
   GET_CAMPAIGNS,
 } from '../types';
 
+const CAMPAIGN = 'campaign';
+const TAG = 'tag';
+
 const CampaignState = (props) => {
   const initialState = {
     campaign: null,
@@ -29,7 +32,7 @@ const CampaignState = (props) => {
 
   const [state, dispatch] = useReducer(campaignReducer, initialState);
 
-  // Get a campaign by it's id
+  // Get a campaign by id
   const getCampaignForId = async (id) => {
     try {
       const response = await api.getCampaignForId(id);
@@ -39,6 +42,7 @@ const CampaignState = (props) => {
     }
   };
 
+  // Get the tags of a campaign
   const getTags = async (campaignId) => {
     try {
       const response = await tagApi.getTags(campaignId);
@@ -69,18 +73,12 @@ const CampaignState = (props) => {
   };
 
   // Create a new campaign
-  const createCampaign = async (name, description, imageUrl) => {
+  const createCampaign = async (formData) => {
     try {
-      if (!name && name.length > 2 && name.length < 30) {
-        throw Error('Name is not of proper format');
-      }
-      let data = {};
-      if (name) data.name = name;
-      if (description) data.description = description;
-      if (imageUrl) data.imageUrl = imageUrl;
+      let data = normalizeData(formData, CAMPAIGN);
       const response = await api.createCampaign(data);
       dispatch({ type: CREATE_CAMPAIGN, payload: response });
-      return response;
+      return response._id;
     } catch (err) {
       handleError('Error creating a campaign', err);
     }
@@ -89,12 +87,7 @@ const CampaignState = (props) => {
   // Edit campaign
   const editCampaign = async (campaignId, formData) => {
     try {
-      let data = {};
-      if (formData.name) data.name = formData.name;
-      if (formData.description) data.description = formData.description;
-      if (formData.imageUrl) data.imageUrl = formData.imageUrl;
-      if (formData.hidden) data.hidden = formData.hidden;
-      if (formData.wiki) data.wiki = formData.wiki;
+      let data = normalizeData(formData, CAMPAIGN);
       const response = await api.editCampaign(campaignId, data);
       dispatch({ type: EDIT_CAMPAIGN, payload: response });
       return response;
@@ -116,12 +109,7 @@ const CampaignState = (props) => {
   // Create a tag
   const createTag = async (campaignId, formData) => {
     try {
-      let tag = {};
-      if (formData.name) tag.name = formData.name;
-      if (formData.description) tag.description = formData.description;
-      if (formData.privateDescription)
-        tag.privateDescription = formData.privateDescription;
-      if (formData.imageUrl) tag.imageUrl = formData.imageUrl;
+      let tag = normalizeData(formData, TAG);
       const response = await tagApi.createTag(campaignId, tag);
       dispatch({ type: CREATE_TAG, payload: response });
       return response._id;
@@ -133,12 +121,7 @@ const CampaignState = (props) => {
   // Edit a tag
   const editTag = async (campaignId, tagId, formData) => {
     try {
-      let tag = {};
-      if (formData.name) tag.name = formData.name;
-      if (formData.description) tag.description = formData.description;
-      if (formData.privateDescription)
-        tag.privateDescription = formData.privateDescription;
-      if (formData.imageUrl) tag.imageUrl = formData.imageUrl;
+      let tag = normalizeData(formData, TAG);
       const response = await tagApi.editTag(campaignId, tagId, tag);
       dispatch({ type: EDIT_TAG, payload: response });
       return tagId;
@@ -157,8 +140,18 @@ const CampaignState = (props) => {
     }
   };
 
-  // Set tabs
-  // const setTabs = async (campaignId, tabs) => {};
+  // Normalize form data, depends on type
+  const normalizeData = (formData, type) => {
+    let data = {};
+    if (formData.name) data.name = formData.name;
+    if (formData.description) data.description = formData.description;
+    if (formData.imageUrl) data.imageUrl = formData.imageUrl;
+    if (type === CAMPAIGN && formData.hidden) data.hidden = formData.hidden;
+    if (type === CAMPAIGN && formData.wiki) data.wiki = formData.wiki;
+    if (type === TAG && formData.privateDescription)
+      data.privateDescription = formData.privateDescription;
+    return data;
+  };
 
   // Handle errors
   const handleError = (type, err) =>

@@ -4,11 +4,12 @@ import { Container, Image, Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const FormComponent = ({
-  defaultValue,
-  edit,
-  onSave,
-  hasImage,
   type,
+  defaultValue,
+  explanation,
+  edit,
+  hasImage,
+  onSave,
   children,
 }) => {
   const [name, setName] = useState('');
@@ -45,6 +46,7 @@ const FormComponent = ({
         <h3 className="text-center mb-3">
           {edit ? `Edit your ${type}` : `Create a new ${type}`}
         </h3>
+        {explanation && <p>{explanation}</p>}
         {type === 'tag' && (
           <p>Tags are applied to your cards to help you organize them!</p>
         )}
@@ -70,6 +72,7 @@ const FormComponent = ({
           fluid
           label="Name"
           placeholder={`Your ${type} name`}
+          required={!edit}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -97,7 +100,7 @@ const FormComponent = ({
         )}
         {children}
         <Button className="my-4" block theme="success" type="submit">
-          Save
+          {edit ? 'Save' : 'Create'}
         </Button>
       </Form>
     </Container>

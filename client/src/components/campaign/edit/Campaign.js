@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Container } from 'semantic-ui-react';
 import EditCampaign from './EditCampaign';
 import CampaignNavbar from './CampaignNavbar';
@@ -26,9 +27,10 @@ const Campaign = () => {
   }, []);
 
   const onCreateTag = (tag) => {
-    createTag(campaign._id, tag).then((id) =>
-      history.push(`/campaign/${campaign._id}/edit/tag/${id}`)
-    );
+    createTag(campaign._id, tag).then((id) => {
+      toast.success('Yes! Tag wass created and ready to go.');
+      history.push(`/campaign/${campaign._id}/edit/tag/${id}`);
+    });
   };
 
   return campaign ? (

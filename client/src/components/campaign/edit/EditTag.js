@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import FormComponent from './FormComponent';
 import { Button } from 'shards-react';
 
@@ -23,16 +24,16 @@ const EditTag = () => {
 
   const onEdit = (tagData) => {
     editTag(campaign._id, tag._id, tagData).then((id) => {
-      console.log('Id', id);
-
+      toast.success('Changes saved!');
       history.push(`/campaign/${campaign._id}/edit/tag/${id}`);
     });
   };
 
   const onDelete = () => {
-    deleteTag(campaign._id, tag._id).then(() =>
-      history.push(`/campaign/${campaign._id}/edit`)
-    );
+    deleteTag(campaign._id, tag._id).then(() => {
+      toast('Done! That tag was deleted.');
+      history.push(`/campaign/${campaign._id}/edit`);
+    });
   };
 
   return (
@@ -45,7 +46,7 @@ const EditTag = () => {
         edit
       />
       <Button
-        className="mt-4"
+        className="mt-3"
         block
         theme="danger"
         type="button"
