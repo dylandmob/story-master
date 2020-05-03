@@ -35,9 +35,9 @@ const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
     let defaultTags = [];
 
     if (tabsList) defaultTabs = tabsList;
-    defaultTags = tagsList.filter(tag => {
+    defaultTags = tagsList.filter((tag) => {
       // Check if tag is in tabs list
-      return !defaultTabs.find(tab => tab._id === tag._id);
+      return !defaultTabs.find((tab) => tab._id === tag._id);
     });
 
     setTabs(defaultTabs);
@@ -46,14 +46,14 @@ const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
     // eslint-disable-next-line
   }, []);
 
-  const getList = id => (id === 'droppable' ? tabs : tags);
+  const getList = (id) => (id === 'droppable' ? tabs : tags);
 
-  const editTabs = tabs => {
+  const editTabs = (tabs) => {
     setTabs(tabs);
     onTabsChange(tabs);
   };
 
-  const onDragEnd = result => {
+  const onDragEnd = (result) => {
     const { source, destination } = result;
 
     // dropped outside the list
@@ -81,9 +81,13 @@ const WikiTabs = ({ tabsList, tagsList, onTabsChange }) => {
 
   return (
     <div style={{ marginTop: 25 }}>
-      <h2>Edit Tabs</h2>
+      <h2>Wiki Settings</h2>
       <p style={{ marginBottom: 5 }}>
         You can add and order tags to display as tabs on your wiki!
+      </p>
+      <p>
+        Your wiki is what others will see when they visit your campaign. You can
+        view it by hitting the <b>view wiki</b> button on the left sidebar!
       </p>
       <div style={{ display: 'flex' }}>
         <DragDropContext onDragEnd={onDragEnd}>
