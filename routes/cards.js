@@ -10,7 +10,7 @@ const Card = require('../models/Card');
 
 // @route   GET api/campaigns/:campaignId/cards
 // @desc    Gets the campaign's cards
-// @access  Public, hide cards
+// @access  Public, hide cards if not admin
 router.get('/', isAdmin, async (req, res) => {
   try {
     let filterParmas = { campaign: req.params.campaignId };

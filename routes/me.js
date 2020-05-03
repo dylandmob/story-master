@@ -7,7 +7,7 @@ const User = require('../models/User');
 
 // @route   GET api/me
 // @desc    Get a user using their token
-// @access  Public
+// @access  Private
 router.get('/', auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id);
@@ -23,6 +23,9 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// @route   PATCH api/me
+// @desc    Edit a user
+// @access  Private
 router.patch(
   '/',
   [
@@ -33,8 +36,8 @@ router.patch(
         'name',
         'Name should be between 3 characters and 25 characters in length'
       ).isLength({ min: 3, max: 25 }),
-      check('imageUrl', 'ImageUrl should be a string').isString()
-    ]
+      check('imageUrl', 'ImageUrl should be a string').isString(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);

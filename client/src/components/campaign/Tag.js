@@ -20,6 +20,12 @@ const Tag = ({ campaign, readOnly }) => {
         setTag(foundTag);
         getCardsForTag(campaign._id, foundTag._id);
       }
+    } else if (campaign._id && campaign.wiki) {
+      let foundTag = campaign.wiki.find((t) => t === params.tagId);
+      if (foundTag) {
+        setTag(foundTag);
+        getCardsForTag(campaign._id, foundTag._id);
+      }
     }
     // eslint-disable-next-line
   }, [params]);
