@@ -27,6 +27,9 @@ const Tag = ({ campaign, readOnly }) => {
         getCardsForTag(campaign._id, foundTag._id);
       }
     }
+    console.log('Campaign Wiki', campaign.wiki);
+    console.log('params', params.tagId);
+
     // eslint-disable-next-line
   }, [params]);
 
