@@ -21,14 +21,12 @@ const Tag = ({ campaign, readOnly }) => {
         getCardsForTag(campaign._id, foundTag._id);
       }
     } else if (campaign._id && campaign.wiki) {
-      let foundTag = campaign.wiki.find((t) => t === params.tagId);
+      let foundTag = campaign.wiki.find((t) => t._id === params.tagId);
       if (foundTag) {
         setTag(foundTag);
         getCardsForTag(campaign._id, foundTag._id);
       }
     }
-    console.log('Campaign Wiki', campaign.wiki);
-    console.log('params', params.tagId);
 
     // eslint-disable-next-line
   }, [params]);
