@@ -60,10 +60,17 @@ const Tag = ({ campaign, readOnly }) => {
           whiteSpace: 'pre-wrap',
           width: '100%',
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
         }}
       >
         <p style={{ width: '70%' }}>{tag.description}</p>
+        {campaign.isAdmin && tag.privateDescription && (
+          <>
+            <h5>Private Notes</h5>
+            <p style={{ width: '70%' }}>{tag.privateDescription}</p>
+          </>
+        )}
       </div>
       <Container
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}

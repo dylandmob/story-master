@@ -43,10 +43,10 @@ const CardPage = ({ campaign }) => {
         }}
       >
         <p>{description}</p>
-        {campaign.isAdmin && (
+        {campaign.isAdmin && card.privateDescription && (
           <>
-            <h3>Private Notes</h3>
-            <p>{privateDescription}</p>{' '}
+            <h5>Private Notes</h5>
+            <p>{privateDescription}</p>
           </>
         )}
       </div>
