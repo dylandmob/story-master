@@ -47,9 +47,6 @@ const FormComponent = ({
           {edit ? `Edit your ${type}` : `Create a new ${type}`}
         </h3>
         {explanation && <p>{explanation}</p>}
-        {type === 'tag' && (
-          <p>Tags are applied to your cards to help you organize them!</p>
-        )}
         {hasImage && (
           <React.Fragment>
             <Image

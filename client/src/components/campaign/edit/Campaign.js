@@ -1,22 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import EditCampaign from './EditCampaign';
 import CampaignNavbar from './CampaignNavbar';
-import CreateForm from '../CreateForm';
-import CreateCard from '../CreateCard';
-import Tag from '../Tag';
+import CreateCard from '../../cards/CreateCard';
 import EditCard from '../../cards/EditCard';
-import EditTag from './EditTag';
+import Tag from '../../tags/Tag';
+import CreateTag from '../../tags/CreateTag';
+import EditTag from '../../tags/EditTag';
 
 const Campaign = () => {
   const campaignContext = useContext(CampaignContext);
-  const { campaign, getCampaignForId, getTags, createTag } = campaignContext;
+  const { campaign, getCampaignForId, getTags } = campaignContext;
 
   let { path, params } = useRouteMatch();
-  let history = useHistory();
 
   useEffect(() => {
     if (params.id) {
@@ -25,13 +23,6 @@ const Campaign = () => {
     }
     // eslint-disable-next-line
   }, []);
-
-  const onCreateTag = (tag) => {
-    createTag(campaign._id, tag).then((id) => {
-      toast.success('Yes! Tag wass created and ready to go.');
-      history.push(`/campaign/${campaign._id}/edit/tag/${id}`);
-    });
-  };
 
   return campaign ? (
     <React.Fragment>
@@ -47,7 +38,7 @@ const Campaign = () => {
             <EditCampaign />
           </Route>
           <Route exact path={`${path}/tag/new`}>
-            <CreateForm type="tag" hasImage onCreate={onCreateTag} />
+            <CreateTag />
           </Route>
           <Route exact path={`${path}/tag/:tagId/edit`}>
             <EditTag />

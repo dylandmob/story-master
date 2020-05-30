@@ -4,7 +4,7 @@ import CardContext from '../../context/cards';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FormCheckbox } from 'shards-react';
-import CreateForm from './CreateForm';
+import FormComponent from '../campaign/edit/FormComponent';
 
 const CreateCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -34,7 +34,12 @@ const CreateCard = () => {
   };
 
   return (
-    <CreateForm type="card" hasImage onCreate={onCreate}>
+    <FormComponent
+      type="card"
+      explanation="A card is a piece of your lore. It can be anything from a character to a magical item! Make sure you add a name and at least one tag."
+      hasImage
+      onSave={onCreate}
+    >
       <h4>Add tags - minimum 1</h4>
       {campaign &&
         campaign.tags.map((tag) => (
@@ -46,7 +51,7 @@ const CreateCard = () => {
             {tag.name}
           </FormCheckbox>
         ))}
-    </CreateForm>
+    </FormComponent>
   );
 };
 

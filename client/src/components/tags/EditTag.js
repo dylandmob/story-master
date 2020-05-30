@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import CampaignContext from '../../../context/campaign';
+import CampaignContext from '../../context/campaign';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import FormComponent from './FormComponent';
+import FormComponent from '../campaign/edit/FormComponent';
 import { Button } from 'shards-react';
 
 const EditTag = () => {

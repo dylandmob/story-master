@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import Tag from '../Tag';
+import Tag from '../../tags/Tag';
 import CardPage from '../../cards/CardPage';
 
 export const WikiLayout = ({ campaign }) => {
