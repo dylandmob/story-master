@@ -21,6 +21,8 @@ const FormComponent = ({
     hasImage ? 'https://place-hold.it/200x200' : null
   );
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [campaignName, setCampaignName] = useState('');
+  const [campaignNameError, setCampaignNameError] = useState(null);
 
   useEffect(() => {
     if (defaultValue) {
@@ -39,6 +41,9 @@ const FormComponent = ({
   };
 
   const onConfirmDelete = () => {
+    if (type === 'campaign' && campaignName !== defaultValue.name) {
+      return setCampaignNameError("That is not the campaign's name");
+    }
     setIsDeleteModalOpen(false);
     onDelete();
   };
@@ -125,7 +130,29 @@ const FormComponent = ({
               body="Are you sure?"
               onConfirm={onConfirmDelete}
               onClose={() => setIsDeleteModalOpen(false)}
-            />
+            >
+              {type === 'campaign' && (
+                <Form
+                  size="small"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: 20,
+                  }}
+                >
+                  <Form.Input
+                    fluid
+                    required
+                    label="Please confirm your campaign's name"
+                    placeholder="Your campaign's name"
+                    width={14}
+                    value={campaignName}
+                    error={campaignNameError}
+                    onChange={(e) => setCampaignName(e.target.value)}
+                  />
+                </Form>
+              )}
+            </ConfirmModal>
           </>
         )}
       </Form>

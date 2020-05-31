@@ -3,7 +3,6 @@ import CampaignContext from '../../context/campaign';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import FormComponent from '../campaign/edit/FormComponent';
-import { Button } from 'shards-react';
 
 const EditTag = () => {
   const [tag, setTag] = useState();
@@ -37,25 +36,14 @@ const EditTag = () => {
   };
 
   return (
-    <>
-      <FormComponent
-        defaultValue={tag}
-        type="tag"
-        hasImage
-        onSave={onEdit}
-        edit
-      />
-      <Button
-        className="mt-3"
-        block
-        theme="danger"
-        type="button"
-        onClick={onDelete}
-        style={{ width: 500, margin: 'auto', marginBottom: '100px' }}
-      >
-        Delete
-      </Button>
-    </>
+    <FormComponent
+      defaultValue={tag}
+      type="tag"
+      hasImage
+      edit
+      onSave={onEdit}
+      onDelete={onDelete}
+    />
   );
 };
 

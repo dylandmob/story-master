@@ -37,8 +37,9 @@ const EditCampaign = () => {
         defaultValue={campaign}
         type="campaign"
         hasImage
-        onSave={onEdit}
         edit
+        onSave={onEdit}
+        onDelete={onDelete}
       >
         {/* <FormCheckbox checked={hidden} onChange={() => setHidden(!hidden)}>
           Hidden
@@ -51,16 +52,6 @@ const EditCampaign = () => {
           />
         )}
       </FormComponent>
-      <Button
-        className="mt-4"
-        block
-        theme="danger"
-        type="button"
-        onClick={onDelete}
-        style={{ width: 500, margin: 'auto', marginBottom: '100px' }}
-      >
-        Delete campaign
-      </Button>
     </Container>
   );
 };

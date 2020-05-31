@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, Modal, ModalBody, ModalHeader } from 'shards-react';
 
-const ConfirmModal = ({ open, onClose, onConfirm, header, body }) => {
+const ConfirmModal = ({ open, onClose, onConfirm, header, body, children }) => {
   return (
     <Modal open={open} hideModal={onClose}>
       <ModalHeader>{header}</ModalHeader>
       <ModalBody>{body}</ModalBody>
+      {children}
       <div
         style={{
           display: 'flex',

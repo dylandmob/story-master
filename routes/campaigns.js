@@ -8,6 +8,7 @@ const { check, validationResult } = require('express-validator');
 const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 const Tag = require('../models/Tag');
+const Card = require('../models/Card');
 
 router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
@@ -131,8 +132,6 @@ router.post(
 
       const campaign = await newCampaign.save();
 
-      console.log('New Campaign', campaign);
-
       // Add new campaign reference to user
       await User.findByIdAndUpdate(req.user.id, {
         $push: { campaigns: { campaign: campaign._id, isAdmin: true } },
@@ -241,6 +240,13 @@ router.delete('/:campaignId', admin, async (req, res) => {
       });
     });
 
+    // Remove all cards
+    await Card.remove({ campaign: campaign.id });
+
+    // Remove all tags
+    await Tag.remove({ campaign: campaign.id });
+
+    // Remove campaign
     campaign.remove();
 
     res.json({ msg: 'Campaign removed' });
