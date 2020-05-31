@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'shards-react';
 import { Container, Image, Form } from 'semantic-ui-react';
 import TextareaAutosize from 'react-textarea-autosize';
+import ConfirmModal from '../../layout/ConfirmModal';
 
 const FormComponent = ({
   type,
@@ -10,6 +11,7 @@ const FormComponent = ({
   edit,
   hasImage,
   onSave,
+  onDelete,
   children,
 }) => {
   const [name, setName] = useState('');
@@ -18,6 +20,7 @@ const FormComponent = ({
   const [imageUrl, setImageUrl] = useState(
     hasImage ? 'https://place-hold.it/200x200' : null
   );
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
     if (defaultValue) {
@@ -33,6 +36,11 @@ const FormComponent = ({
   const onSubmit = (e) => {
     e.preventDefault();
     onSave({ name, description, privateDescription, imageUrl });
+  };
+
+  const onConfirmDelete = () => {
+    setIsDeleteModalOpen(false);
+    onDelete();
   };
 
   return (
@@ -99,6 +107,27 @@ const FormComponent = ({
         <Button className="my-4" block theme="success" type="submit">
           {edit ? 'Save' : 'Create'}
         </Button>
+        {edit && (
+          <>
+            <Button
+              className="mt-2"
+              block
+              theme="danger"
+              type="button"
+              onClick={() => setIsDeleteModalOpen(true)}
+              style={{ width: 500, margin: 'auto', marginBottom: '100px' }}
+            >
+              Delete
+            </Button>
+            <ConfirmModal
+              open={true}
+              header={`Delete ${type}?`}
+              body="Are you sure?"
+              onConfirm={onConfirmDelete}
+              onClose={() => setIsDeleteModalOpen(false)}
+            />
+          </>
+        )}
       </Form>
     </Container>
   );

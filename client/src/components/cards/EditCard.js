@@ -5,6 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FormCheckbox, Button } from 'shards-react';
 import FormComponent from '../campaign/edit/FormComponent';
+import ConfirmModal from '../layout/ConfirmModal';
 
 const EditCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -27,7 +28,7 @@ const EditCard = () => {
 
   useEffect(() => {
     if (campaign && card) {
-      setSelectedTags(selectedTags.concat(card.tags));
+      setSelectedTags(card.tags);
     }
     // eslint-disable-next-line
   }, [campaign, card]);
@@ -64,8 +65,9 @@ const EditCard = () => {
         defaultValue={card}
         type="card"
         hasImage
-        onSave={onEdit}
         edit
+        onSave={onEdit}
+        onDelete={onDelete}
       >
         <h4>Add tags - minimum 1</h4>
         {campaign &&
@@ -79,16 +81,6 @@ const EditCard = () => {
             </FormCheckbox>
           ))}
       </FormComponent>
-      <Button
-        className="mt-3"
-        block
-        theme="danger"
-        type="button"
-        onClick={onDelete}
-        style={{ width: 500, margin: 'auto', marginBottom: '100px' }}
-      >
-        Delete
-      </Button>
     </>
   );
 };
