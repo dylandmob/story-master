@@ -241,10 +241,10 @@ router.delete('/:campaignId', admin, async (req, res) => {
     });
 
     // Remove all cards
-    await Card.remove({ campaign: campaign.id });
+    await Card.deleteMany({ campaign: campaign.id });
 
     // Remove all tags
-    await Tag.remove({ campaign: campaign.id });
+    await Tag.deleteMany({ campaign: campaign.id });
 
     // Remove campaign
     campaign.remove();
