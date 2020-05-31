@@ -10,6 +10,7 @@ const ConfirmModal = ({ open, onClose, onConfirm, header, body }) => {
         style={{
           display: 'flex',
           width: '100%',
+          paddingBottom: '20px',
           justifyContent: 'flex-end',
         }}
       >

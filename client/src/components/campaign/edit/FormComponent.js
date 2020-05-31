@@ -120,7 +120,7 @@ const FormComponent = ({
               Delete
             </Button>
             <ConfirmModal
-              open={true}
+              open={isDeleteModalOpen}
               header={`Delete ${type}?`}
               body="Are you sure?"
               onConfirm={onConfirmDelete}
