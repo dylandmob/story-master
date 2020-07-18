@@ -22,8 +22,12 @@ router.get('/', isAdmin, async (req, res) => {
       filterParmas = { ...filterParmas, hidden: false };
     }
 
+    // const cards = await Card.find(filterParmas).sort({
+    //   dateLastModified: -1,
+    // });
+
     const cards = await Card.find(filterParmas).sort({
-      dateLastModified: -1,
+      name: 1,
     });
 
     res.json(cards);
