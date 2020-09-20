@@ -97,7 +97,7 @@ const FormComponent = ({
         />
         {type !== 'campaign' && (
           <>
-            <Form.Field label="Private Notes" />
+            <Form.Field label="Private Notes" style={{ marginTop: '20px' }} />
             <TextareaAutosize
               placeholder={`Your ${type} notes only to be seen you and other admins`}
               value={privateDescription}

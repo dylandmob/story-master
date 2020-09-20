@@ -122,6 +122,8 @@ router.post(
     const { name, description, imageUrl } = req.body;
 
     try {
+      // Can only create 5 campaigns
+
       // Create new campaign
       const newCampaign = new Campaign({
         name,
