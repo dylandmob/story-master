@@ -24,6 +24,9 @@ router.get('/', skipIfQuery(auth), async (req, res) => {
     if (req.query.category && req.query.category === 'me') {
       // get user's campaigns if category = me
       const user = await User.findById(req.user.id);
+      if (!user) {
+        return res.status(404).send('No user was found.');
+      }
       let ids = user.campaigns.map((c) => c.campaign);
       let campaigns = await Campaign.find({ _id: { $in: ids } }).sort({
         dateLastModified: -1,

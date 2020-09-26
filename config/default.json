@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://dylancraig:cNyJcORI2QHJWdgm@storymastercluster-jmf9b.mongodb.net/test?retryWrites=true&w=majority",
+  "mongoURI": "process.env.MONGO_URI",
   "jwtSecret": "story_master_jwt_secret",
   "jwtRefreshSecret": "story_master_jwt_refresh_secret",
   "jwtEmailSecret": "story_master_jwt_email_secret",
