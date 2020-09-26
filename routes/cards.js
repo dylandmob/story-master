@@ -90,7 +90,14 @@ router.post('/', [admin, cardValidation], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, description, privateDescription, imageUrl, tags } = req.body;
+  const {
+    name,
+    description,
+    privateDescription,
+    imageUrl,
+    tags,
+    hidden,
+  } = req.body;
 
   try {
     const newCard = new Card({
@@ -137,7 +144,7 @@ router.patch('/:cardId', [admin, cardValidation], async (req, res) => {
     if (privateDescription) patchData.privateDescription = privateDescription;
     if (imageUrl) patchData.imageUrl = imageUrl;
     if (tags) patchData.tags = tags;
-    if (hidden) patchData.hidden = hidden;
+    if (hidden !== undefined) patchData.hidden = hidden;
     patchData.dateLastModified = Date.now();
 
     // Edit the card

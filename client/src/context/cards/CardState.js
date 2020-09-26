@@ -72,7 +72,7 @@ const CardState = (props) => {
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.tags) data.tags = formData.tags;
-      if (formData.hidden) data.hidden = formData.hidden;
+      if (formData.hidden !== undefined) data.hidden = formData.hidden;
       const response = await api.createCard(campaignId, data);
       dispatch({ type: EDIT_CARD, payload: response });
       return response._id;

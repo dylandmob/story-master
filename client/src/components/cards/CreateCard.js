@@ -3,12 +3,13 @@ import CampaignContext from '../../context/campaign';
 import CardContext from '../../context/cards';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Checkbox } from 'semantic-ui-react';
 import FormComponent from '../campaign/edit/FormComponent';
 
 const CreateCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
+  const [hidden, setHidden] = useState(false);
   const campaignContext = useContext(CampaignContext);
   const cardContext = useContext(CardContext);
   const { campaign } = campaignContext;
@@ -39,6 +40,7 @@ const CreateCard = () => {
 
   const onCreate = (card) => {
     card.tags = selectedTags.map((tag) => tag._id);
+    card.hidden = hidden;
     createCard(campaign._id, card).then((id) => {
       toast.success('Your card was created successfully!');
       history.push(`/campaign/${campaign._id}/card/${id}`);
@@ -71,6 +73,12 @@ const CreateCard = () => {
           })}
         />
       )}
+      <Checkbox
+        label="Hide this card? Only you will be able to see it."
+        checked={hidden}
+        onChange={(e) => setHidden(!hidden)}
+        style={{ marginTop: '20px' }}
+      />
     </FormComponent>
   );
 };
