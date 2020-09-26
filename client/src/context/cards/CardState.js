@@ -10,20 +10,20 @@ import {
   GET_CARDS,
   GET_CARDS_FOR_ACT,
   GET_CARDS_FOR_TAG,
-  GET_CARD_FOR_ID
+  GET_CARD_FOR_ID,
 } from '../types';
 
-const CardState = props => {
+const CardState = (props) => {
   const initialState = {
     cards: [],
     card: null,
-    cardError: null
+    cardError: null,
   };
 
   const [state, dispatch] = useReducer(cardReducer, initialState);
 
   // Get campaign cards
-  const getCards = async campaignId => {
+  const getCards = async (campaignId) => {
     try {
       const response = await api.getCards(campaignId);
       dispatch({ type: GET_CARDS, payload: response });
@@ -72,6 +72,7 @@ const CardState = props => {
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.tags) data.tags = formData.tags;
+      if (formData.hidden) data.hidden = formData.hidden;
       const response = await api.createCard(campaignId, data);
       dispatch({ type: EDIT_CARD, payload: response });
       return response._id;
@@ -90,6 +91,7 @@ const CardState = props => {
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.tags) data.tags = formData.tags;
+      if (formData.hidden) data.hidden = formData.hidden;
       await api.editCard(campaignId, cardId, data);
       return cardId;
     } catch (err) {
@@ -122,7 +124,7 @@ const CardState = props => {
         getCardForId,
         createCard,
         editCard,
-        deleteCard
+        deleteCard,
       }}
     >
       {props.children}

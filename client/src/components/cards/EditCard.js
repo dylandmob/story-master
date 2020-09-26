@@ -3,12 +3,13 @@ import CampaignContext from '../../context/campaign';
 import CardContext from '../../context/cards';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Checkbox } from 'semantic-ui-react';
 import FormComponent from '../campaign/edit/FormComponent';
 
 const EditCard = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
+  const [hidden, setHidden] = useState(false);
   const cardContext = useContext(CardContext);
   const campaignContext = useContext(CampaignContext);
   const { card, getCardForId, editCard, deleteCard } = cardContext;
@@ -28,6 +29,7 @@ const EditCard = () => {
 
   useEffect(() => {
     if (campaign && card) {
+      setHidden(card.hidden);
       const options = campaign.tags
         .sort((a, b) => {
           const nameA = a.name.toUpperCase();
@@ -54,6 +56,8 @@ const EditCard = () => {
 
   const onEdit = (cardData) => {
     cardData.tags = selectedTags.map((tag) => tag._id);
+    cardData.hidden = hidden;
+    console.log('Card Data', cardData);
     editCard(campaign._id, card._id, cardData).then((id) => {
       toast.success('Saved!');
       history.push(`/campaign/${campaign._id}/edit/card/${id}`);
@@ -95,6 +99,12 @@ const EditCard = () => {
           })}
         />
       )}
+      <Checkbox
+        label="Hide this card? Only you will be able to see it."
+        checked={hidden}
+        onChange={(e) => setHidden(!hidden)}
+        style={{ marginTop: '20px' }}
+      />
     </FormComponent>
   );
 };

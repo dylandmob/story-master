@@ -31,6 +31,7 @@ const cardValidation = [
   ).isLength({
     max: 2048,
   }),
+  check('hidden', 'Hidden has to be true or false').isBoolean(),
 ];
 
 // @route   GET api/campaigns/:campaignId/cards
@@ -99,6 +100,7 @@ router.post('/', [admin, cardValidation], async (req, res) => {
       privateDescription,
       imageUrl,
       tags,
+      hidden,
     });
 
     const card = await newCard.save();
@@ -113,7 +115,14 @@ router.post('/', [admin, cardValidation], async (req, res) => {
 // @desc    Edit a card
 // @access  Admin
 router.patch('/:cardId', [admin, cardValidation], async (req, res) => {
-  const { name, description, privateDescription, imageUrl, tags } = req.body;
+  const {
+    name,
+    description,
+    privateDescription,
+    imageUrl,
+    tags,
+    hidden,
+  } = req.body;
 
   try {
     let card = await Card.findById(req.params.cardId);
@@ -128,6 +137,7 @@ router.patch('/:cardId', [admin, cardValidation], async (req, res) => {
     if (privateDescription) patchData.privateDescription = privateDescription;
     if (imageUrl) patchData.imageUrl = imageUrl;
     if (tags) patchData.tags = tags;
+    if (hidden) patchData.hidden = hidden;
     patchData.dateLastModified = Date.now();
 
     // Edit the card
