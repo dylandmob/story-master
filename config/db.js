@@ -9,7 +9,7 @@ const connectDB = async () => {
       useFindAndModify: false,
     });
 
-    console.log('MongoDB Connected!! Node Env = ', process.env.NODE_ENV );
+    console.log('MongoDB Connected!');
   } catch (err) {
     console.error(err);
     console.log('ERROR CONNECTING', err.message);

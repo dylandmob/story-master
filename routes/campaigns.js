@@ -13,6 +13,22 @@ const Card = require('../models/Card');
 router.use('/:campaignId/tags', require('./tags'));
 router.use('/:campaignId/cards', require('./cards'));
 
+const campaignValidation = [
+  check('name', "Campaign's name is required").not().isEmpty(),
+  check(
+    'name',
+    'Name should be between 3 characters and 50 characters in length'
+  ).isLength({ min: 3, max: 50 }),
+  check(
+    'description',
+    'Description should be no more than 100,000 characters in length'
+  ).isLength({ max: 100000 }),
+  check(
+    'imageUrl',
+    'ImageUrl should be no more than 2,048 characters in length'
+  ).isLength({ max: 2048 }),
+];
+
 const skipIfQuery = (middleware) => (req, res, next) =>
   req.query.category ? middleware(req, res, next) : next();
 
@@ -94,28 +110,7 @@ router.get('/:campaignId', isAdmin, async (req, res) => {
 // @route   POST api/campaigns
 // @desc    Add new campaign
 // @access  Private
-router.post(
-  '/',
-  [
-    auth,
-    [
-      check('name', "Campaign's name is required").not().isEmpty(),
-      check(
-        'name',
-        'Name should be between 3 characters and 50 characters in length'
-      ).isLength({ min: 3, max: 50 }),
-      check('description', 'Description should be a string').isString(),
-      check(
-        'description',
-        'Description should be no more than 100,000 characters in length'
-      ).isLength({ max: 100000 }),
-      check('imageUrl', 'ImageUrl should be a string').isString(),
-      check(
-        'imageUrl',
-        'ImageUrl should be no more than 2,048 characters in length'
-      ).isLength({ max: 2048 }),
-    ],
-  ],
+router.post('/', [auth, campaignValidation],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -153,28 +148,7 @@ router.post(
 // @route   PATCH api/campaigns/:id
 // @desc    Edit campaign
 // @access  Private
-router.patch(
-  '/:campaignId',
-  [
-    admin,
-    [
-      check('name', "Campaign's name should be a string").isString(),
-      check(
-        'name',
-        'Name should be between 3 characters and 50 characters in length'
-      ).isLength({ min: 3, max: 50 }),
-      check('description', 'Description should be a string').isString(),
-      check(
-        'description',
-        'Description should be no more than 100,000 characters in length'
-      ).isLength({ max: 100000 }),
-      check('imageUrl', 'ImageUrl should be a string').isString(),
-      check(
-        'imageUrl',
-        'ImageUrl should be no more than 2,048 characters in length'
-      ).isLength({ max: 2048 }),
-    ],
-  ],
+router.patch('/:campaignId', [admin, campaignValidation],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
