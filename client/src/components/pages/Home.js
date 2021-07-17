@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Container } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
 import CampaignCard from '../cards/CampaignCard';
+import { Button } from '@mantine/core';
 
 const Home = () => {
   const campaignContext = useContext(CampaignContext);
@@ -29,6 +30,7 @@ const Home = () => {
     <Container className="text-center">
       {authStatus === SIGNED_IN && (
         <>
+          <Button disabled>Redesign coming soon!</Button>
           <h1 className="mt-5">
             My Campaigns
             <Link to="campaign/new">

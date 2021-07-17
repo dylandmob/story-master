@@ -62,7 +62,7 @@ router.patch(
       await user.updateOne({ $set: patchData });
 
       res.json(user);
-    } catch (error) {}
+    } catch (error) { }
   }
 );
 
