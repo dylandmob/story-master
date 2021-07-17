@@ -1071,6 +1071,11 @@
     react-textarea-autosize "^8.3.2"
     react-transition-group "^4.4.2"
 
+"@mantine/hooks@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-2.0.6.tgz#bbba04647009a0d580306468f4daa275fba2d620"
+  integrity sha512-6GsCPa0smz5iFQ/Jcz6bT0us9PtGZst9w6JOnUa57Ik/3nKZ5x33rGshmxwHqLfePx02S7Njj5iRxmDc1iBBEg==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
