@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { Card, CardImg, CardBody, Button } from 'shards-react';
 import { animated, useTransition } from 'react-spring';
 import AuthContext from '../../context/auth';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
 
 const AuthCard = props => {
   const { authStatus } = useContext(AuthContext);
@@ -30,7 +32,7 @@ const AuthCard = props => {
       />
       <CardBody
         style={{
-          height: '80px',
+          height: '260px',
           width: '100%',
           paddingLeft: 25,
           paddingRight: 25
@@ -41,7 +43,7 @@ const AuthCard = props => {
             key={key}
             style={{ width: 'calc(100% - 50px)', ...props }}
           >
-            <Button href="/auth/google" theme="primary" block>
+            <Button href={window.location.hostname === "localhost" ? 'http://localhost:5000/auth/google' : "/auth/google"} theme="primary" block>
               Sign In with Google
             </Button>
           </animated.div>

@@ -40,7 +40,11 @@ router.get(
     const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), {
       expiresIn: config.get('refreshTokenLife')
     });
-    res.redirect(`/sign-in?token=${token}&refreshToken=${refreshToken}`);
+    if (process.env.NODE_ENV === 'production') {
+      res.redirect(`/sign-in?token=${token}&refreshToken=${refreshToken}`);
+    } else {
+      res.status(301).redirect(`http://localhost:3000/sign-in?token=${token}&refreshToken=${refreshToken}`);
+    }
   }
 );
 
