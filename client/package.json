@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@mantine/core": "^2.0.6",
     "@mantine/hooks": "^2.0.6",
+    "@radix-ui/react-icons": "^1.0.3",
     "immutability-helper": "^3.0.1",
     "query-string": "^6.8.3",
     "react": "^16.9.0",

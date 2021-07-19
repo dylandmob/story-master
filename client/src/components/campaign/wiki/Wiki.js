@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { Card, CardBody, CardTitle } from 'shards-react';
-import { Container, Icon, Grid, Loader } from 'semantic-ui-react';
+// import { Card, CardBody, CardTitle } from 'shards-react';
+import { Icon, Grid, Loader } from 'semantic-ui-react';
+import { Container, Card, Paper, Title } from '@mantine/core';
 import { WikiNav } from './WikiNav';
 import { WikiLayout } from './WikiLayout';
 
@@ -29,7 +30,7 @@ export default function Wiki() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <Card
@@ -40,23 +41,24 @@ export default function Wiki() {
           height: 'calc(90vh - 70px)',
           marginTop: '5vh'
         }}
+        radius='lg'
       >
-        <CardBody style={{ height: '100%' }}>
-          <CardTitle className="text-center">
-            <h1 style={{ whiteSpace: 'nowrap' }}>
-              {campaign.name}
-              {campaign.isAdmin && (
-                <Link to={`/campaign/${campaign._id}/edit`}>
-                  <Icon
-                    name="pencil"
-                    color="blue"
-                    link
-                    style={{ marginLeft: 15 }}
-                  />
-                </Link>
-              )}
-            </h1>
-          </CardTitle>
+        <div style={{ height: '100%' }}>
+          <Title className="text-center">
+            {/* <h1 style={{ whiteSpace: 'nowrap' }}> */}
+            {campaign.name}
+            {campaign.isAdmin && (
+              <Link to={`/campaign/${campaign._id}/edit`}>
+                <Icon
+                  name="pencil"
+                  color="blue"
+                  link
+                  style={{ marginLeft: 15 }}
+                />
+              </Link>
+            )}
+            {/* </h1> */}
+          </Title>
           <Grid className="my-3" style={{ height: 'calc(100% - 50px)' }}>
             <Grid.Column width={4}>
               <WikiNav campaign={campaign} />
@@ -71,7 +73,7 @@ export default function Wiki() {
               <WikiLayout campaign={campaign} />
             </Grid.Column>
           </Grid>
-        </CardBody>
+        </div>
       </Card>
       <img
         src={campaign.imageUrl}

@@ -4,6 +4,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Button } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
 import CardComponent from '../cards/CardComponent';
+import { Title } from '@mantine/core';
 
 const Tag = ({ campaign, readOnly }) => {
   const cardContext = useContext(CardContext);
@@ -34,7 +35,7 @@ const Tag = ({ campaign, readOnly }) => {
   return (
     <Container>
       <div className="my-3 text-center">
-        <h1>
+        <Title>
           {tag.name}
           {campaign.isAdmin && (
             <Link to={`/campaign/${campaign._id}/edit/tag/${tag._id}/edit`}>
@@ -46,7 +47,7 @@ const Tag = ({ campaign, readOnly }) => {
               />
             </Link>
           )}
-        </h1>
+        </Title>
         {campaign.isAdmin && (
           <Link to={`/campaign/${campaign._id}/edit/card/new`}>
             <Button className="mt-3" outline>
