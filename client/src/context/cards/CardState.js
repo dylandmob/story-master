@@ -91,7 +91,7 @@ const CardState = (props) => {
         data.privateDescription = formData.privateDescription;
       if (formData.imageUrl) data.imageUrl = formData.imageUrl;
       if (formData.tags) data.tags = formData.tags;
-      if (formData.hidden) data.hidden = formData.hidden;
+      if (formData.hidden !== undefined) data.hidden = formData.hidden;
       await api.editCard(campaignId, cardId, data);
       return cardId;
     } catch (err) {

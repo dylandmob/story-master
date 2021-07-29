@@ -3,22 +3,17 @@ import CampaignContext from '../../context/campaign';
 import AuthContext from '../../context/auth';
 import { SIGNED_IN } from '../../context/types';
 import { Link } from 'react-router-dom';
-import { Container } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
-import CampaignCard from '../cards/CampaignCard';
-import { Button } from '@mantine/core';
+import { Title, Text, Container } from '@mantine/core';
+import CardComponent from '../cards/CardComponent';
 
 const Home = () => {
   const campaignContext = useContext(CampaignContext);
   const authContext = useContext(AuthContext);
   const { authStatus } = authContext;
 
-  const {
-    getCampaigns,
-    campaigns,
-    getMyCampaigns,
-    myCampaigns,
-  } = campaignContext;
+  const { getCampaigns, campaigns, getMyCampaigns, myCampaigns } =
+    campaignContext;
 
   useEffect(() => {
     getCampaigns();
@@ -30,8 +25,7 @@ const Home = () => {
     <Container className="text-center">
       {authStatus === SIGNED_IN && (
         <>
-          <Button disabled>Redesign coming soon!</Button>
-          <h1 className="mt-5">
+          <Title className="mt-5">
             My Campaigns
             <Link to="campaign/new">
               <Icon
@@ -41,7 +35,7 @@ const Home = () => {
                 style={{ marginLeft: 15 }}
               />
             </Link>
-          </h1>
+          </Title>
           <div
             style={{
               display: 'flex',
@@ -50,21 +44,31 @@ const Home = () => {
             }}
           >
             {myCampaigns.length === 0 ? (
-              <h4>No campaigns yet? Create one by hitting the plus icon!</h4>
+              <Text order={4}>
+                No campaigns yet? Create one by hitting the plus icon!
+              </Text>
             ) : (
               myCampaigns.map((campaign) => (
-                <CampaignCard key={campaign._id} campaign={campaign} />
+                <CardComponent
+                  key={campaign._id}
+                  path={`/campaign/${campaign._id}`}
+                  data={campaign}
+                />
               ))
             )}
           </div>
         </>
       )}
-      <h1 className="mt-5">Campaigns</h1>
+      <Title className="mt-5">Campaigns</Title>
       <div
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
         {campaigns.map((campaign) => (
-          <CampaignCard key={campaign._id} campaign={campaign} />
+          <CardComponent
+            key={campaign._id}
+            path={`/campaign/${campaign._id}`}
+            data={campaign}
+          />
         ))}
       </div>
     </Container>

@@ -90,14 +90,8 @@ router.post('/', [admin, cardValidation], async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const {
-    name,
-    description,
-    privateDescription,
-    imageUrl,
-    tags,
-    hidden,
-  } = req.body;
+  const { name, description, privateDescription, imageUrl, tags, hidden } =
+    req.body;
 
   try {
     const newCard = new Card({
@@ -122,14 +116,8 @@ router.post('/', [admin, cardValidation], async (req, res) => {
 // @desc    Edit a card
 // @access  Admin
 router.patch('/:cardId', [admin, cardValidation], async (req, res) => {
-  const {
-    name,
-    description,
-    privateDescription,
-    imageUrl,
-    tags,
-    hidden,
-  } = req.body;
+  const { name, description, privateDescription, imageUrl, tags, hidden } =
+    req.body;
 
   try {
     let card = await Card.findById(req.params.cardId);

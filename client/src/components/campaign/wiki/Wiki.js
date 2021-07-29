@@ -3,7 +3,7 @@ import CampaignContext from '../../../context/campaign';
 import { Link, useRouteMatch } from 'react-router-dom';
 // import { Card, CardBody, CardTitle } from 'shards-react';
 import { Icon, Grid, Loader } from 'semantic-ui-react';
-import { Container, Card, Paper, Title } from '@mantine/core';
+import { Container, Paper, Title } from '@mantine/core';
 import { WikiNav } from './WikiNav';
 import { WikiLayout } from './WikiLayout';
 
@@ -33,15 +33,16 @@ export default function Wiki() {
         justifyContent: 'center',
       }}
     >
-      <Card
+      <Paper
         style={{
           minWidth: '70vw',
           maxWidth: '90vw',
           width: '100%',
           height: 'calc(90vh - 70px)',
-          marginTop: '5vh'
+          marginTop: '5vh',
         }}
-        radius='lg'
+        padding="md"
+        radius="lg"
       >
         <div style={{ height: '100%' }}>
           <Title className="text-center">
@@ -67,14 +68,14 @@ export default function Wiki() {
               width={12}
               style={{
                 height: '100%',
-                overflow: 'auto'
+                overflow: 'auto',
               }}
             >
               <WikiLayout campaign={campaign} />
             </Grid.Column>
           </Grid>
         </div>
-      </Card>
+      </Paper>
       <img
         src={campaign.imageUrl}
         alt="wiki background"
@@ -86,7 +87,7 @@ export default function Wiki() {
           minWidth: '1024px',
           minHeight: '100%',
           width: '100%',
-          height: 'auto'
+          height: 'auto',
         }}
       ></img>
     </Container>

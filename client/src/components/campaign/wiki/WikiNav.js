@@ -1,34 +1,49 @@
 import React from 'react';
-import { useHistory, useRouteMatch, Link } from 'react-router-dom';
-import { Text, Group } from '@mantine/core';
+import { useRouteMatch, Link, NavLink } from 'react-router-dom';
+import { Text, Group, theming } from '@mantine/core';
 import { ListBulletIcon } from '@radix-ui/react-icons';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles(
+  (theme) => ({
+    menuContainer: {
+      borderLeft: `1px solid ${theme.colors.menuBorderColor}`,
+    },
+    navLink: {
+      borderLeft: '1px solid transparent',
+      marginLeft: -1,
+    },
+    activeNavLink: {
+      color: theme.colors.activeLinkTextColor,
+      backgroundColor: theme.colors.activeLinkBackgroundColor,
+      borderLeftColor: theme.colors.activeLinkBorderColor,
+    },
+  }),
+  { theming }
+);
 
 export const WikiNav = ({ campaign }) => {
-  let history = useHistory();
-
   let { url } = useRouteMatch();
+  const classes = useStyles();
   return (
     <div>
       <Group style={{ marginBottom: '16px' }}>
         <ListBulletIcon />
         <Link to={`${url}`}>
-          <Text>
-            Home
-          </Text>
+          <Text>Home</Text>
         </Link>
       </Group>
-      <div style={{ borderLeft: '1px solid #dee2e6' }}>
+      <div className={classes.menuContainer}>
         {campaign.wiki &&
-          campaign.wiki.map(tag => (
-            <Link
+          campaign.wiki.map((tag) => (
+            <NavLink
               key={tag._id}
-              className="nav-item nav-link"
+              className={`nav-item nav-link ${classes.navLink}`}
+              activeClassName={classes.activeNavLink}
               to={`${url}/tag/${tag._id}`}
             >
-              <Text size='sm'>
-                {tag.name}
-              </Text>
-            </Link>
+              <Text size="sm">{tag.name}</Text>
+            </NavLink>
           ))}
       </div>
     </div>

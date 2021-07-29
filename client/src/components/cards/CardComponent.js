@@ -1,10 +1,20 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { Icon } from 'semantic-ui-react';
 // import { Card, CardTitle, CardImg, CardBody, Tooltip } from 'shards-react';
-import { Card, Container, Paper, Image, Group, Title, Badge, Button } from '@mantine/core';
+import {
+  Card,
+  Container,
+  Paper,
+  Image,
+  Group,
+  Title,
+  Badge,
+  Button,
+  theming,
+} from '@mantine/core';
 import { createUseStyles } from 'react-jss';
-import { theming } from '@mantine/core';
+import { EyeNoneIcon } from '@radix-ui/react-icons';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -27,16 +37,43 @@ const CardComponent = ({ data, path }) => {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.card} key={_id} shadow="sm">
-      <Image
-        src={imageUrl}
-        height={300}
-        fit='cover'
-        style={{ margin: 0 }}
-      />
-      <Badge style={{ position: 'absolute', bottom: '8px', left: '8px', maxWidth: '90%' }}>{name}</Badge>
-    </Paper>
-  )
+    <Link to={path}>
+      <Paper className={classes.card} key={_id} shadow="sm">
+        <Image src={imageUrl} height={300} fit="cover" style={{ margin: 0 }} />
+        <Badge
+          color="gray"
+          style={{
+            position: 'absolute',
+            bottom: '8px',
+            left: '8px',
+            maxWidth: '90%',
+          }}
+        >
+          {name}
+        </Badge>
+        {hidden && (
+          <>
+            <div
+              id="hoverable"
+              style={{
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                top: 0,
+                left: 0,
+                width: 300,
+                height: 300,
+                backgroundColor: 'rgba(255, 255, 255, 0.4)',
+              }}
+            >
+              <EyeNoneIcon style={{ height: 50, width: 50 }} color="black" />
+            </div>
+          </>
+        )}
+      </Paper>
+    </Link>
+  );
 
   // return (
   //   <Link to={path}>
