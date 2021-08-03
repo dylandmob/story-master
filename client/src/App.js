@@ -26,7 +26,7 @@ function App() {
       <div
         style={{
           backgroundColor: colorScheme === 'dark' ? 'rgb(29, 30, 48)' : 'white',
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           bottom: 0,
           left: 0,

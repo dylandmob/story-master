@@ -5,6 +5,7 @@ import { Container, Button } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
 import CardComponent from '../cards/CardComponent';
 import { Title } from '@mantine/core';
+import AnimatedCard from '../cards/AnimatedCard';
 
 const Tag = ({ campaign, readOnly }) => {
   const cardContext = useContext(CardContext);
@@ -78,7 +79,7 @@ const Tag = ({ campaign, readOnly }) => {
       >
         {cards && cards.length > 0 ? (
           cards.map((card) => (
-            <CardComponent
+            <AnimatedCard
               key={card._id}
               data={card}
               path={

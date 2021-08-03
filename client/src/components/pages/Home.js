@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { Title, Text, Container } from '@mantine/core';
 import CardComponent from '../cards/CardComponent';
+import AnimatedCard from '../cards/AnimatedCard';
 
 const Home = () => {
   const campaignContext = useContext(CampaignContext);
@@ -56,6 +57,9 @@ const Home = () => {
                 />
               ))
             )}
+            {campaigns.map((c) => (
+              <AnimatedCard key={c._id} path={`/campaign/${c._id}`} data={c} />
+            ))}
           </div>
         </>
       )}
@@ -69,6 +73,9 @@ const Home = () => {
             path={`/campaign/${campaign._id}`}
             data={campaign}
           />
+        ))}
+        {campaigns.map((c) => (
+          <AnimatedCard key={c._id} path={`/campaign/${c._id}`} data={c} />
         ))}
       </div>
     </Container>

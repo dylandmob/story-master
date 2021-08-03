@@ -1,18 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Icon } from 'semantic-ui-react';
-// import { Card, CardTitle, CardImg, CardBody, Tooltip } from 'shards-react';
-import {
-  Card,
-  Container,
-  Paper,
-  Image,
-  Group,
-  Title,
-  Badge,
-  Button,
-  theming,
-} from '@mantine/core';
+import { Paper, Image, Badge, theming } from '@mantine/core';
 import { createUseStyles } from 'react-jss';
 import { EyeNoneIcon } from '@radix-ui/react-icons';
 
@@ -23,7 +11,7 @@ const useStyles = createUseStyles(
       borderRadius: theme.radius.lg,
       margin: 20,
       overflow: 'hidden',
-      width: '300px',
+      width: '200px',
       '&:hover': {
         boxShadow: theme.shadows.hover,
       },
