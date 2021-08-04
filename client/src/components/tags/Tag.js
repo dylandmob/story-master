@@ -3,7 +3,6 @@ import CardContext from '../../context/cards';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Button } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
-import CardComponent from '../cards/CardComponent';
 import { Title } from '@mantine/core';
 import AnimatedCard from '../cards/AnimatedCard';
 

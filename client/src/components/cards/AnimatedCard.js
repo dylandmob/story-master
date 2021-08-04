@@ -4,6 +4,7 @@ import { useGesture } from 'react-use-gesture';
 import { Image, Paper, Badge, theming } from '@mantine/core';
 import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
+import { EyeNoneIcon } from '@radix-ui/react-icons';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -21,6 +22,7 @@ const useStyles = createUseStyles(
   { theming }
 );
 
+// TODO: Add tooltip for hidden card
 export default function AnimatedCard({ data, path }) {
   const { _id, name, imageUrl, hidden } = data;
 
@@ -78,6 +80,23 @@ export default function AnimatedCard({ data, path }) {
             >
               {name}
             </Badge>
+            {hidden && (
+              <div
+                style={{
+                  position: 'absolute',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  top: 0,
+                  left: 0,
+                  width: 200,
+                  height: 300,
+                  backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                }}
+              >
+                <EyeNoneIcon style={{ height: 50, width: 50 }} color="black" />
+              </div>
+            )}
           </Paper>
         </Link>
       </animated.div>
