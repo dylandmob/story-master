@@ -8,6 +8,7 @@ import { MantineProvider } from '@mantine/core';
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 
 import 'react-toastify/dist/ReactToastify.css';
+import './fonts.css';
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorageValue({
@@ -43,6 +44,7 @@ function App() {
               colorScheme === 'dark' ? 'rgba(24, 100, 171, 0.45)' : '#e7f5ff',
             activeLinkBorderColor: '#339af0',
             menuBorderColor: colorScheme === 'dark' ? '#4d4f66' : '#dee2e6',
+            navBackgroundColor: colorScheme === 'dark' ? '#0c0d21' : '#f8f9fa',
           },
           shadows: {
             hover: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px',

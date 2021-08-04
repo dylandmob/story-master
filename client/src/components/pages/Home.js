@@ -50,16 +50,13 @@ const Home = () => {
               </Text>
             ) : (
               myCampaigns.map((campaign) => (
-                <CardComponent
+                <AnimatedCard
                   key={campaign._id}
                   path={`/campaign/${campaign._id}`}
                   data={campaign}
                 />
               ))
             )}
-            {campaigns.map((c) => (
-              <AnimatedCard key={c._id} path={`/campaign/${c._id}`} data={c} />
-            ))}
           </div>
         </>
       )}
@@ -67,13 +64,6 @@ const Home = () => {
       <div
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
-        {campaigns.map((campaign) => (
-          <CardComponent
-            key={campaign._id}
-            path={`/campaign/${campaign._id}`}
-            data={campaign}
-          />
-        ))}
         {campaigns.map((c) => (
           <AnimatedCard key={c._id} path={`/campaign/${c._id}`} data={c} />
         ))}
