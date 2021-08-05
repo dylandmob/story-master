@@ -26,7 +26,8 @@ function App() {
     <Store>
       <div
         style={{
-          backgroundColor: colorScheme === 'dark' ? 'rgb(29, 30, 48)' : 'white',
+          backgroundColor:
+            colorScheme === 'dark' ? 'rgb(29, 30, 48)' : '#f8f9fa',
           position: 'fixed',
           top: 0,
           bottom: 0,
@@ -44,7 +45,12 @@ function App() {
               colorScheme === 'dark' ? 'rgba(24, 100, 171, 0.45)' : '#e7f5ff',
             activeLinkBorderColor: '#339af0',
             menuBorderColor: colorScheme === 'dark' ? '#4d4f66' : '#dee2e6',
-            navBackgroundColor: colorScheme === 'dark' ? '#0c0d21' : '#f8f9fa',
+            navBackgroundColor: colorScheme === 'dark' ? '#0c0d21' : '#007bff',
+            navBorderColor: colorScheme === 'dark' ? '#0c0d21' : 'transparent',
+            wikiBackgroundColor:
+              colorScheme === 'dark'
+                ? 'rgb(29, 30, 48, 0.95)'
+                : 'rgb(248, 249, 250, 0.95)',
           },
           shadows: {
             hover: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px',
