@@ -3,7 +3,7 @@ import CardContext from '../../context/cards';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Button } from 'shards-react';
 import { Icon } from 'semantic-ui-react';
-import { Title } from '@mantine/core';
+import { Title, Text } from '@mantine/core';
 import AnimatedCard from '../cards/AnimatedCard';
 
 const Tag = ({ campaign, readOnly }) => {
@@ -65,11 +65,11 @@ const Tag = ({ campaign, readOnly }) => {
           justifyContent: 'center',
         }}
       >
-        <p style={{ width: '70%' }}>{tag.description}</p>
+        <Text style={{ width: '70%' }}>{tag.description}</Text>
         {campaign.isAdmin && tag.privateDescription && (
           <>
-            <h5>Private Notes</h5>
-            <p style={{ width: '70%' }}>{tag.privateDescription}</p>
+            <Title order={5}>Private Notes</Title>
+            <Text style={{ width: '70%' }}>{tag.privateDescription}</Text>
           </>
         )}
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Tag from '../../tags/Tag';
 import CardPage from '../../cards/CardPage';
+import { Text } from '@mantine/core';
 
 export const WikiLayout = ({ campaign }) => {
   let { path } = useRouteMatch();
@@ -9,7 +10,7 @@ export const WikiLayout = ({ campaign }) => {
   return (
     <Switch>
       <Route exact path={path}>
-        <p style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</p>
+        <Text style={{ whiteSpace: 'pre-wrap' }}>{campaign.description}</Text>
       </Route>
       <Route path={`${path}/tag/:tagId`}>
         <Tag campaign={campaign} readOnly />

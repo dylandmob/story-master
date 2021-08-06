@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import CardContext from '../../context/cards';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Image, Button } from 'semantic-ui-react';
+import { Text, Title } from '@mantine/core';
 
 const CardPage = ({ campaign }) => {
   const cardContext = useContext(CardContext);
@@ -28,7 +29,7 @@ const CardPage = ({ campaign }) => {
         style={{ maxHeight: '400px', objectFit: 'cover' }}
       />
       <div style={{ textAlign: 'center', marginTop: 25 }}>
-        <h1>{name}</h1>
+        <Title>{name}</Title>
         {campaign.isAdmin && (
           <Link to={`/campaign/${params.id}/edit/card/${params.cardId}`}>
             <Button>Edit</Button>
@@ -42,7 +43,7 @@ const CardPage = ({ campaign }) => {
           marginTop: 25,
         }}
       >
-        <p>{description}</p>
+        <Text>{description}</Text>
         {campaign.isAdmin && card.privateDescription && (
           <>
             <h5>Private Notes</h5>

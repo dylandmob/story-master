@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/auth';
 import { SIGNED_IN } from '../../context/types';
 import { Link } from 'react-router-dom';
-import { Title, theming, Group, ActionIcon } from '@mantine/core';
-import { useLocalStorageValue } from '@mantine/hooks';
+import { Title, theming, Group, ActionIcon, Tooltip, Kbd } from '@mantine/core';
 import { createUseStyles } from 'react-jss';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
+import ColorContext from '../../context/color';
 
 const useStyles = createUseStyles(
   (theme) => ({
@@ -31,16 +31,10 @@ const useStyles = createUseStyles(
 
 const NavbarComp = () => {
   const authContext = useContext(AuthContext);
+  const colorContext = useContext(ColorContext);
   const { authStatus } = authContext;
+  const dark = colorContext.colorScheme === 'dark';
   const styles = useStyles();
-
-  const [colorScheme, setColorScheme] = useLocalStorageValue({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
-  });
-
-  const toggleColorScheme = () =>
-    setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
 
   return (
     <div className={styles.navbar}>
@@ -58,18 +52,28 @@ const NavbarComp = () => {
         </Title>
       </Link>
       <Group>
-        <ActionIcon
-          variant="outline"
-          color={colorScheme === 'dark' ? 'yellow' : 'white'}
-          onClick={toggleColorScheme}
-          title="Toggle color scheme"
+        <Tooltip
+          label={
+            <>
+              Toggle Color Scheme: <Kbd>⌘</Kbd>/<Kbd>Ctrl</Kbd> + <Kbd>J</Kbd>
+            </>
+          }
+          position="left"
+          placement="start"
         >
-          {colorScheme === 'dark' ? (
-            <SunIcon style={{ width: 18, height: 18 }} />
-          ) : (
-            <MoonIcon style={{ width: 18, height: 18 }} />
-          )}
-        </ActionIcon>
+          <ActionIcon
+            variant="outline"
+            color={dark ? 'yellow' : 'dark'}
+            onClick={() => colorContext.onChange(dark ? 'light' : 'dark')}
+            title="Toggle color scheme"
+          >
+            {dark ? (
+              <SunIcon style={{ width: 18, height: 18 }} />
+            ) : (
+              <MoonIcon style={{ width: 18, height: 18 }} />
+            )}
+          </ActionIcon>
+        </Tooltip>
         {authStatus === SIGNED_IN && (
           <Link className="nav-item nav-link" to="/" style={{ color: 'white' }}>
             <Title order={4} style={{ color: 'white' }}>
