@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import Home from '../pages/Home';
 import Navbar from './Navbar';
 import Campaign from '../campaign/edit/Campaign';
@@ -22,6 +27,7 @@ function Layout() {
         <Route path="/campaign/:id" component={Wiki} />
         <Route exact path="/sign-in" component={Auth} />
         <Route exact path="/profile" component={Profile} />
+        <Redirect to="/" />
       </Switch>
     </Router>
   );
