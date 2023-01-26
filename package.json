@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "The Ultimate Dungeon Master helper app",
   "engines": {
-    "node": "18.2",
-    "npm": "8.19.2"
+    "node": "18.x",
+    "npm": "8.x"
   },
   "main": "server.js",
   "dependencies": {
