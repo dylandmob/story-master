@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const session = require('express-session');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const path = require('path');
@@ -17,6 +18,10 @@ connectDB();
 
 // initialize middleware
 app.use(express.json({ extended: false }));
+
+// intialize express session middleware
+var session = require('express-session');
+app.use(session({ secret: process.env.SESSION_SECRET }));
 
 // initialize passport
 app.enable('trust proxy');
