@@ -2,6 +2,10 @@
   "name": "story-master",
   "version": "1.0.0",
   "description": "The Ultimate Dungeon Master helper app",
+  "engines": {
+    "node": "18.2",
+    "npm": "8.19.2"
+  },
   "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
