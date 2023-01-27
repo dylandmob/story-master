@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Paper, Image, Badge, theming } from '@mantine/core';
+import { Paper, Image, Badge, useMantineTheme } from '@mantine/core';
 import { createUseStyles } from 'react-jss';
 import { EyeNoneIcon } from '@radix-ui/react-icons';
 
@@ -17,7 +17,7 @@ const useStyles = createUseStyles(
       },
     },
   }),
-  { theming }
+  { useMantineTheme }
 );
 
 const CardComponent = ({ data, path }) => {

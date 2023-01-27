@@ -5,13 +5,13 @@ import Layout from './components/layout/Layout';
 import Toast from './components/layout/Toast';
 import TokenChecker from './components/auth/TokenChecker';
 import { MantineProvider } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import { useWindowEvent, useLocalStorage } from '@mantine/hooks';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './fonts.css';
 
 function App() {
-  const [colorScheme, setColorScheme] = useLocalStorageValue({
+  const [colorScheme, setColorScheme] = useLocalStorage({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
   });

@@ -1,26 +1,22 @@
 import React, { useRef, useEffect } from 'react';
 import { useSpring, animated, to } from '@react-spring/web';
 import { useGesture } from 'react-use-gesture';
-import { Image, Paper, Badge, theming } from '@mantine/core';
-import { createUseStyles } from 'react-jss';
+import { Image, Paper, Badge, createStyles } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { EyeNoneIcon } from '@radix-ui/react-icons';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    paper: {
-      position: 'relative',
-      borderRadius: theme.radius.lg,
-      margin: 20,
-      overflow: 'hidden',
-      width: '200px',
-      '&:hover': {
-        boxShadow: theme.shadows.hover,
-      },
+const useStyles = createStyles((theme) => ({
+  paper: {
+    position: 'relative',
+    borderRadius: theme.radius.lg,
+    margin: 20,
+    overflow: 'hidden',
+    width: '200px',
+    '&:hover': {
+      boxShadow: theme.shadows.hover,
     },
-  }),
-  { theming }
-);
+  },
+}));
 
 // TODO: Add tooltip for hidden card
 export default function AnimatedCard({ data, path }) {
@@ -37,7 +33,7 @@ export default function AnimatedCard({ data, path }) {
     };
   }, []);
 
-  const styles = useStyles();
+  const { classes } = useStyles();
 
   const domTarget = useRef(null);
   const [{ zoom, scale }, api] = useSpring(() => ({
@@ -67,7 +63,7 @@ export default function AnimatedCard({ data, path }) {
         }}
       >
         <Link to={path}>
-          <Paper className={styles.paper} shadow="sm">
+          <Paper className={classes.paper} shadow="sm">
             <Image src={imageUrl} height={300} fit="cover" />
             <Badge
               color="gray"

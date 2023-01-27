@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Icon, Grid, Loader } from 'semantic-ui-react';
-import { Container, Paper, Title, theming } from '@mantine/core';
+import { Container, Paper, Title, useMantineTheme } from '@mantine/core';
 import { WikiNav } from './WikiNav';
 import { WikiLayout } from './WikiLayout';
 import { createUseStyles } from 'react-jss';
@@ -18,7 +18,7 @@ const useStyles = createUseStyles(
       backgroundColor: theme.colors.wikiBackgroundColor,
     },
   }),
-  { theming }
+  { useMantineTheme }
 );
 
 export default function Wiki() {

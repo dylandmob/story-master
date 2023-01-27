@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouteMatch, Link, NavLink } from 'react-router-dom';
-import { Text, Group, theming } from '@mantine/core';
+import { Text, Group, useMantineTheme } from '@mantine/core';
 import { ListBulletIcon } from '@radix-ui/react-icons';
 import { createUseStyles } from 'react-jss';
 
@@ -19,7 +19,7 @@ const useStyles = createUseStyles(
       borderLeftColor: theme.colors.activeLinkBorderColor,
     },
   }),
-  { theming }
+  { useMantineTheme }
 );
 
 export const WikiNav = ({ campaign }) => {

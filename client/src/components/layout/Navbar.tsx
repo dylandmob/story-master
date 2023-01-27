@@ -2,42 +2,47 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/auth';
 import { SIGNED_IN } from '../../context/types';
 import { Link } from 'react-router-dom';
-import { Title, theming, Group, ActionIcon, Tooltip, Kbd } from '@mantine/core';
-import { createUseStyles } from 'react-jss';
+import {
+  Title,
+  useMantineTheme,
+  Group,
+  ActionIcon,
+  Tooltip,
+  Kbd,
+  createStyles,
+} from '@mantine/core';
+// import { createStyles } from 'react-jss';
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
 import ColorContext from '../../context/color';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    navbar: {
-      position: 'relative',
-      overflow: 'hidden',
-      top: 0,
-      width: '100%',
-      height: 68,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: theme.colors.navBackgroundColor,
-      borderBottom: '1px solid',
-      borderBottomColor: theme.colors.navBorderColor,
-      paddingLeft: 16,
-      paddingRight: 16,
-      color: 'white',
-    },
-  }),
-  { theming }
-);
+const useStyles = createStyles((theme) => ({
+  navbar: {
+    position: 'relative',
+    overflow: 'hidden',
+    top: 0,
+    width: '100%',
+    height: 68,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: theme.colors.navBackgroundColor,
+    borderBottom: '1px solid',
+    borderBottomColor: theme.colors.navBorderColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    color: 'white',
+  },
+}));
 
 const NavbarComp = () => {
   const authContext = useContext(AuthContext);
   const colorContext = useContext(ColorContext);
   const { authStatus } = authContext;
   const dark = colorContext.colorScheme === 'dark';
-  const styles = useStyles();
+  const { classes } = useStyles();
 
   return (
-    <div className={styles.navbar}>
+    <div className={classes.navbar}>
       <Link to="/">
         <Title
           color="white"
@@ -59,7 +64,6 @@ const NavbarComp = () => {
             </>
           }
           position="left"
-          placement="start"
         >
           <ActionIcon
             variant="outline"
