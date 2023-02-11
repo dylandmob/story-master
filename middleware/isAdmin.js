@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
 
     // find the campaign
     let campaignReference = user.campaigns.find(
-      c => c.campaign.toString() === campaignId
+      (c) => c.campaign.toString() === campaignId
     );
 
     // user is admin if campaignReference is valid and isAdmin is true

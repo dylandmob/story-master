@@ -7,11 +7,12 @@ const { check, validationResult } = require('express-validator');
 const Tag = require('../models/Tag');
 const Card = require('../models/Card');
 const Campaign = require('../models/Campaign');
+const isAdmin = require('../middleware/isAdmin');
 
 // @route   GET api/campaigns/:campaignId/tags
 // @desc    Gets the campaign's tags
 // @access  Private
-router.get('/', auth, async (req, res) => {
+router.get('/', isAdmin, async (req, res) => {
   try {
     const tags = await Tag.find({ campaign: req.params.campaignId }).sort({
       dateLastModified: -1,

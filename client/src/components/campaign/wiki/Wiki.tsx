@@ -1,25 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 import CampaignContext from '../../../context/campaign';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { Icon, Grid, Loader } from 'semantic-ui-react';
-import { Container, Paper, Title, useMantineTheme } from '@mantine/core';
+import { Icon, Loader } from 'semantic-ui-react';
+import { createStyles, Container, Paper, Title, Grid } from '@mantine/core';
 import { WikiNav } from './WikiNav';
 import { WikiLayout } from './WikiLayout';
-import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    paper: {
-      minWidth: '70vw',
-      maxWidth: '90vw',
-      width: '100%',
-      height: 'calc(90vh - 70px)',
-      marginTop: '5vh',
-      backgroundColor: theme.colors.wikiBackgroundColor,
-    },
-  }),
-  { useMantineTheme }
-);
+const useStyles = createStyles((theme) => ({
+  paper: {
+    minWidth: '70vw',
+    maxWidth: '90vw',
+    width: '100%',
+    height: 'calc(90vh - 70px)',
+    marginTop: '5vh',
+    backgroundColor: theme.colors.wikiBackgroundColor,
+  },
+}));
 
 export default function Wiki() {
   const campaignContext = useContext(CampaignContext);
@@ -27,7 +23,7 @@ export default function Wiki() {
 
   const styles = useStyles();
 
-  let { params } = useRouteMatch();
+  let { params } = useRouteMatch<{ id: string }>();
 
   useEffect(() => {
     if (params.id) {
@@ -49,7 +45,7 @@ export default function Wiki() {
         justifyContent: 'center',
       }}
     >
-      <Paper className={styles.paper} padding="md" radius="lg">
+      <Paper className={styles.classes.paper} p="md" radius="lg">
         <div style={{ height: '100%' }}>
           <Title className="text-center">
             {/* <h1 style={{ whiteSpace: 'nowrap' }}> */}
@@ -67,18 +63,18 @@ export default function Wiki() {
             {/* </h1> */}
           </Title>
           <Grid className="my-3" style={{ height: 'calc(100% - 50px)' }}>
-            <Grid.Column width={4}>
+            <Grid.Col span={3}>
               <WikiNav campaign={campaign} />
-            </Grid.Column>
-            <Grid.Column
-              width={12}
+            </Grid.Col>
+            <Grid.Col
+              span={9}
               style={{
                 height: '100%',
                 overflow: 'auto',
               }}
             >
               <WikiLayout campaign={campaign} />
-            </Grid.Column>
+            </Grid.Col>
           </Grid>
         </div>
       </Paper>

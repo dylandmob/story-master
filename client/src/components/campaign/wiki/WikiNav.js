@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRouteMatch, Link, NavLink } from 'react-router-dom';
-import { Text, Group, useMantineTheme } from '@mantine/core';
+import { createStyles, Text, Group, useMantineTheme } from '@mantine/core';
 import { ListBulletIcon } from '@radix-ui/react-icons';
-import { createUseStyles } from 'react-jss';
+// import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles(
+const useStyles = createStyles(
   (theme) => ({
     menuContainer: {
       borderLeft: `1px solid ${theme.colors.menuBorderColor}`,
