@@ -4,7 +4,11 @@ import Tag from '../../tags/Tag';
 import CardPage from '../../cards/CardPage';
 import { Text } from '@mantine/core';
 
-export const WikiLayout = ({ campaign }) => {
+interface WikiLayoutProps {
+  campaign: Campaign;
+}
+
+export const WikiLayout = ({ campaign }: WikiLayoutProps) => {
   let { path } = useRouteMatch();
 
   return (

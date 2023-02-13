@@ -48,7 +48,6 @@ export default function Wiki() {
       <Paper className={styles.classes.paper} p="md" radius="lg">
         <div style={{ height: '100%' }}>
           <Title className="text-center">
-            {/* <h1 style={{ whiteSpace: 'nowrap' }}> */}
             {campaign.name}
             {campaign.isAdmin && (
               <Link to={`/campaign/${campaign._id}/edit`}>
@@ -60,7 +59,6 @@ export default function Wiki() {
                 />
               </Link>
             )}
-            {/* </h1> */}
           </Title>
           <Grid className="my-3" style={{ height: 'calc(100% - 50px)' }}>
             <Grid.Col span={3}>
