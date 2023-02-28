@@ -1,28 +1,34 @@
 import api from './api';
 
 // Get tags for a campaign
-const getTags = campaignId =>
+const getTags = (campaignId: number): Promise<Tag[]> =>
   api({ url: `/api/campaigns/${campaignId}/tags`, method: 'GET' });
 
 // Create a new tag
-const createTag = (campaignId, data) =>
+const createTag = (campaignId: number, data: Partial<Tag>): Promise<Tag> =>
   api({ url: `/api/campaigns/${campaignId}/tags`, method: 'POST', data });
 
 // Edit a card
-const editTag = (campaignId, tagId, data) =>
+const editTag = (
+  campaignId: number,
+  tagId: number,
+  data: Partial<Tag>
+): Promise<Tag> =>
   api({
     url: `/api/campaigns/${campaignId}/tags/${tagId}`,
     method: 'PATCH',
-    data
+    data,
   });
 
 // Delete a tag
-const deleteTag = (campaignId, tagId) =>
+const deleteTag = (campaignId: number, tagId: number): Promise<void> =>
   api({ url: `/api/campaigns/${campaignId}/tags/${tagId}`, method: 'DELETE' });
 
-export default {
+const TagService = {
   getTags,
   createTag,
   editTag,
-  deleteTag
+  deleteTag,
 };
+
+export default TagService;

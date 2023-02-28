@@ -1,54 +1,55 @@
 import api from './api';
 
 // Get user's campaigns
-const getCampaigns = () =>
+const getCampaigns = (): Promise<Campaign[]> =>
   api({
     url: '/api/campaigns',
-    method: 'GET'
+    method: 'GET',
   });
 
 // Get user's campaigns
-const getMyCampaigns = () =>
+const getMyCampaigns = (): Promise<Campaign[]> =>
   api({
     url: '/api/campaigns?category=me',
-    method: 'GET'
+    method: 'GET',
   });
 
 // Get a campaign by id
-const getCampaignForId = id =>
+const getCampaignForId = (id: number): Promise<Campaign> =>
   api({
     url: `/api/campaigns/${id}`,
-    method: 'GET'
+    method: 'GET',
   });
 
 // Create a new campaign
-const createCampaign = data =>
+const createCampaign = (data: Partial<Campaign>): Promise<Campaign> =>
   api({
     url: '/api/campaigns',
     method: 'POST',
-    data
+    data,
   });
 
 // Edit a campaign
-const editCampaign = (id, data) =>
+const editCampaign = (id: number, data: Partial<Campaign>): Promise<Campaign> =>
   api({
     url: `/api/campaigns/${id}`,
     method: 'PATCH',
-    data
+    data,
   });
 
 // Delete user
-const deleteCampaign = id =>
+const deleteCampaign = (id: number): Promise<void> =>
   api({
     url: `/api/campaigns/${id}`,
-    method: 'DELETE'
+    method: 'DELETE',
   });
 
-export default {
+const CampaignService = {
   getCampaigns,
   getMyCampaigns,
   getCampaignForId,
   createCampaign,
   editCampaign,
-  deleteCampaign
+  deleteCampaign,
 };
+export default CampaignService;

@@ -1,11 +1,16 @@
-import axios from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 
 // Create an Axios Client with defaults
-const client = axios.create({
+const client: AxiosInstance = axios.create({
   // baseURL: 'http://localhost:5000/api',
   timeout: 10000,
   crossDomain: true,
-});
+} as AxiosRequestConfig);
 
 const AUTH_HEADER = 'x-auth-token';
 const ACCESS_TOKEN = 'storyMasterAccessToken';
@@ -15,13 +20,13 @@ const TOKEN_LIFE = 3600;
 const REFRESH_TOKEN_LIFE = 7776000;
 
 // Request Wrapper with default success/error actions
-const api = async function (options) {
-  const onSuccess = function (response) {
+const api = async function <Type>(options: AxiosRequestConfig) {
+  const onSuccess = function (response: AxiosResponse) {
     console.log('Request Successful!', response);
-    return response.data;
+    return response.data as Type;
   };
 
-  const onError = function (error) {
+  const onError = function (error: AxiosError) {
     console.error('Request Failed:', error.config);
     if (error.response) {
       // Request was made but server responded with something other than 2xx
@@ -45,7 +50,7 @@ const api = async function (options) {
 
 // Check the tokens to see if they aren't expired - refresh if so
 async function handleToken() {
-  const expiration = localStorage.getItem(TOKEN_EXP_TIME);
+  const expiration = JSON.parse(localStorage.getItem(TOKEN_EXP_TIME));
   const time = new Date().getTime() / 1000;
   const refreshTokenExpTime = expiration + (REFRESH_TOKEN_LIFE - TOKEN_LIFE);
 
@@ -73,7 +78,7 @@ async function getNewToken() {
 
     localStorage.setItem(ACCESS_TOKEN, token);
     localStorage.setItem(REFRESH_TOKEN, refreshToken);
-    localStorage.setItem(TOKEN_EXP_TIME, tokenExpTime);
+    localStorage.setItem(TOKEN_EXP_TIME, JSON.stringify(tokenExpTime));
 
     client.defaults.headers.common[AUTH_HEADER] =
       localStorage.getItem(ACCESS_TOKEN);
