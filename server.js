@@ -1,11 +1,11 @@
 require('dotenv').config();
 
-import express, { json } from 'express';
-import connectDB from './config/db';
-import cors from 'cors';
-import { resolve } from 'path';
-import { initialize, session as passportSession } from 'passport';
-import './config/passport-setup';
+const express = require('express');
+const connectDB = require('./config/db');
+const cors = require('cors');
+const path = require('path');
+const passport = require('passport');
+require('./config/passport-setup');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,17 +16,17 @@ app.use(cors());
 connectDB();
 
 // initialize middleware
-app.use(json({ extended: false }));
+app.use(express.json({ extended: false }));
 
 // intialize express session middleware
-import session from 'express-session';
-import { create } from 'connect-mongo';
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 app.use(
   session({
     secret: process.env.SESSION_SECRET, // Session secret
     resave: false, // Don't save session if unmodified
     saveUninitialized: false, // Don't create session until something stored
-    store: create({ mongoUrl: process.env.MONGO_URI }), // Use MongoDB to store sessions
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // Use MongoDB to store sessions
     // Set cookie options
     cookie: {
       secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
@@ -38,8 +38,8 @@ app.use(
 
 // initialize passport
 app.enable('trust proxy');
-app.use(initialize());
-app.use(passportSession());
+app.use(passport.initialize());
+app.use(passport.session());
 
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) =>
-    res.sendFile(resolve(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   );
 }
 
