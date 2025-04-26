@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './fonts.css';
 
 function App() {
-  const [colorScheme, setColorScheme] = useLocalStorage({
+  const [colorScheme, setColorScheme] = useLocalStorage<'dark' | 'light'>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
   });
@@ -41,24 +41,30 @@ function App() {
           theme={{
             colorScheme,
             colors: {
-              activeLinkTextColor:
+              activeLinkTextColor: [
                 colorScheme === 'dark' ? '#d0ebff' : '#1971c2',
-              activeLinkBackgroundColor:
+              ],
+              activeLinkBackgroundColor: [
                 colorScheme === 'dark' ? 'rgba(24, 100, 171, 0.45)' : '#e7f5ff',
-              activeLinkBorderColor: '#339af0',
-              menuBorderColor: colorScheme === 'dark' ? '#4d4f66' : '#dee2e6',
-              navBackgroundColor:
+              ],
+              activeLinkBorderColor: ['#339af0'],
+              menuBorderColor: [colorScheme === 'dark' ? '#4d4f66' : '#dee2e6'],
+              navBackgroundColor: [
                 colorScheme === 'dark' ? '#0c0d21' : '#007bff',
-              navBorderColor:
+              ],
+              navBorderColor: [
                 colorScheme === 'dark' ? '#0c0d21' : 'transparent',
-              wikiBackgroundColor:
+              ],
+              wikiBackgroundColor: [
                 colorScheme === 'dark'
                   ? 'rgb(29, 30, 48, 0.95)'
                   : 'rgb(248, 249, 250, 0.95)',
+              ],
             },
-            shadows: {
-              hover: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px',
-            },
+            // shadows: {
+            //   hover: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px',
+            // },
+            other: { cardHover: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px' },
           }}
         >
           <Layout />

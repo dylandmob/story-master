@@ -21,7 +21,7 @@ export default function Wiki() {
   const campaignContext = useContext(CampaignContext);
   const { campaign, getCampaignForId, getTags } = campaignContext;
 
-  const styles = useStyles();
+  const { classes } = useStyles();
 
   let { params } = useRouteMatch<{ id: string }>();
 
@@ -45,7 +45,7 @@ export default function Wiki() {
         justifyContent: 'center',
       }}
     >
-      <Paper className={styles.classes.paper} p="md" radius="lg">
+      <Paper className={classes.paper} p="md" radius="lg">
         <div style={{ height: '100%' }}>
           <Title className="text-center">
             {campaign.name}

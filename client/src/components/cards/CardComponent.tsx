@@ -1,28 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Paper, Image, Badge, useMantineTheme } from '@mantine/core';
-import { createUseStyles } from 'react-jss';
+import { Paper, Image, Badge, createStyles } from '@mantine/core';
 import { EyeNoneIcon } from '@radix-ui/react-icons';
 
-const useStyles = createUseStyles(
-  (theme) => ({
-    card: {
-      position: 'relative',
-      borderRadius: theme.radius.lg,
-      margin: 20,
-      overflow: 'hidden',
-      width: '200px',
-      '&:hover': {
-        boxShadow: theme.shadows.hover,
-      },
+const useStyles = createStyles((theme) => ({
+  card: {
+    position: 'relative',
+    borderRadius: theme.radius.lg,
+    margin: 20,
+    overflow: 'hidden',
+    width: '200px',
+    '&:hover': {
+      boxShadow: 'rgba(100, 100, 111, 0.3) 0px 7px 29px 0px',
     },
-  }),
-  { useMantineTheme }
-);
+  },
+}));
 
-const CardComponent = ({ data, path }) => {
+interface CardComponentProps {
+  data: { _id: number; name: string; imageUrl: string; hidden: boolean };
+  path: string;
+}
+
+const CardComponent = ({ data, path }: CardComponentProps) => {
   const { _id, name, imageUrl, hidden } = data;
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Link to={path}>

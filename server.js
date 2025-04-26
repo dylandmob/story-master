@@ -1,11 +1,11 @@
 require('dotenv').config();
 
-const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors');
-const path = require('path');
-const passport = require('passport');
-require('./config/passport-setup');
+import express, { json } from 'express';
+import connectDB from './config/db';
+import cors from 'cors';
+import { resolve } from 'path';
+import { initialize, session as passportSession } from 'passport';
+import './config/passport-setup';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,16 +16,30 @@ app.use(cors());
 connectDB();
 
 // initialize middleware
-app.use(express.json({ extended: false }));
+app.use(json({ extended: false }));
 
 // intialize express session middleware
-var session = require('express-session');
-app.use(session({ secret: process.env.SESSION_SECRET }));
+import session from 'express-session';
+import { create } from 'connect-mongo';
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, // Session secret
+    resave: false, // Don't save session if unmodified
+    saveUninitialized: false, // Don't create session until something stored
+    store: create({ mongoUrl: process.env.MONGO_URI }), // Use MongoDB to store sessions
+    // Set cookie options
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      httpOnly: true, // Prevent client-side JS access
+      maxAge: 1000 * 60 * 60 * 24, // 1 day expiry
+    },
+  })
+);
 
 // initialize passport
 app.enable('trust proxy');
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(initialize());
+app.use(passportSession());
 
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
@@ -48,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(resolve(__dirname, 'client', 'build', 'index.html'))
   );
 }
 

@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
+import { connect } from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const uri = process.env.NODE_ENV === 'production' ? process.env.MONGO_URI_PROD : process.env.MONGO_URI
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
+    const uri =
+      process.env.NODE_ENV === 'production'
+        ? process.env.MONGO_URI_PROD
+        : process.env.MONGO_URI;
+    await connect(uri);
 
     console.log('MongoDB Connected!');
   } catch (err) {
@@ -17,4 +16,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;
