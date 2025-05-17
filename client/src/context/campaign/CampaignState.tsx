@@ -22,7 +22,7 @@ import {
 const CAMPAIGN = 'campaign';
 const TAG = 'tag';
 
-const CampaignState = (props) => {
+const CampaignState = ({ children }) => {
   const initialState = {
     campaign: null,
     campaigns: [],
@@ -176,7 +176,7 @@ const CampaignState = (props) => {
         deleteTag,
       }}
     >
-      {props.children}
+      {children}
     </CampaignContext.Provider>
   );
 };

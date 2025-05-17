@@ -1,3 +1,4 @@
+import { ReducerAction } from 'react';
 import {
   CAMPAIGN_ERROR,
   GET_MY_CAMPAIGNS,
@@ -10,7 +11,14 @@ import {
   DELETE_TAG,
 } from '../types';
 
-export default (state, action) => {
+export interface CampaignState {
+  campaign: Campaign | null;
+  campaigns: Campaign[];
+  myCampaigns: Campaign[];
+  campaignError: string | null;
+}
+
+const campaignReducer = (state: CampaignState, action: any) => {
   switch (action.type) {
     case GET_MY_CAMPAIGNS:
       return { ...state, myCampaigns: action.payload };
@@ -50,3 +58,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default campaignReducer;
