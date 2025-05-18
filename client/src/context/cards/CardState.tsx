@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import CardContext from './index';
-import cardReducer from './cardReducer';
+import cardReducer, { CardState as CardStateType } from './cardReducer';
 
 import api from '../../api/CardService';
 
@@ -13,8 +13,8 @@ import {
   GET_CARD_FOR_ID,
 } from '../types';
 
-const CardState = (props) => {
-  const initialState = {
+const CardState: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const initialState: CardStateType = {
     cards: [],
     card: null,
     cardError: null,
@@ -23,7 +23,7 @@ const CardState = (props) => {
   const [state, dispatch] = useReducer(cardReducer, initialState);
 
   // Get campaign cards
-  const getCards = async (campaignId) => {
+  const getCards = async (campaignId: number) => {
     try {
       const response = await api.getCards(campaignId);
       dispatch({ type: GET_CARDS, payload: response });
@@ -33,7 +33,7 @@ const CardState = (props) => {
   };
 
   // Get card for id
-  const getCardForId = async (campaignId, cardId) => {
+  const getCardForId = async (campaignId: number, cardId: number) => {
     try {
       const response = await api.getCardForId(campaignId, cardId);
       dispatch({ type: GET_CARD_FOR_ID, payload: response });
@@ -43,7 +43,7 @@ const CardState = (props) => {
   };
 
   // Get cards for an act
-  const getCardsForAct = async (campaignId, actId) => {
+  const getCardsForAct = async (campaignId: number, actId: number) => {
     try {
       const response = await api.getCardsForAct(campaignId, actId);
       dispatch({ type: GET_CARDS_FOR_ACT, payload: response });
@@ -53,7 +53,7 @@ const CardState = (props) => {
   };
 
   // Get cards for a tag
-  const getCardsForTag = async (campaignId, tagId) => {
+  const getCardsForTag = async (campaignId: number, tagId: number) => {
     try {
       const response = await api.getCardsForTag(campaignId, tagId);
       dispatch({ type: GET_CARDS_FOR_TAG, payload: response });
@@ -63,9 +63,9 @@ const CardState = (props) => {
   };
 
   // Create a new card
-  const createCard = async (campaignId, formData) => {
+  const createCard = async (campaignId: number, formData: Partial<Card>) => {
     try {
-      let data = {};
+      let data: Partial<Card> = {};
       if (formData.name) data.name = formData.name;
       if (formData.description) data.description = formData.description;
       if (formData.privateDescription)
@@ -82,9 +82,13 @@ const CardState = (props) => {
   };
 
   // Edit a card
-  const editCard = async (campaignId, cardId, formData) => {
+  const editCard = async (
+    campaignId: number,
+    cardId: number,
+    formData: Partial<Card>
+  ) => {
     try {
-      let data = {};
+      let data: Partial<Card> = {};
       if (formData.name) data.name = formData.name;
       if (formData.description) data.description = formData.description;
       if (formData.privateDescription)
@@ -100,7 +104,7 @@ const CardState = (props) => {
   };
 
   // Delete a card
-  const deleteCard = async (campaignId, cardId) => {
+  const deleteCard = async (campaignId: number, cardId: number) => {
     try {
       await api.deleteCard(campaignId, cardId);
     } catch (err) {
@@ -109,7 +113,7 @@ const CardState = (props) => {
   };
 
   // Handle errors
-  const handleError = (type, err) =>
+  const handleError = (type: string, err: any) =>
     dispatch({ type: CARD_ERROR, payload: `${type}: ${err}` });
 
   return (
@@ -127,7 +131,7 @@ const CardState = (props) => {
         deleteCard,
       }}
     >
-      {props.children}
+      {children}
     </CardContext.Provider>
   );
 };

@@ -4,10 +4,21 @@ import {
   GET_CARDS,
   GET_CARDS_FOR_ACT,
   GET_CARDS_FOR_TAG,
-  GET_CARD_FOR_ID
+  GET_CARD_FOR_ID,
 } from '../types';
 
-export default (state, action) => {
+export interface CardAction {
+  type: string;
+  payload?: any;
+}
+
+export interface CardState {
+  cards: Card[];
+  card: Card | null;
+  cardError: string | null;
+}
+
+const cardReducer = (state: CardState, action: CardAction) => {
   switch (action.type) {
     case GET_CARD_FOR_ID:
     case EDIT_CARD:
@@ -22,3 +33,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default cardReducer;
