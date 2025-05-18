@@ -4,7 +4,7 @@ import UserState from './user/UserState';
 import CampaignState from './campaign/CampaignState';
 import CardState from './cards/CardState';
 
-const Store = ({ children }) => {
+const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <AuthState>
       <UserState>
