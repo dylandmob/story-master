@@ -24,7 +24,9 @@ import {
 const CAMPAIGN = 'campaign';
 const TAG = 'tag';
 
-const CampaignState = ({ children }: { children: React.ReactNode }) => {
+const CampaignState: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const initialState: CampaignStateType = {
     campaign: null,
     campaigns: [],
