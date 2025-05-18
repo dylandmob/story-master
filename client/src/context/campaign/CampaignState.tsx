@@ -1,6 +1,8 @@
 import React, { useReducer } from 'react';
 import CampaignContext from './index';
-import campaignReducer from './campaignReducer';
+import campaignReducer, {
+  CampaignState as CampaignStateType,
+} from './campaignReducer';
 
 import api from '../../api/CampaignService';
 import tagApi from '../../api/TagService';
@@ -22,8 +24,8 @@ import {
 const CAMPAIGN = 'campaign';
 const TAG = 'tag';
 
-const CampaignState = ({ children }) => {
-  const initialState = {
+const CampaignState = ({ children }: { children: React.ReactNode }) => {
+  const initialState: CampaignStateType = {
     campaign: null,
     campaigns: [],
     myCampaigns: [],
@@ -33,7 +35,7 @@ const CampaignState = ({ children }) => {
   const [state, dispatch] = useReducer(campaignReducer, initialState);
 
   // Get a campaign by id
-  const getCampaignForId = async (id) => {
+  const getCampaignForId = async (id: number) => {
     try {
       const response = await api.getCampaignForId(id);
       dispatch({ type: GET_CURRENT_CAMPAIGN, payload: response });
@@ -43,7 +45,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Get the tags of a campaign
-  const getTags = async (campaignId) => {
+  const getTags = async (campaignId: number) => {
     try {
       const response = await tagApi.getTags(campaignId);
       dispatch({ type: GET_TAGS, payload: response });
@@ -73,7 +75,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Create a new campaign
-  const createCampaign = async (formData) => {
+  const createCampaign = async (formData: any) => {
     try {
       let data = normalizeData(formData, CAMPAIGN);
       const response = await api.createCampaign(data);
@@ -85,7 +87,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Edit campaign
-  const editCampaign = async (campaignId, formData) => {
+  const editCampaign = async (campaignId: number, formData: any) => {
     try {
       let data = normalizeData(formData, CAMPAIGN);
       const response = await api.editCampaign(campaignId, data);
@@ -97,7 +99,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Delete a campaign
-  const deleteCampaign = async (id) => {
+  const deleteCampaign = async (id: number) => {
     try {
       await api.deleteCampaign(id);
       dispatch({ type: DELETE_CAMPAIGN });
@@ -107,7 +109,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Create a tag
-  const createTag = async (campaignId, formData) => {
+  const createTag = async (campaignId: number, formData: any) => {
     try {
       let tag = normalizeData(formData, TAG);
       const response = await tagApi.createTag(campaignId, tag);
@@ -119,7 +121,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Edit a tag
-  const editTag = async (campaignId, tagId, formData) => {
+  const editTag = async (campaignId: number, tagId: number, formData: any) => {
     try {
       let tag = normalizeData(formData, TAG);
       const response = await tagApi.editTag(campaignId, tagId, tag);
@@ -131,7 +133,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Delete a tag
-  const deleteTag = async (campaignId, tagId) => {
+  const deleteTag = async (campaignId: number, tagId: number) => {
     try {
       await tagApi.deleteTag(campaignId, tagId);
       dispatch({ type: DELETE_TAG, payload: tagId });
@@ -141,8 +143,8 @@ const CampaignState = ({ children }) => {
   };
 
   // Normalize form data, depends on type
-  const normalizeData = (formData, type) => {
-    let data = {};
+  const normalizeData = (formData: any, type: string) => {
+    let data: any = {};
     if (formData.name) data.name = formData.name;
     if (formData.description) data.description = formData.description;
     if (formData.imageUrl) data.imageUrl = formData.imageUrl;
@@ -154,7 +156,7 @@ const CampaignState = ({ children }) => {
   };
 
   // Handle errors
-  const handleError = (type, err) =>
+  const handleError = (type: string, err: any) =>
     dispatch({ type: CAMPAIGN_ERROR, payload: `${type}: ${err}` });
 
   return (

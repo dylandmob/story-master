@@ -9,4 +9,5 @@ declare interface Campaign {
   chapters: any[];
   hidden: boolean;
   wiki: Tag[];
+  tags: Tag[];
 }

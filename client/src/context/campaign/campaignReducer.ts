@@ -1,4 +1,4 @@
-import { ReducerAction } from 'react';
+import { Reducer } from 'react';
 import {
   CAMPAIGN_ERROR,
   GET_MY_CAMPAIGNS,
@@ -18,7 +18,15 @@ export interface CampaignState {
   campaignError: string | null;
 }
 
-const campaignReducer = (state: CampaignState, action: any) => {
+interface CampaignAction {
+  type: string;
+  payload?: any;
+}
+
+const campaignReducer: Reducer<CampaignState, CampaignAction> = (
+  state: CampaignState,
+  action: CampaignAction
+): CampaignState => {
   switch (action.type) {
     case GET_MY_CAMPAIGNS:
       return { ...state, myCampaigns: action.payload };
@@ -53,7 +61,7 @@ const campaignReducer = (state: CampaignState, action: any) => {
         },
       };
     case CAMPAIGN_ERROR:
-      return { ...state, userError: action.payload };
+      return { ...state, campaignError: action.payload };
     default:
       return state;
   }
