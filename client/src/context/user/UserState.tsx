@@ -1,15 +1,15 @@
 import React, { useReducer } from 'react';
 import UserContext from '.';
-import userReducer from './userReducer';
+import userReducer, { UserState as UserStateType } from './userReducer';
 
 import api from '../../api/UserService';
 
 import { GET_ME, EDIT_ME, DELETE_ME, USER_ERROR } from '../types';
 
-const UserState = props => {
-  const initialState = {
+const UserState: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const initialState: UserStateType = {
     user: null,
-    userError: null
+    userError: null,
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
@@ -25,9 +25,9 @@ const UserState = props => {
     }
   };
 
-  const editMe = async (name, imageUrl) => {
+  const editMe = async (name: string, imageUrl: string) => {
     try {
-      let data = {};
+      let data: Partial<User> = {};
       if (name && name.length > 3 && name.length < 25) data.name = name;
       if (imageUrl) data.imageUrl = imageUrl;
       await api.editMe(data);
@@ -48,19 +48,20 @@ const UserState = props => {
     }
   };
 
-  const handleError = (type, err) =>
+  const handleError = (type: string, err: any) =>
     dispatch({ type: USER_ERROR, payload: `${type}: ${err}` });
 
   return (
     <UserContext.Provider
       value={{
         user: state.user,
+        userError: state.userError,
         getMe,
         editMe,
-        deleteMe
+        deleteMe,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 };
